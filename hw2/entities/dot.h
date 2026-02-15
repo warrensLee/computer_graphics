@@ -1,9 +1,10 @@
 #ifndef DOT_H
 #define DOT_H
 
-#include <OpenGL/gl.h>
+
 #include <cmath>
 #include "../components/vertex.h"
+#include "../components/gl_platform.h"
 
 class Dot
 {

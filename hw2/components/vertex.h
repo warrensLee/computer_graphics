@@ -2,15 +2,9 @@
 #define VERTEX_H
 
 #include <iostream>
-#ifdef __APPLE__
-#define GL_SILENCE_DEPRECATION
-#include <OpenGL/gl.h>
-#else
-#define GL_SILENCE_DEPRECATION
-#include <OpenGL/gl.h>
-#include <OpenGL/glu.h>
-#include <GLUT/glut.h>
-#endif
+
+#include "../components/gl_platform.h"
+
 
 class Vertex
 {

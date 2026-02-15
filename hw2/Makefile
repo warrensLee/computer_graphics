@@ -1,23 +1,34 @@
-# Compiler
-CXX = g++
-CXXFLAGS = -std=c++17 -Wall -Wextra -DGL_SILENCE_DEPRECATION
+CXX ?= g++
+CXXFLAGS ?= -std=c++17 -Wall -Wextra
 
-# Frameworks (macOS)
-FRAMEWORKS = -framework OpenGL -framework GLUT
+TARGET = main
 
-# Source files
 SRC = main.cpp \
       components/polygon.cpp \
       components/vertex.cpp \
       entities/dot.cpp
 
-# Output executable
-TARGET = main
+UNAME_S := $(shell uname -s 2>/dev/null)
+
+LIBS =
+INCLUDES =
+
+ifeq ($(UNAME_S),Darwin)
+	CXXFLAGS += -DGL_SILENCE_DEPRECATION
+	LIBS += -framework OpenGL -framework GLUT
+endif
+
+# Linux / WSL
+ifeq ($(UNAME_S),Linux)
+	LIBS += -lGL -lGLU -lglut
+	# If your distro uses freeglut, this may be needed instead:
+	# LIBS += -lGL -lGLU -lfreeglut
+endif
 
 all: $(TARGET)
 
 $(TARGET): $(SRC)
-	$(CXX) $(CXXFLAGS) $(SRC) -o $(TARGET) $(FRAMEWORKS)
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $(SRC) -o $@ $(LIBS)
 
 clean:
-	rm -f $(TARGET)
+	rm -f main main.exe

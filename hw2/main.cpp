@@ -5,9 +5,6 @@
 
 
 #define GL_SILENCE_DEPRECATION
-#include <OpenGL/gl.h>
-#include <OpenGL/glu.h>
-#include <GLUT/glut.h>
 
 #include "components/polygon.h"
 #include "entities/dot.h"
