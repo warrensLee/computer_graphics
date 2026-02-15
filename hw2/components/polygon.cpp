@@ -24,7 +24,7 @@ int Polygon::numVertices()
     return vertices.size();
 }
 
-void Polygon::polygonInformation() 
+void Polygon::printInformation() 
 {
     std::cout << "This polygon has " << numVertices() << " vertices" << std::endl; // output how many vertices there are
     int count = 1;                                                                 // track what vertex we are on

@@ -18,7 +18,7 @@ Dot::Dot(float cx, float cy, float c_radius, float cr, float cg, float cb, bool 
 
 
 
-void Dot::dotInformation()
+void Dot::printInformation()
 {
 
 }
@@ -91,4 +91,9 @@ float Dot::getX() const
 float Dot::getY() const
 {
     return y;
+}
+
+bool Dot::setAlive(bool a) const
+{
+	isAlive = a;
 }
