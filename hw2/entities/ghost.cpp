@@ -1,7 +1,7 @@
 #include "ghost.h"
 
 
-void Ghost::printInformation()
+void Ghost::printInformation() const
 {
     std::cout << "override complete" << std::endl;
 }

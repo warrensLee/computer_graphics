@@ -9,6 +9,7 @@ Entity::Entity()
 {
 }
 
+Entity::~Entity() = default;
 
 Entity::Entity(float cx, float cy, float c_radius, float cr, float cg, float cb, bool c_isAlive)
     : x(cx), y(cy), radius(c_radius), r(cr), g(cg), b(cb), isAlive(c_isAlive)

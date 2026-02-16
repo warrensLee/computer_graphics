@@ -1,20 +1,19 @@
 #include <random>
-#include <iostream>
-#include <cstdlib>
+
 
 
 #define GL_SILENCE_DEPRECATION
 
-#include "components/polygon.h"
-#include "entities/dot.h"
-#include "entities/entity.h"
+
+#include "architecture/controller.h"
+#include "architecture/model.h"
+#include "architecture/view.h"
 
 
 // global variables for storage:
-
-std::vector<Polygon> polygons;
-std::vector<Entity> entities;
-std::vector<Dot> dots;
+Model m;
+View v(m);
+Controller c(m, v);
 
 
 // DUE: Friday 02/20/2026 at 11:59pm
@@ -61,59 +60,6 @@ void init()
 
 }
 
-void display()
-{
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-
-    for (Entity &e : entities) // iterate thru each polygon in the vector of polygons
-    {
-        e.display();
-    }
-    for (Dot &d : dots) // iterate thru each polygon in the vector of polygons
-    {
-        d.display();
-    }
-
-    glutSwapBuffers();
-}
-
-void keyboard(unsigned char key, int, int)
-{
-    std::printf("key=%d char=%c\n", key, key);
-    std::fflush(stdout);
-
-    if (key == 27 || key == 'q')
-        // close program
-        std::exit(0);
-    if (key == 'w')
-        // move north
-        std::exit(0);
-    if (key == 'a')
-        // move west
-        std::exit(0);
-    if (key == 's')
-        // move south
-        std::exit(0);
-    if (key == 'd')
-        // move east
-        std::exit(0);
-}
-void buildDots()
-{
-    float d = (.85 - -.85) / 11;
-
-    for (int i = 0; i < 12;  i += 1)
-    {
-        float y = -.85 + i * d;
-        for (int j = 0; j < 12;  j += 1)
-        {
-            float x = -.85 + j * d;
-            dots.emplace_back(Dot(x, y, 0.035, 0.6, 0.0, 1.0, true));
-        }
-    }
-}
 
 
 int main(int argc, char *argv[])
@@ -121,15 +67,14 @@ int main(int argc, char *argv[])
     // polygons = testPolygons(4, 5);          // sides, polygons
     //  allInformation(polygons);
 
-    buildDots();
     glutInit(&argc, argv);
     glutInitWindowSize(500, 500);
     glutInitWindowPosition(250, 250);
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
     glutCreateWindow("Warren Roberts - Assignment 2 Pacman");
     glEnable(GL_DEPTH_TEST);
-    glutDisplayFunc(display);
-    glutKeyboardFunc(keyboard);
+    glutDisplayFunc(v.displayWrapper);
+    glutKeyboardFunc(c.keyboardWrapper);
     init();
     glutMainLoop();
     return 0;

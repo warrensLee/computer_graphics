@@ -6,7 +6,13 @@ TARGET = main
 SRC = main.cpp \
       components/polygon.cpp \
       components/vertex.cpp \
-      entities/dot.cpp
+      entities/dot.cpp \
+	  entities/ghost.cpp \
+	  entities/pacman.cpp \
+	  entities/entity.cpp \
+	  architecture/controller.cpp \
+	  architecture/view.cpp \
+	  architecture/model.cpp
 
 UNAME_S := $(shell uname -s 2>/dev/null)
 

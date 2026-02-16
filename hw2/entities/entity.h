@@ -15,6 +15,7 @@ public:
     // constructors
     Entity();
     Entity(float px, float py, float radius, float red, float green, float blue, bool alive = true);
+    virtual ~Entity();
 
     // member functions
     void printInformation() const override;
