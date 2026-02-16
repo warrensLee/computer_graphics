@@ -93,7 +93,7 @@ float Dot::getY() const
     return y;
 }
 
-bool Dot::setAlive(bool a) const
+void Dot::setAlive(bool a)
 {
-	isAlive = a;
+    isAlive = a;
 }

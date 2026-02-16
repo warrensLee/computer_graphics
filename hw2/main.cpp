@@ -1,5 +1,4 @@
 #include <random>
-#include <vector>
 #include <iostream>
 #include <cstdlib>
 
@@ -8,8 +7,15 @@
 
 #include "components/polygon.h"
 #include "entities/dot.h"
+#include "entities/entity.h"
+
+
+// global variables for storage:
 
 std::vector<Polygon> polygons;
+std::vector<Entity> entities;
+std::vector<Dot> dots;
+
 
 // DUE: Friday 02/20/2026 at 11:59pm
 // The goal of this programming assignment is to give students experience with user
@@ -45,7 +51,6 @@ std::vector<Polygon> polygons;
 // help you complete two of four tasks above. You are required to keep track of all of
 // your AI prompts in a separate document to submit with your project report.
 
-Dot d;
 
 void init()
 {
@@ -53,6 +58,7 @@ void init()
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
+
 }
 
 void display()
@@ -61,11 +67,13 @@ void display()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    d.display();
-
-    for (Polygon &p : polygons) // iterate thru each polygon in the vector of polygons
+    for (Entity &e : entities) // iterate thru each polygon in the vector of polygons
     {
-        p.display();
+        e.display();
+    }
+    for (Dot &d : dots) // iterate thru each polygon in the vector of polygons
+    {
+        d.display();
     }
 
     glutSwapBuffers();
@@ -77,7 +85,34 @@ void keyboard(unsigned char key, int, int)
     std::fflush(stdout);
 
     if (key == 27 || key == 'q')
+        // close program
         std::exit(0);
+    if (key == 'w')
+        // move north
+        std::exit(0);
+    if (key == 'a')
+        // move west
+        std::exit(0);
+    if (key == 's')
+        // move south
+        std::exit(0);
+    if (key == 'd')
+        // move east
+        std::exit(0);
+}
+void buildDots()
+{
+    float d = (.85 - -.85) / 11;
+
+    for (int i = 0; i < 12;  i += 1)
+    {
+        float y = -.85 + i * d;
+        for (int j = 0; j < 12;  j += 1)
+        {
+            float x = -.85 + j * d;
+            dots.emplace_back(Dot(x, y, 0.035, 0.6, 0.0, 1.0, true));
+        }
+    }
 }
 
 
@@ -86,6 +121,7 @@ int main(int argc, char *argv[])
     // polygons = testPolygons(4, 5);          // sides, polygons
     //  allInformation(polygons);
 
+    buildDots();
     glutInit(&argc, argv);
     glutInitWindowSize(500, 500);
     glutInitWindowPosition(250, 250);

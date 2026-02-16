@@ -2,9 +2,9 @@
 #define FRUIT_H
 
 
-#include "../components/polygon.h"
+#include "entity.h"
 
-class Fruit : public Polygon
+class Fruit : public Entity
 {
 private:
     bool isAlive;

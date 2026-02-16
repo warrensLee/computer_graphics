@@ -1,7 +1,13 @@
 #include "fruit.h"
 
-Fruit::Fruit();
-Fruit::Fruit(float fx, float fy, float size, float r, float g, float b, bool alive = true);
+Fruit::Fruit()
+{
+
+}
+Fruit::Fruit(float fx, float fy, float size, float r, float g, float b, bool alive = true)
+{
+    
+}
 
 // member functions
 void Fruit::display() const

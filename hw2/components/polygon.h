@@ -3,12 +3,9 @@
 
 #include <vector>
 #include <iostream>
-#include "vertex.h" // NOT the .cpp
+#include "vertex.h"
 
-
-//#include <GL/freeglut.h>
-
-class Polygon : public Vertex
+class Polygon
 {
 public:
     std::vector<Vertex> vertices;
@@ -16,12 +13,13 @@ public:
     // Constructors
     Polygon();
     Polygon(std::vector<Vertex> info);
+    virtual ~Polygon() = default;
 
     // Member functions
     void setPolygonColor(float a, float b, float c);
     int numVertices();
-    void polygonInformation();
-    void display();
+    virtual void printInformation() const;
+    virtual void display() const;
 };
 
 #endif // POLYGON_H

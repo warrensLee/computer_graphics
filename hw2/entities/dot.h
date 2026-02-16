@@ -4,6 +4,8 @@
 
 #include <cmath>
 #include "../components/vertex.h"
+#include <vector>
+
 
 class Dot
 {
@@ -15,7 +17,7 @@ public:
     // constructors
     Dot();
     Dot(float cx, float cy, float c_radius, float cr, float cg, float cb, bool c_isAlive = true);
-
+    
     // member functions
     void printInformation();
     void setPosition(float sx, float sy);
@@ -28,7 +30,7 @@ public:
     float getY() const;
     float getRadius() const;
     bool getAlive() const;
-	bool setAlive(bool a) const;
+	void setAlive(bool a);
 
 };
 

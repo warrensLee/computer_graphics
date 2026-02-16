@@ -24,33 +24,36 @@ int Polygon::numVertices()
     return vertices.size();
 }
 
-void Polygon::printInformation() 
+void Polygon::printInformation() const
 {
-    std::cout << "This polygon has " << numVertices() << " vertices" << std::endl; // output how many vertices there are
-    int count = 1;                                                                 // track what vertex we are on
-    for (Vertex &v : vertices)                                                     // iterate thru each vertex in the vector
-    {
-        std::cout << "Vertex (" << count << "):" << std::endl; // output the specific vertex we are at
-        v.vertexInformation();                                 // print that vertex's information
-        count++;
-    }
+//     std::cout << "This polygon has " << numVertices() << " vertices" << std::endl; // output how many vertices there are
+//     int count = 1;                                                                 // track what vertex we are on
+//     for (Vertex &v : vertices)                                                     // iterate thru each vertex in the vector
+//     {
+//         std::cout << "Vertex (" << count << "):" << std::endl; // output the specific vertex we are at
+//         v.vertexInformation();                                 // print that vertex's information
+//         count++;
+//     }
+    std::cout << "placeholder...\n";
 }
 
-void Polygon::display()
+void Polygon::display() const
 {
-    float x, y, z, r, g, b;
-    glBegin(GL_POLYGON);
-    for (Vertex &v : vertices) // iterate thru each vertex in the vector
-    {
-        x = v.getX();
-        y = v.getY();
-        z = v.getZ();
-        r = v.getR();
-        g = v.getG();
-        b = v.getB();
+    // float x, y, z, r, g, b;
+    // glBegin(GL_POLYGON);
+    // for (Vertex &v : vertices) // iterate thru each vertex in the vector
+    // {
+    //     x = v.getX();
+    //     y = v.getY();
+    //     z = v.getZ();
+    //     r = v.getR();
+    //     g = v.getG();
+    //     b = v.getB();
 
-        glColor3f(r, g, b);
-        glVertex3f(x, y, z);
-    }
-    glEnd();
+    //     glColor3f(r, g, b);
+    //     glVertex3f(x, y, z);
+    // }
+    // glEnd();
+    std::cout << "placeholder...\n";
+
 }
