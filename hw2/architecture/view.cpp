@@ -19,19 +19,17 @@ void View::display()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    for (Entity &e : model.getEntities()) // iterate thru each polygon in the vector of polygons
-    {
-        e.display();
-    }
-    for (Dot &d : model.getDots()) // iterate thru each polygon in the vector of polygons
-    {
-        d.display();
-    }
+    model.pacman.display();
 
-    glutSwapBuffers();
+    for (Ghost &g : model.getGhosts()) // iterate thru each polygon in the vector of polygons
+    {
+        g.display();
+    }
+    // for (Dot &d : model.getDots()) // iterate thru each polygon in the vector of polygons
+    // {
+    //     d.display();
+    // }
+
+
 }
 
-void View::displayWrapper()
-{
-    if (instance) instance->display();
-}

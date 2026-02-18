@@ -2,10 +2,20 @@
 
 
 
-Model::Model()
+Model::Model() : pacman(0.0f, 0.0f, 0.08f, 1.0f, 1.0f, 0.0f, true)
 {
     // Initialize data here later
-    buildDots();
+    //buildDots();
+    pacman.setSpeed(1.0f);
+
+    // create ghosts
+    ghosts.emplace_back(-0.5f, 0.5f, 0.07f, 1.0f, 0.0f, 0.0f);
+    ghosts.back().setSpeed(0.4f);
+    ghosts.back().setDirection(0.8f); // radians
+
+    ghosts.emplace_back(0.6f, -0.3f, 0.07f, 0.0f, 1.0f, 1.0f);
+    ghosts.back().setSpeed(0.3f);
+    ghosts.back().setDirection(0.8f); // radians
 }
 
 Model::~Model()
@@ -33,7 +43,21 @@ std::vector<Entity> Model::getEntities()
 {
     return entities;
 }
+
 std::vector<Dot> Model::getDots()
 {
     return dots;
+}
+
+std::vector<Ghost> Model::getGhosts()
+{
+    return ghosts;
+}
+
+
+void Model::update(float dt)
+{
+    pacman.update(dt);
+    for (auto& g : ghosts)
+        g.update(dt);
 }

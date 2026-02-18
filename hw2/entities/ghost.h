@@ -6,20 +6,25 @@
 class Ghost : public Entity
 {
     private:
-        float radius;
-        float mouthAngle;
-        float px, py;
+        float direction;
 
     public:
     // constructors
         Ghost();
-        Ghost(float px, float py, float r, float mouth, float red, float green, float blue);
+        Ghost(float px, float py, float rad, float red, float green, float blue, bool alive = true);
+        ~Ghost() override;
 
     // member methods
-        void display() const;
-        void printInformation() const;
+        void display() const override;
+        void printInformation() const override;
+
         void setPosition(float fx, float fy);
         bool setAlive(bool a) const;
+        void setDirection(float d);
+
+
+    // member methods
+        void update(float dt);
 };
 
 #endif // GHOST_H

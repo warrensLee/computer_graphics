@@ -50,8 +50,9 @@ Controller c(m, v);
 // help you complete two of four tasks above. You are required to keep track of all of
 // your AI prompts in a separate document to submit with your project report.
 
+static float lastTime = 0.0f;
 
-void init()
+void init()  // initialize OPENGL
 {
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glMatrixMode(GL_PROJECTION);
@@ -61,21 +62,78 @@ void init()
 }
 
 
+float getTimeSeconds() 
+{
+    return glutGet(GLUT_ELAPSED_TIME) / 1000.0f;
+}
+
+
+// allows us to call display and keyboard calls smoothly
+
+void displayCallback()
+{
+    v.display();
+    glutSwapBuffers();
+}
+
+void keyUpCallback(unsigned char key, int x, int y)
+{
+    c.keyUp(key, x, y);
+}
+void keyDownCallback(unsigned char key, int x, int y)
+{
+    c.keyDown(key, x, y);
+}
+
+
+
+// now to control gsame timing with ticks
+
+void timerCallback(int)
+{
+    float now = getTimeSeconds();
+    float dt = now - lastTime;
+    lastTime = now;
+
+    m.update(dt);
+    glutPostRedisplay();
+
+    glutTimerFunc(16, timerCallback, 0); // ~60fps
+}
+
+void tick() {
+    float now = getTimeSeconds();
+    float dt = now - lastTime;
+    lastTime = now;
+
+    m.update(dt);
+    v.display();
+}
+
+
 
 int main(int argc, char *argv[])
 {
-    // polygons = testPolygons(4, 5);          // sides, polygons
-    //  allInformation(polygons);
-
     glutInit(&argc, argv);
     glutInitWindowSize(500, 500);
     glutInitWindowPosition(250, 250);
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
     glutCreateWindow("Warren Roberts - Assignment 2 Pacman");
+
+
     glEnable(GL_DEPTH_TEST);
-    glutDisplayFunc(v.displayWrapper);
-    glutKeyboardFunc(c.keyboardWrapper);
     init();
+
+
+    glutDisplayFunc(displayCallback);
+    glutKeyboardFunc(keyDownCallback);
+    glutKeyboardUpFunc(keyUpCallback);
+
+
+    lastTime = getTimeSeconds();
+    glutTimerFunc(16, timerCallback, 0);
+
+
     glutMainLoop();
     return 0;
 }

@@ -7,17 +7,22 @@
 
 class Polygon
 {
-public:
+protected:
     std::vector<Vertex> vertices;
 
-    // Constructors
+public:
+    // constructors
     Polygon();
     Polygon(std::vector<Vertex> info);
     virtual ~Polygon() = default;
 
-    // Member functions
-    void setPolygonColor(float a, float b, float c);
+    // member functions
+    void clear();
     int numVertices();
+    void addVertex(const Vertex& v);
+
+    void setPolygonColor(float a, float b, float c);
+    
     virtual void printInformation() const;
     virtual void display() const;
 };

@@ -2,8 +2,8 @@
 #define VIEW_H
 
 #include "../components/gl_platform.h"
-#include "../components/polygon.h"
-#include "../entities/entity.h"
+
+
 #include "model.h"
 
 class View
@@ -19,7 +19,6 @@ public:
     // Destructor
     ~View();
     void display();
-    static void displayWrapper();
 
 };
 

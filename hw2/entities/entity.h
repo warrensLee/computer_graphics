@@ -4,13 +4,18 @@
 
 #include <cmath>
 #include "../components/polygon.h"
+#include "../components/gl_platform.h"
+
 
 class Entity : public Polygon
 {
-private:
+protected:
     float radius;
     bool isAlive;
     float r, g, b, x, y;
+    float vx = 0.0f;
+    float vy = 0.0f;
+    float speed = .5f;
 public:
     // constructors
     Entity();
@@ -19,9 +24,15 @@ public:
 
     // member functions
     void printInformation() const override;
+    virtual void display() const override;
+
+    // setters
     void setPosition(float sx, float sy);
+    void setAlive(bool a);
     void setColor(float sr, float sg, float sb);
-    void display() const override;
+    void setSpeed(float s);
+
+    // getters
     float getR() const;
     float getG() const;
     float getB() const;
@@ -29,7 +40,14 @@ public:
     float getY() const;
     float getRadius() const;
     bool getAlive() const;
-	void setAlive(bool a);
+    float getSpeed() const;
+
+
+    // traversal
+    void setVelocity(float nvx, float nvy);
+    void move(float dt);
+    void wrap();
+    virtual void update(float dt); // virtual
 
 };
 

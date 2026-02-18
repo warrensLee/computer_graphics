@@ -25,8 +25,8 @@ public:
 
     // methods
     void keyboard(unsigned char key, int x, int y);
-    static void keyboardWrapper(unsigned char key, int x, int y);
-
+    void keyUp(unsigned char key, int x, int y);
+    void keyDown(unsigned char key, int x, int y);
 
 };
 

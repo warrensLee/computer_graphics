@@ -57,3 +57,13 @@ void Polygon::display() const
     std::cout << "placeholder...\n";
 
 }
+
+void Polygon::addVertex(const Vertex& v)
+{
+    vertices.push_back(v);
+}
+
+// int Polygon::numVertices()
+// {
+//     return (int)vertices.size();
+// }

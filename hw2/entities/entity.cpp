@@ -37,28 +37,32 @@ void Entity::printInformation() const
 
 void Entity::display() const
 {
-    if (!isAlive) return;
-
-    glColor3f(r, g, b);
-
-    const int segments = 64;  // higher = smoother circle
-
-    glBegin(GL_TRIANGLE_FAN);
-
-    // center
-    glVertex2f(x, y);
-
-    for (int i = 0; i <= segments; i++)
-    {
-        float angle = 2.0f * 3.14159265359f * i / segments;
-        float dx = radius * cosf(angle);
-        float dy = radius * sinf(angle);
-
-        glVertex2f(x + dx, y + dy);
-    }
-
-    glEnd();
+    
 }
+//{
+
+    // if (!isAlive) return;
+
+    // glColor3f(r, g, b);
+
+    // const int segments = 64;  // higher = smoother circle
+
+    // glBegin(GL_TRIANGLE_FAN);
+
+    // // center
+    // glVertex2f(x, y);
+
+    // for (int i = 0; i <= segments; i++)
+    // {
+    //     float angle = 2.0f * 3.14159265359f * i / segments;
+    //     float dx = radius * cosf(angle);
+    //     float dy = radius * sinf(angle);
+
+    //     glVertex2f(x + dx, y + dy);
+    // }
+
+    // glEnd();
+//}
 
 float Entity::getRadius() const
 {
@@ -98,4 +102,45 @@ float Entity::getY() const
 void Entity::setAlive(bool a)
 {
     isAlive = a;
+}
+
+void Entity::setVelocity(float nvx, float nvy)
+{
+    vx = nvx;
+    vy = nvy;
+}
+void Entity::move(float dt)
+{
+    x += vx * dt;
+    y += vy * dt;
+}
+
+void Entity::setSpeed(float s)
+{
+    speed = s;
+}
+
+float Entity::getSpeed() const
+{
+    return speed;
+}
+
+void Entity::wrap()
+{
+    // wrap horizontally
+    if (x > 1.0f + radius)
+        x = -1.0f - radius;
+    else if (x < -1.0f - radius)
+        x = 1.0f + radius;
+    // wrap vertically
+    if (y > 1.0f + radius)
+        y = -1.0f -  radius;
+    else if (y < -1.0f - radius)
+        y = 1.0f + radius;
+}
+void Entity::update(float dt)
+{
+    move(dt);
+    wrap();
+
 }
