@@ -6,8 +6,8 @@
 #include "../entities/entity.h"
 #include "../entities/pacman.h"
 #include "../entities/ghost.h"
-
-
+#include "../entities/fruit.h"
+#include <random>
 
 
 
@@ -18,6 +18,7 @@ private:
     std::vector<Dot> dots;
     std::vector<Polygon> polygons;
     std::vector<Entity> entities;
+    std::vector<Fruit> fruits;
     std::vector<Ghost> ghosts;
 
 public:
@@ -26,11 +27,14 @@ public:
     Model();
     // Destructor
     ~Model();
-    
+
+    float randFloat();
     void buildDots();
+
     std::vector<Entity> getEntities();
     std::vector<Ghost> getGhosts();
     std::vector<Dot> getDots();
+    std::vector<Fruit> getFruit();
 
     void update(float dt);
 

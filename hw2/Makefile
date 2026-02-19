@@ -9,6 +9,7 @@ SRC = main.cpp \
       entities/dot.cpp \
 	  entities/ghost.cpp \
 	  entities/pacman.cpp \
+	  entities/fruit.cpp \
 	  entities/entity.cpp \
 	  architecture/controller.cpp \
 	  architecture/view.cpp \

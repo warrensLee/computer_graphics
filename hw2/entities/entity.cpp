@@ -7,6 +7,8 @@ Entity::Entity()
       r(0.6f), g(0.0f), b(1.0f),
       isAlive(true)
 {
+
+    
 }
 
 Entity::~Entity() = default;
@@ -127,16 +129,7 @@ float Entity::getSpeed() const
 
 void Entity::wrap()
 {
-    // wrap horizontally
-    if (x > 1.0f + radius)
-        x = -1.0f - radius;
-    else if (x < -1.0f - radius)
-        x = 1.0f + radius;
-    // wrap vertically
-    if (y > 1.0f + radius)
-        y = -1.0f -  radius;
-    else if (y < -1.0f - radius)
-        y = 1.0f + radius;
+
 }
 void Entity::update(float dt)
 {

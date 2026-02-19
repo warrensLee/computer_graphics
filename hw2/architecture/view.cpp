@@ -25,6 +25,10 @@ void View::display()
     {
         g.display();
     }
+    for (Fruit &f : model.getFruit()) // iterate thru each polygon in the vector of polygons
+    {
+        f.display();
+    }
     // for (Dot &d : model.getDots()) // iterate thru each polygon in the vector of polygons
     // {
     //     d.display();

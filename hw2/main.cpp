@@ -2,8 +2,6 @@
 
 
 
-#define GL_SILENCE_DEPRECATION
-
 
 #include "architecture/controller.h"
 #include "architecture/model.h"

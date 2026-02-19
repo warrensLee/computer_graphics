@@ -18,20 +18,23 @@ Dot::Dot(float cx, float cy, float c_radius, float cr, float cg, float cb, bool 
 
 
 
-void Dot::printInformation()
-{
+// void Dot::printInformation()
+// {
 
-}
+// }
 
-void Dot::setPosition(float sx, float sy)
-{
+// void Dot::setPosition(float sx, float sy)
+// {
+//     // removes warning for unused parameters
+//     // forced signature from OpenGL
+//     (void)sx;
+//     (void)sy;
+// }
 
-}
+// void Dot::setColor(float sr, float sg, float sb)
+// {
 
-void Dot::setColor(float sr, float sg, float sb)
-{
-
-}
+// }
 
 void Dot::display() const
 {

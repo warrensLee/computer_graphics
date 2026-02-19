@@ -53,6 +53,25 @@ void Ghost::printInformation() const
 
 }
 
+void Ghost::wrap()
+{
+    const float left   = -1.0f + radius;
+    const float right  =  1.0f - radius;
+    const float bottom = -1.0f + radius;
+    const float top    =  1.0f - radius;
+
+    bool bouncedX = false;
+    bool bouncedY = false;
+
+    if (x > right)  { x = right;  vx = -vx; bouncedX = true; }
+    if (x < left)   { x = left;   vx = -vx; bouncedX = true; }
+    if (y > top)    { y = top;    vy = -vy; bouncedY = true; }
+    if (y < bottom) { y = bottom; vy = -vy; bouncedY = true; }
+
+    if (bouncedX || bouncedY)
+        direction = std::atan2(vy, vx);
+}
+
 
 void Ghost::update(float dt)
 {
@@ -61,10 +80,6 @@ void Ghost::update(float dt)
     y += vy * dt;
     
     // wrap-around (with radius so it fully leaves screen)
-    if (x > 1.0f + radius) x = -1.0f - radius;
-    else if (x < -1.0f - radius) x = 1.0f + radius;
-
-    if (y > 1.0f + radius) y = -1.0f - radius;
-    else if (y < -1.0f - radius) y = 1.0f + radius;
+    wrap();
 
 }

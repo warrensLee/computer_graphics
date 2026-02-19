@@ -24,7 +24,9 @@ class Ghost : public Entity
 
 
     // member methods
-        void update(float dt);
+        void update(float dt) override;
+        void wrap() override;
+
 };
 
 #endif // GHOST_H

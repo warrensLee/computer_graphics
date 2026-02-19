@@ -2,20 +2,29 @@
 
 
 
-Model::Model() : pacman(0.0f, 0.0f, 0.08f, 1.0f, 1.0f, 0.0f, true)
+Model::Model() : pacman(0.0f, 0.0f, 0.09f, 1.0f, 1.0f, 0.0f, true)
 {
     // Initialize data here later
     //buildDots();
     pacman.setSpeed(1.0f);
 
     // create ghosts
-    ghosts.emplace_back(-0.5f, 0.5f, 0.07f, 1.0f, 0.0f, 0.0f);
+    ghosts.emplace_back(randFloat(),randFloat(), 0.06f, randFloat(), randFloat(), randFloat());
     ghosts.back().setSpeed(0.4f);
     ghosts.back().setDirection(0.8f); // radians
 
-    ghosts.emplace_back(0.6f, -0.3f, 0.07f, 0.0f, 1.0f, 1.0f);
+    ghosts.emplace_back(randFloat(), randFloat(), 0.06f, randFloat(), randFloat(), randFloat());
     ghosts.back().setSpeed(0.3f);
     ghosts.back().setDirection(0.8f); // radians
+
+    // create fruits
+    fruits.emplace_back(randFloat(), randFloat(), 0.025f, randFloat(), randFloat(), randFloat());
+    fruits.back().setSpeed(0.4f);
+    fruits.back().setDirection(0.8f); // radians
+
+    fruits.emplace_back(randFloat(), randFloat(), 0.025f, randFloat(), randFloat(), randFloat());
+    fruits.back().setSpeed(0.3f);
+    fruits.back().setDirection(0.8f); // radians
 }
 
 Model::~Model()
@@ -39,6 +48,16 @@ void Model::buildDots()
     }
 }
 
+float Model::randFloat()
+{
+   // thread_local keeps one RNG per thread; static keeps it initialized once.
+    thread_local std::mt19937 rng{ std::random_device{}() };
+    thread_local std::uniform_real_distribution<float> dist(-0.95f, 0.95f);
+
+    return dist(rng);
+}
+
+
 std::vector<Entity> Model::getEntities()
 {
     return entities;
@@ -54,10 +73,17 @@ std::vector<Ghost> Model::getGhosts()
     return ghosts;
 }
 
+std::vector<Fruit> Model::getFruit()
+{
+    return fruits;
+}
+
 
 void Model::update(float dt)
 {
     pacman.update(dt);
     for (auto& g : ghosts)
         g.update(dt);
+    for (auto& f : fruits)
+        f.update(dt);
 }

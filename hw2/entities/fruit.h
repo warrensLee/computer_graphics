@@ -6,18 +6,27 @@
 
 class Fruit : public Entity
 {
-private:
-    bool isAlive;
-public:
-    // constructors
-    Fruit();
-    Fruit(float fx, float fy, float size, float r, float g, float b, bool alive = true);
+    private:
+        float direction;
 
-    // member functions
-    void display() const;
-	void setPosition(float fx, float fy);
-	bool setAlive(bool a) const;
-    bool getAlive() const;
+    public:
+    // constructors
+        Fruit();
+        Fruit(float px, float py, float rad, float red, float green, float blue, bool alive = true);
+        ~Fruit() override;
+
+    // member methods
+        void display() const override;
+        void printInformation() const override;
+
+        void setPosition(float fx, float fy);
+        bool setAlive(bool a) const;
+        void setDirection(float d);
+
+
+    // member methods
+        void update(float dt) override;
+        void wrap() override;
 
 };
 

@@ -31,7 +31,8 @@ class Pacman : public Entity
         void setMouthOpening(bool open);        // will start mouth opening by changing bool value
         void setMouthAngle(float angle);        // will update the angle mouth is open for animation
 
-        void update(float dt);
+        void update(float dt) override;
+        void wrap() override;
 
 
     // to control movement directions

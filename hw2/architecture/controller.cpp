@@ -14,6 +14,11 @@ Controller::~Controller()
 }
 void Controller::keyboard(unsigned char key, int x, int y)
 {
+    // removes warning for unused parameters
+    // forced signature from OpenGL
+    (void)x;
+    (void)y;
+
     std::printf("key=%d char=%c\n", key, key);
     std::fflush(stdout);
 
@@ -36,6 +41,10 @@ void Controller::keyboard(unsigned char key, int x, int y)
 
 void Controller::keyDown(unsigned char key, int x, int y)
 {
+    // removes warning for unused parameters
+    // forced signature from OpenGL
+    (void)x;
+    (void)y;
 
     if (key == 27 || key == 'q')
         // close program
@@ -60,6 +69,11 @@ void Controller::keyDown(unsigned char key, int x, int y)
 
 void Controller::keyUp(unsigned char key, int x, int y)
 {
+    // removes warning for unused parameters
+    // forced signature from OpenGL
+    (void)x;
+    (void)y;
+
     if (key == 'w')
     {
         model.pacman.moveUp = false;

@@ -19,9 +19,9 @@ public:
     Dot(float cx, float cy, float c_radius, float cr, float cg, float cb, bool c_isAlive = true);
     
     // member functions
-    void printInformation();
-    void setPosition(float sx, float sy);
-    void setColor(float sr, float sg, float sb);
+    //void printInformation();
+    //void setPosition(float sx, float sy);
+    //void setColor(float sr, float sg, float sb);
     void display() const;
     float getR() const;
     float getG() const;

@@ -10,9 +10,10 @@
 class Entity : public Polygon
 {
 protected:
+    float x,y; 
     float radius;
+    float r, g, b;
     bool isAlive;
-    float r, g, b, x, y;
     float vx = 0.0f;
     float vy = 0.0f;
     float speed = .5f;
@@ -46,8 +47,8 @@ public:
     // traversal
     void setVelocity(float nvx, float nvy);
     void move(float dt);
-    void wrap();
-    virtual void update(float dt); // virtual
+    virtual void wrap();
+    virtual void update(float dt);
 
 };
 

@@ -51,7 +51,7 @@ void Pacman::display() const
     float startAngle = direction + mouthAngleRadians / 2.0f;
     float endAngle = direction + 2.0f * PI - mouthAngleRadians / 2.0f;
 
-    const int segments = 248;        // more segments of pacman to create = more smooth
+    const int segments = 1000;        // more segments of pacman to create = more smooth
 
     // now set pacmans color and begin TRIANGLE FANNING
     glColor3f(r, g, b);
@@ -108,6 +108,20 @@ void Pacman::setMouthAngle(float angle)        // will update the angle mouth is
     mouthAngle = angle;
 }
 
+void Pacman::wrap()
+{
+    // wrap horizontally
+    if (x > 1.0f + radius)
+        x = -1.0f - radius;
+    else if (x < -1.0f - radius)
+        x = 1.0f + radius;
+    // wrap vertically
+    if (y > 1.0f + radius)
+        y = -1.0f -  radius;
+    else if (y < -1.0f - radius)
+        y = 1.0f + radius;
+}
+
 void Pacman::update(float dt)
 {
     float dx = 0.0f;
@@ -151,30 +165,43 @@ void Pacman::update(float dt)
     // does what every entity does... move
     Entity::update(dt);
 
+    // pacman has special wrapping and goes from one side to the other
+    wrap();
+
     // clamp mouth openings
     const float minMouth = 0.0f;
-    const float maxMouth = 50.0f;
+    const float maxMouth = 65.0f;
 
 
-    // if it is time to open the mouth 
-    if (mouthOpening)
+    if (moveUp || moveDown || moveLeft || moveRight)
     {
-        mouthAngle += mouthSpeed * dt;
+        // if it is time to open the mouth 
+        if (mouthOpening)
+        {
+            mouthAngle += mouthSpeed * dt;
+        }
+        else
+        {
+            mouthAngle -= mouthSpeed * dt;
+        }
+
+
+        if (mouthAngle >= maxMouth) 
+        { 
+            mouthAngle = maxMouth; 
+            mouthOpening = false; 
+        }
+        if (mouthAngle <= minMouth) 
+        { 
+            mouthAngle = minMouth; 
+            mouthOpening = true;  
+        }
     }
     else
     {
-        mouthAngle -= mouthSpeed * dt;
-    }
-
-
-    if (mouthAngle >= maxMouth) 
-    { 
-        mouthAngle = maxMouth; 
-        mouthOpening = false; 
-    }
-    if (mouthAngle <= minMouth) 
-    { 
-        mouthAngle = minMouth; 
-        mouthOpening = true;  
+        mouthAngle += mouthSpeed * dt;
+        if (mouthAngle > maxMouth)
+            mouthAngle = maxMouth;
+        mouthOpening = true;
     }
 }
