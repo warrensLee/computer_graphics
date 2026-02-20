@@ -6,8 +6,6 @@
 class Ghost : public Entity
 {
     private:
-        float direction;
-
     public:
     // constructors
         Ghost();
@@ -19,8 +17,15 @@ class Ghost : public Entity
         void printInformation() const override;
 
         void setPosition(float fx, float fy);
-        bool setAlive(bool a) const;
-        void setDirection(float d);
+        void setAlive(bool a);
+
+        void onCollide(Entity& other) override { other.collideWith(*this); }
+
+        // second dispatch targets
+        void collideWith(class Pacman& p) override;
+        void collideWith(class Ghost& g) override;
+        void collideWith(class Fruit& f) override;
+        //void collideWith(class Dot&) override;
 
 
     // member methods

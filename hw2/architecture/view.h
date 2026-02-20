@@ -20,6 +20,8 @@ public:
     ~View();
     void display();
 
+    static void drawText(float x, float y, const std::string& s);
+
 };
 
 #endif // VIEW_H

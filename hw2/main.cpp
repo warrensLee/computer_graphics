@@ -113,8 +113,8 @@ void tick() {
 int main(int argc, char *argv[])
 {
     glutInit(&argc, argv);
-    glutInitWindowSize(500, 500);
-    glutInitWindowPosition(250, 250);
+    glutInitWindowSize(750, 750);
+    glutInitWindowPosition(0, 0);
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
     glutCreateWindow("Warren Roberts - Assignment 2 Pacman");
 

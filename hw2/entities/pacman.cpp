@@ -1,7 +1,6 @@
-
 #include "pacman.h"
-
-
+#include "fruit.h"
+#include "ghost.h"
 // constructors
 Pacman::Pacman() : Entity(0.0f, 0.0f, 0.05f, 1.0f, 1.0f, 0.0f, true),
   mouthAngle(50.0f),
@@ -108,6 +107,71 @@ void Pacman::setMouthAngle(float angle)        // will update the angle mouth is
     mouthAngle = angle;
 }
 
+bool Pacman::getHasEaten() const
+{
+    return hasEaten;
+}
+
+void Pacman::setHasEaten(bool h)
+{
+    hasEaten = h;
+}
+
+void Pacman::collideWith(class Pacman& p)
+{
+
+}
+
+void Pacman::collideWith(class Ghost& g)
+{
+     std::cout << "Pacman collides with ghost\n";
+     if (hasEaten)
+     {
+        g.setAlive(false);
+        ghostsAte += 1;
+        return;
+     }
+     if (!hurt)
+     {
+        hurt = true;
+        hurtTimer = 0.0f;      // start the cooldown window
+        currentLives -= 1;
+     }
+}
+
+void Pacman::collideWith(class Fruit& f)
+{
+    std::cout << "Pacman collides with fruit\n";
+    hasEaten = true;
+    powerTimer = 0.0f;  // reset timer
+    f.setAlive(false);
+
+}
+
+void Pacman::setAlive(bool a)
+{
+    isAlive = a;
+}
+
+int Pacman::getLives() const
+{
+    return currentLives;
+}
+
+bool Pacman::getPower() const
+{
+    return hasEaten;
+}
+bool Pacman::getHurt() const
+{
+    return hurt;
+}
+
+int Pacman::getGhostsAte() const
+{
+    return ghostsAte;
+}
+
 void Pacman::wrap()
 {
     // wrap horizontally
@@ -126,6 +190,43 @@ void Pacman::update(float dt)
 {
     float dx = 0.0f;
     float dy = 0.0f;
+
+    if (currentLives <= 0)
+    {
+        setAlive(false);
+    }
+
+    // 1) advance timers
+    if (hurt) 
+    {
+        hurtTimer += dt;
+        if (hurtTimer >= hurtDuration) 
+        {
+            hurt = false;
+            hurtTimer = 0.0f;
+        }
+    }
+
+    if (hasEaten) 
+    {
+        powerTimer += dt;
+        if (powerTimer >= powerDuration) 
+        {
+            hasEaten = false;
+            powerTimer = 0.0f;
+        }
+    }
+
+    // pick speed baed on how pacman is doing
+    float targetSpeed = 0.5f;
+
+    if (hasEaten) 
+        targetSpeed = 0.8f;
+    if (hurt)     
+        targetSpeed = 0.25f;
+        
+    setSpeed(targetSpeed);
+
 
     if (moveUp)
     {

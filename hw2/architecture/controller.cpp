@@ -27,16 +27,16 @@ void Controller::keyboard(unsigned char key, int x, int y)
         std::exit(0);
     if (key == 'w')
         // move north
-        model.pacman.changeDirection(PI / 2.0f);
+        model.getPacman().changeDirection(PI / 2.0f);
     if (key == 'a')
         // move west
-        model.pacman.changeDirection(PI);
+        model.getPacman().changeDirection(PI);
     if (key == 's')
         // move south
-        model.pacman.changeDirection(3.0f * PI / 2.0f);
+        model.getPacman().changeDirection(3.0f * PI / 2.0f);
     if (key == 'd')
         // move east
-        model.pacman.changeDirection(0.0f);
+        model.getPacman().changeDirection(0.0f);
 }
 
 void Controller::keyDown(unsigned char key, int x, int y)
@@ -51,19 +51,19 @@ void Controller::keyDown(unsigned char key, int x, int y)
         std::exit(0);
     if (key == 'w')
     {
-        model.pacman.moveUp = true;
+        model.getPacman().moveUp = true;
     }
     if (key == 's')
     {
-        model.pacman.moveDown = true;
+        model.getPacman().moveDown = true;
         }
     if (key == 'a') 
     {
-        model.pacman.moveLeft = true;
+        model.getPacman().moveLeft = true;
     }
     if (key == 'd')
     {
-        model.pacman.moveRight = true;
+        model.getPacman().moveRight = true;
     }
 }
 
@@ -76,18 +76,18 @@ void Controller::keyUp(unsigned char key, int x, int y)
 
     if (key == 'w')
     {
-        model.pacman.moveUp = false;
+        model.getPacman().moveUp = false;
     }
     if (key == 's')
     {
-        model.pacman.moveDown = false;
+        model.getPacman().moveDown = false;
         }
     if (key == 'a') 
     {
-        model.pacman.moveLeft = false;
+        model.getPacman().moveLeft = false;
     }
     if (key == 'd')
     {
-        model.pacman.moveRight = false;
+        model.getPacman().moveRight = false;
     }
 }
