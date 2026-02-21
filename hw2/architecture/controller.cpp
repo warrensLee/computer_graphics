@@ -12,6 +12,14 @@ Controller::~Controller()
 {
     // Nothing here yet
 }
+void Controller::mouse(int button, int state, int x, int y)
+{
+    float glX = (2.0f * x / 750) - 1.0f;
+    float glY = 1.0f - (2.0f * y / 750);
+    std::cout << "clicked x: " << glX << " y: " << glY << "\n";
+    model.getPacman().setMouseTarget(glX, glY);
+
+}
 void Controller::keyboard(unsigned char key, int x, int y)
 {
     // removes warning for unused parameters

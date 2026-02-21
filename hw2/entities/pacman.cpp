@@ -185,18 +185,23 @@ void Pacman::wrap()
     else if (y < -1.0f - radius)
         y = 1.0f + radius;
 }
+void Pacman::setMouseTarget(float mx, float my)
+{
+    hasMouseTarget = true;
+    targetX = mx;
+    targetY = my;
+}
+
 
 void Pacman::update(float dt)
 {
-    float dx = 0.0f;
-    float dy = 0.0f;
-
-    if (currentLives <= 0)
+    // if game over
+    if(currentLives <= 0)
     {
         setAlive(false);
     }
 
-    // 1) advance timers
+    // timers and modes
     if (hurt) 
     {
         hurtTimer += dt;
@@ -218,49 +223,83 @@ void Pacman::update(float dt)
     }
 
     // pick speed baed on how pacman is doing
-    float targetSpeed = 0.5f;
+    float targetSpeed = 0.4f;
 
     if (hasEaten) 
-        targetSpeed = 0.8f;
+        targetSpeed = 0.6f;
     if (hurt)     
-        targetSpeed = 0.25f;
-        
+        targetSpeed = 0.2f;
+
     setSpeed(targetSpeed);
 
+    float dx = 0.0f;
+    float dy = 0.0f;
 
-    if (moveUp)
+    if (hasMouseTarget)
     {
-        dy += 1.0f;
-    }
-    if (moveDown)
-    {
-        dy -= 1.0f;
-    }  
-    if (moveRight)
-    {
-        dx += 1.0f;
-    } 
-    if (moveLeft)
-    {
-        dx -= 1.0f;
-    }  
+        float mx = targetX - x;
+        float my = targetY - y;
 
-    // normalize so diagonal isn't faster
-    float length = std::sqrt(dx * dx + dy * dy);
-    if (length > 0.0f)
-    {
-        dx /= length;
-        dy /= length;
+        direction = std::atan2(my, mx);
 
-        vx = dx * speed;
-        vy = dy * speed;
+        float dist = std::sqrt(mx * mx + my * my);
 
-        direction = std::atan2(dy, dx);
+        if (dist < 0.02f)   // stop threshold
+        {
+            hasMouseTarget = false;
+            vx = 0.0f;
+            vy = 0.0f;
+        }
+        else
+        {
+            float move = speed * dt;
+
+            // clamp so we don’t overshoot
+            if (move > dist)
+                move = dist;
+
+            x += (mx / dist) * move;
+            y += (my / dist) * move;
+            vx = 0.0f;
+            vy = 0.0f;
+        }
     }
     else
     {
-        vx = 0.0f;
-        vy = 0.0f;
+        if (moveUp)
+        {
+            dy += 1.0f;
+        }
+        if (moveDown)
+        {
+            dy -= 1.0f;
+        }  
+        if (moveRight)
+        {
+            dx += 1.0f;
+        } 
+        if (moveLeft)
+        {
+            dx -= 1.0f;
+        }  
+
+        // normalize so diagonal isn't faster
+        float length = std::sqrt(dx * dx + dy * dy);
+        if (length > 0.0f)
+        {
+            dx /= length;
+            dy /= length;
+
+            vx = dx * speed;
+            vy = dy * speed;
+
+            direction = std::atan2(dy, dx);
+        }
+        else
+        {
+            vx = 0.0f;
+            vy = 0.0f;
+        }
     }
     
     // does what every entity does... move
@@ -274,7 +313,7 @@ void Pacman::update(float dt)
     const float maxMouth = 65.0f;
 
 
-    if (moveUp || moveDown || moveLeft || moveRight)
+    if (moveUp || moveDown || moveLeft || moveRight || hasMouseTarget)
     {
         // if it is time to open the mouth 
         if (mouthOpening)

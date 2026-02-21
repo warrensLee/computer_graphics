@@ -83,6 +83,11 @@ void keyDownCallback(unsigned char key, int x, int y)
     c.keyDown(key, x, y);
 }
 
+void mouseCallback(int button, int state, int x, int y)
+{
+    c.mouse(button, state, x, y);
+}
+
 
 
 // now to control gsame timing with ticks
@@ -126,6 +131,7 @@ int main(int argc, char *argv[])
     glutDisplayFunc(displayCallback);
     glutKeyboardFunc(keyDownCallback);
     glutKeyboardUpFunc(keyUpCallback);
+    glutMouseFunc(mouseCallback);
 
 
     lastTime = getTimeSeconds();

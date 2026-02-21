@@ -8,6 +8,7 @@ class Ghost;
 
 static constexpr float PI = 3.14159265358979323846f; //ensures this number is made once on compilation!
 
+
 class Pacman : public Entity
 {
     private:
@@ -25,7 +26,9 @@ class Pacman : public Entity
         int currentLives = 3;
         const int maxLives = 3;
         int ghostsAte = 0;
-
+        bool hasMouseTarget = false;
+        float targetX = 0.0f;
+        float targetY = 0.0f;
 
     public:
     // constructors
@@ -50,6 +53,7 @@ class Pacman : public Entity
         void setMouthAngle(float angle);        // will update the angle mouth is open for animation
         void setHasEaten(bool h);
         void setAlive(bool a);
+        void setMouseTarget(float mx, float my);
 
         void update(float dt) override;
         void wrap() override;
