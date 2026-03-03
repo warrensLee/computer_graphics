@@ -16,7 +16,12 @@
 
 #include "app.h"
 
+App* App::instance = nullptr;
 
+void App::init()
+{
+    instance = this;
+}
 
 void App::initOpenGL()
 {
@@ -55,4 +60,10 @@ void App::keyboard(unsigned char key, int x, int y)
 void App::idle()
 {
 
+}
+
+void App::callDisplay()
+{
+    if (instance)
+        instance->display();
 }

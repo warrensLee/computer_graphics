@@ -23,16 +23,20 @@ class App
 {
     public: 
         App() = default;
+        void init();
+
 
         void initOpenGL();
         void display();
         void reshape(int w, int h);
         void keyboard(unsigned char key, int x, int y);
         void idle();
+        static void callDisplay();
+        static void callreshape(int w, int h);
+        static void callKeyboard(unsigned char key, int x, int y);
+        static void callIdle();
         
     private:
-        void callDisplay();
-        void callreshape(int w, int h);
-        void callKeyboard(unsigned char key, int x, int y);
-        void callIdle();
+        static App* instance;
+
 };

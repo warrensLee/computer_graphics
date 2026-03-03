@@ -14,3 +14,13 @@
  ******************************************************************************************/
 
 
+class Math
+{
+    public:
+        float dotProduct();
+        float crossProduct();
+        float normalize();
+        float clamp();
+        float lerp(); 
+};
+

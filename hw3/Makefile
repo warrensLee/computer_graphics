@@ -4,7 +4,7 @@ LDFLAGS  = -framework OpenGL -framework GLUT
 
 TARGET = main
 
-OBJS = app/main.o app/app.o app/callbacks.o \
+OBJS = app/main.o app/app.o \
        core/math.o core/random.o \
        model/world.o model/terrainSystem.o \
        view/render.o view/camera.o

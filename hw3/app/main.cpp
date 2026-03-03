@@ -16,9 +16,6 @@
 
 
 #include "app.h"
-#include "callbacks.h"
-
-
 
 
 
@@ -32,10 +29,11 @@ int main(int argc, char** argv)
 
 
     App app;
+    app.init();
     app.initOpenGL();
 
 
-    glutDisplayFunc(Callbacks::display);
+    glutDisplayFunc(app.callDisplay);
     
 
 
