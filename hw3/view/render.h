@@ -13,10 +13,18 @@
  *
  ******************************************************************************************/
 
+ #pragma once
+
+#include "../terrain/height.h"
+#include <OpenGL/gl.h>
+#include <GLUT/glut.h>
 
 class Render
 {
     public:
+        Height& h;
+
+        void drawWirefram(const Height& h);
 
     private:
 
