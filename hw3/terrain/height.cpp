@@ -56,15 +56,13 @@ void Height::initGrid()
 
 }
 
+// getters:
 
-// gets the current index
 int Height::index(int i, int j) const
 {
-    return i * cols + j;
+    return i * cols + j;        // gets the current index
 }
 
-
-// GETTERS:
 const std::vector<float>& Height::getX() const
 {
     return X;
@@ -100,3 +98,23 @@ float Height::getSpacing() const
     return spacing;
 }
 
+
+// functionality:
+
+void Height::buildSurface()
+{
+    const float scale = 0.4f;
+
+    for (int i = 0; i < rows; ++i)
+    {
+        for (int j = 0; j < cols; ++j)
+        {
+            int k = index(i, j);
+
+            float x = X[k];
+            float z = Z[k];
+
+            Y[k] = scale * (sin(x * 2) * cos(z * 6));
+        }
+    }
+}

@@ -32,6 +32,9 @@ void App::init()
 
     height.init();
     height.initGrid();
+    height.buildSurface();
+
+    // diagnositics / display confix
     printf("rows=%d cols=%d spacing=%f size=%zu\n",
        height.getRows(), height.getCols(), height.getSpacing(),
        height.getX().size());
@@ -75,11 +78,15 @@ void App::display()
 
 void App::reshape(int w, int h)
 {
-
+    (void) w;
+    (void) h;
 }
 
 void App::keyboard(unsigned char key, int x, int y)
 {
+    (void) key;
+    (void) x;
+    (void) y;
 
 }
 

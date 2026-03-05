@@ -36,6 +36,9 @@ class Height
         int getCols() const;
         float getSpacing() const;
 
+        // functionality
+        void buildSurface();
+
     private:
         // member vairables
         std::vector<float> X, Y, Z;

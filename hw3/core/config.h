@@ -24,4 +24,6 @@ namespace Config
 
     constexpr inline float HEIGHT_SCALE = 0.01f;
     constexpr inline float ROTATION_STEP = 0.07f;
+
 }
+
