@@ -16,35 +16,61 @@
 
 #include "app.h"
 
+
+
 App* App::instance = nullptr;
+
+App::App() : renderer(height)
+{
+
+}
 
 void App::init()
 {
     instance = this;
+
+
+    height.init();
+    height.initGrid();
+    printf("rows=%d cols=%d spacing=%f size=%zu\n",
+       height.getRows(), height.getCols(), height.getSpacing(),
+       height.getX().size());
+    printf("p0: %f %f %f\n", height.getX()[0], height.getY()[0], height.getZ()[0]);
+    printf("plast: %f %f %f\n",
+        height.getX().back(), height.getY().back(), height.getZ().back());
+        
 }
 
 void App::initOpenGL()
 {
-    glClearColor(0.0, 0.0f, 0.0f, 1.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
+    glEnable(GL_DEPTH_TEST);
+
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
+    glOrtho(-2, 2, -2, 2, -2, 2);
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 }
 
 void App::display()
 {
-    printf("display called\n");
-    glClear(GL_COLOR_BUFFER_BIT);      // Clear the screen
+    // printf("display called\n");
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glColor3f(1.0f, 0.0f, 0.0f);       // Set draw color (red)
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 
-    glBegin(GL_TRIANGLES);             // Start drawing
-        glVertex2f(0.0f, 0.5f);        // Top
-        glVertex2f(-0.5f, -0.5f);      // Bottom left
-        glVertex2f(0.5f, -0.5f);       // Bottom right
-    glEnd();
+    glRotatef(60.0f, 1.0f, 0.0f, 0.0f);
+    glRotatef(30.0f, 0.0f, 1.0f, 0.0f);
 
-    glutSwapBuffers();                 // Render immediately
+    glColor3f(1.0f, 0.0f, 0.0f);
+    renderer.drawWireframe(height);
+
+    glutSwapBuffers();
+    glutPostRedisplay();
 }
 
 void App::reshape(int w, int h)

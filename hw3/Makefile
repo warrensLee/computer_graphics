@@ -6,7 +6,7 @@ TARGET = main
 
 OBJS = app/main.o app/app.o \
        core/math.o core/random.o \
-       model/world.o model/terrainSystem.o \
+       model/terrainSystem.o terrain/height.o \
        view/render.o view/camera.o
 
 all: $(TARGET)

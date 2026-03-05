@@ -15,7 +15,12 @@
 
 #include "render.h"
 
-void Render::drawWirefram(const Height& h)
+Render::Render(Height & height) : h(height)
+{
+
+}
+
+void Render::drawWireframe(const Height& h)
 {
     const auto& X = h.getX();
     const auto& Y = h.getY();

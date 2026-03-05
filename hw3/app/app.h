@@ -16,14 +16,21 @@
 #include <GLUT/glut.h>
 #include <stdio.h>
 
+#include "../core/config.h"
+
+#include "../view/render.h"
+#include "../terrain/height.h"
+
+
 
 #pragma once
 
 class App
 {
     public: 
-        App() = default;
+        App();
         void init();
+
 
 
         void initOpenGL();
@@ -38,5 +45,7 @@ class App
         
     private:
         static App* instance;
+        Height height;
+        Render renderer;
 
 };

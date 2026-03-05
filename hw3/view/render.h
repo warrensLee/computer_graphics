@@ -24,7 +24,9 @@ class Render
     public:
         Height& h;
 
-        void drawWirefram(const Height& h);
+        Render(Height & height);
+
+        void drawWireframe(const Height& h);
 
     private:
 
