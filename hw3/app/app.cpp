@@ -42,13 +42,8 @@ void App::init()
     // .................... //
 
     // diagnositics / display confix
-    printf("rows=%d cols=%d spacing=%f size=%zu\n",
-       height.getRows(), height.getCols(), height.getSpacing(),
-       height.getX().size());
-    printf("p0: %f %f %f\n", height.getX()[0], height.getY()[0], height.getZ()[0]);
-    printf("plast: %f %f %f\n",
-        height.getX().back(), height.getY().back(), height.getZ().back());
-        
+    printf("rows=%d cols=%d spacing=%f size=%zu\n",height.getRows(), 
+            height.getCols(), height.getSpacing(),height.getX().size());
 }
 
 void App::initOpenGL()
@@ -83,10 +78,17 @@ void App::display()
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
+
+    // this will adjust out zoom factor based on what
+    // our controller handles the zoom. 
     glOrtho(-zoom, zoom, -zoom, zoom, -zoom, zoom);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+
+    // this is awesome! it sets the camera to what the controller has
+    // set it to. so now we can move around with WASD
+    glTranslatef(controller.getCameraX(), controller.getCameraY(), 0.0f);
 
     glRotatef(60.0f, 1.0f, 0.0f, 0.0f);
     glRotatef(30.0f, 0.0f, 1.0f, 0.0f);
@@ -100,7 +102,9 @@ void App::display()
 void App::callDisplay()
 {
     if (instance)
+    {
         instance->display();
+    }
 }
 
 void App::reshape(int w, int h)
@@ -113,7 +117,7 @@ void App::keyboard(unsigned char key, int x, int y)
 {
     (void) x;
     (void) y;
-    controller.handleKey(key);
+    controller.handleKeyDown(key);
     glutPostRedisplay();
 
 }
@@ -121,11 +125,37 @@ void App::keyboard(unsigned char key, int x, int y)
 void App::callKeyboard(unsigned char key, int x, int y)
 {
     if (instance)
+    {
         instance->keyboard(key, x, y);
+    }
+}
+
+void App::keyboardKeyUp(unsigned char key, int x, int y)
+{
+    (void) x;
+    (void) y;
+    controller.handleKeyUp(key);
+}
+
+void App::callKeyboardKeyUp(unsigned char key, int x, int y)
+{
+    if (instance)
+    {
+        instance->keyboardKeyUp(key, x, y);
+    }
 }
 
 
 void App::idle()
 {
+    controller.update();
+    glutPostRedisplay();
+}
 
+void App::callIdle()
+{
+    if (instance)
+    {
+        instance->idle();
+    }    
 }

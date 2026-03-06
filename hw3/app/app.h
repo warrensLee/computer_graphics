@@ -28,22 +28,30 @@
 class App
 {
     public: 
+    // constructors
         App();
         void init();
 
 
-
+    // OpenGL methods
         void initOpenGL();
         void display();
         void reshape(int w, int h);
         void keyboard(unsigned char key, int x, int y);
+        void keyboardKeyUp(unsigned char key, int x, int y);
         void idle();
+
+
+    // callers to OpenGL methods
         static void callDisplay();
         static void callreshape(int w, int h);
         static void callKeyboard(unsigned char key, int x, int y);
+        static void callKeyboardKeyUp(unsigned char key, int x, int y);
         static void callIdle();
+
         
     private:
+    // method members
         static App* instance;
         Height height;
         Render renderer;

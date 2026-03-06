@@ -16,31 +16,34 @@
 #include "math.h"
 
 
-float Math::dotProduct()
-{
+// float Math::dotProduct()
+// {
 
-}
+// }
 
-float Math::crossProduct()
-{
+// float Math::crossProduct()
+// {
 
-}
+// }
 
-float Math::normalize()
-{
+// float Math::normalize()
+// {
 
-}
+// }
 
-float Math::clamp()
-{
+// float Math::clamp()
+// {
 
-}
+// }
 
-float Math::lerp()
-{
+// float Math::lerp()
+// {
 
-}
+// }
 
+
+// used for noise calcualtion, code is gotten from 
+// stack overflow. Might make a new method...
 float Math::getRandomBetween(float a, float b)
 {
     float random = ((float) rand()) / (float) RAND_MAX;

@@ -23,7 +23,7 @@
 int main(int argc, char** argv)
 {
     glutInit(&argc, argv);                         // Initialize GLUT
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);  // Double buffer, RGB
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);  // Double buffer, RGB
     glutInitWindowSize(800, 600);                  // Window size
     glutCreateWindow("Computer Graphics: Homework 3, Terrain Generation on a Grid");       // Window title
 
@@ -35,8 +35,9 @@ int main(int argc, char** argv)
 
     glutDisplayFunc(app.callDisplay);
     glutKeyboardFunc(app.callKeyboard);
+    glutKeyboardUpFunc(app.callKeyboardKeyUp);
     
-
+    glutIdleFunc(app.callIdle);
 
     glutMainLoop();                                // Start event loop
     return 0;

@@ -126,6 +126,7 @@ void Height::buildSurface()
             // (sin(x * 2) * cos(z * 4) is my base surface
             // also tried (sin(z * 2) * cos(x * 4) * 1.7
             Y[idx] = scale * (sin(z * 2) * cos(x * 4)) * 1.7f; //* (z/x/2);
+            //Y[idx] = scale * exp(sin(x*z));
         }
     }
 }
