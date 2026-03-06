@@ -14,3 +14,39 @@
  ******************************************************************************************/
 
 #include "math.h"
+
+
+float Math::dotProduct()
+{
+
+}
+
+float Math::crossProduct()
+{
+
+}
+
+float Math::normalize()
+{
+
+}
+
+float Math::clamp()
+{
+
+}
+
+float Math::lerp()
+{
+
+}
+
+float Math::getRandomBetween(float a, float b)
+{
+    float random = ((float) rand()) / (float) RAND_MAX;
+    float diff = b - a;
+    float r = random * diff;
+    
+    return a + r;
+
+}

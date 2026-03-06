@@ -16,6 +16,7 @@
 
 #pragma once
 
+#include "../core/math.h"
 #include "../core/config.h"
 #include <vector>
 
@@ -38,6 +39,10 @@ class Height
 
         // functionality
         void buildSurface();
+        void addNoise();
+        void smoothSurface();
+        bool hasNeighbor(int i, int j);
+
 
     private:
         // member vairables

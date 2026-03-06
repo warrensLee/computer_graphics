@@ -34,6 +34,7 @@ int main(int argc, char** argv)
 
 
     glutDisplayFunc(app.callDisplay);
+    glutKeyboardFunc(app.callKeyboard);
     
 
 

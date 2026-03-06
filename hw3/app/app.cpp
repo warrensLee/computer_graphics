@@ -20,7 +20,7 @@
 
 App* App::instance = nullptr;
 
-App::App() : renderer(height)
+App::App() : renderer(height), controller()
 {
 
 }
@@ -29,10 +29,17 @@ void App::init()
 {
     instance = this;
 
+    // this will establish our terrain once and forall
+    // applies all effects that bring our terrain to life
 
     height.init();
     height.initGrid();
     height.buildSurface();
+    height.addNoise();
+    height.smoothSurface();
+
+    // now to apply coloring
+    // .................... //
 
     // diagnositics / display confix
     printf("rows=%d cols=%d spacing=%f size=%zu\n",
@@ -50,18 +57,33 @@ void App::initOpenGL()
 
     glEnable(GL_DEPTH_TEST);
 
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glOrtho(-2, 2, -2, 2, -2, 2);
+    // glMatrixMode(GL_PROJECTION);
+    // glLoadIdentity();
+    // glOrtho(-z, z, -z, z, -z, z);
 
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
+    // glMatrixMode(GL_PROJECTION);
+    // glLoadIdentity();
+    // glOrtho(-2, 2, -2, 2, -2, 2);
+    // //glScalef(0.7f, 0.7f, 0.7f);         // to get a better view of the grid
+
+    // glMatrixMode(GL_MODELVIEW);
+    // glLoadIdentity();
+
 }
 
 void App::display()
 {
     // printf("display called\n");
+    
+    // current zoom level
+    float zoom = controller.getCurrentZoom();
+    //printf("zoom = %f"), zoom;
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(-zoom, zoom, -zoom, zoom, -zoom, zoom);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -73,7 +95,12 @@ void App::display()
     renderer.drawWireframe(height);
 
     glutSwapBuffers();
-    glutPostRedisplay();
+}
+
+void App::callDisplay()
+{
+    if (instance)
+        instance->display();
 }
 
 void App::reshape(int w, int h)
@@ -84,19 +111,21 @@ void App::reshape(int w, int h)
 
 void App::keyboard(unsigned char key, int x, int y)
 {
-    (void) key;
     (void) x;
     (void) y;
+    controller.handleKey(key);
+    glutPostRedisplay();
 
 }
+
+void App::callKeyboard(unsigned char key, int x, int y)
+{
+    if (instance)
+        instance->keyboard(key, x, y);
+}
+
 
 void App::idle()
 {
 
-}
-
-void App::callDisplay()
-{
-    if (instance)
-        instance->display();
 }

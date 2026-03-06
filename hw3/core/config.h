@@ -18,8 +18,8 @@
 
 namespace Config
 {
-    constexpr inline int GRID_ROWS = 50;
-    constexpr inline int GRID_COLS = 50;
+    constexpr inline int GRID_ROWS = 100;
+    constexpr inline int GRID_COLS = 100;
     constexpr inline float GRID_SPACE = 0.05f;
 
     constexpr inline float HEIGHT_SCALE = 0.01f;

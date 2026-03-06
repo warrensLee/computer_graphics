@@ -1,28 +1,26 @@
 /******************************************************************************************
- *  File Name:      math.h
+ *  File Name:      height.h
  *  Author:         Warren Roberts
  *  Created:        February 26, 2026
- *  Last Modified:  February 26, 2026
+ *  Last Modified:  March 3, 2026
  *
  *  Description:
  *  Defintion of commonly used math tools such as clamping, length, minimum, etc.
  * 
  *  Dependencies:
- *
+ *  config.h, vector
+ * 
  *  Notes:
  *
  ******************************************************************************************/
 
-#include <random>
+#include "../core/config.h"
 
-class Math
+class World
 {
     public:
-        float dotProduct();
-        float crossProduct();
-        float normalize();
-        float clamp();
-        float lerp(); 
-        static float getRandomBetween(float a, float b);
-};
+        // initializers
 
+    private:
+        // member vairables
+};

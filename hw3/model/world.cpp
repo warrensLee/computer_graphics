@@ -1,28 +1,20 @@
 /******************************************************************************************
- *  File Name:      math.h
+ *  File Name:      height.cpp
  *  Author:         Warren Roberts
  *  Created:        February 26, 2026
  *  Last Modified:  February 26, 2026
  *
  *  Description:
- *  Defintion of commonly used math tools such as clamping, length, minimum, etc.
+ *  Define methods and initialize grid of our polygons that will form a terrain.
  * 
  *  Dependencies:
- *
+ *  height.h, 
+ * 
  *  Notes:
  *
  ******************************************************************************************/
 
-#include <random>
 
-class Math
-{
-    public:
-        float dotProduct();
-        float crossProduct();
-        float normalize();
-        float clamp();
-        float lerp(); 
-        static float getRandomBetween(float a, float b);
-};
+
+#include "world.h"
 

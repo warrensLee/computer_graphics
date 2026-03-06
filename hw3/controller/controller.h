@@ -13,4 +13,30 @@
  *
  ******************************************************************************************/
 
+#pragma once
+
+class Controller
+{
+    public:
+    // constructor
+        Controller() = default;
+
+    // getters
+        bool getZoomInPressed() const;
+        bool getZoomOutPressed() const;
+        float getCurrentZoom() const;
+
+    // setters   
+        void setZoomInPressed(bool a);
+        void setZoomOutPressed(bool a);
+
+    // functionality
+        void handleKey(unsigned char key);
+
+    private:
+        bool zoomInPressed;
+        bool zoomOutPressed;
+        float zoomIncrement = 0.05f;
+        float currentZoom = 2.0f;       //starting zoom
+};
 

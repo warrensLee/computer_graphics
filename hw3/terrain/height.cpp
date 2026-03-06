@@ -45,6 +45,7 @@ void Height::initGrid()
 
         for (int j = 0; j < cols; ++j)
         {
+            // prevents over calculations
             const int idx = index(i, j);
             const float x = (static_cast<float>(j) - halfCols) * spacing;
 
@@ -101,6 +102,11 @@ float Height::getSpacing() const
 
 // functionality:
 
+
+// this will initialize x and y coords
+// then based on those values create
+// y coordinated that bring our surface 
+// to life!
 void Height::buildSurface()
 {
     const float scale = 0.4f;
@@ -109,12 +115,92 @@ void Height::buildSurface()
     {
         for (int j = 0; j < cols; ++j)
         {
-            int k = index(i, j);
+            // gets the current index based on i and j
+            int idx = index(i, j);
+            
+            // initial setting of X and Z
+            float x = X[idx];
+            float z = Z[idx];
 
-            float x = X[k];
-            float z = Z[k];
-
-            Y[k] = scale * (sin(x * 2) * cos(z * 6));
+            // now apply the scale and base terrain surface
+            // (sin(x * 2) * cos(z * 4) is my base surface
+            // also tried (sin(z * 2) * cos(x * 4) * 1.7
+            Y[idx] = scale * (sin(z * 2) * cos(x * 4)) * 1.7f; //* (z/x/2);
         }
     }
 }
+
+// noise to add realism and randomness
+// to our terrain.
+// occurs after base surface is created
+void Height::addNoise()
+{
+    for (int i = 0; i < rows; ++i)
+    {
+        for (int j = 0; j < cols; ++j)
+        {
+            // gets the current index based on i and j
+            int idx = index(i, j);
+
+            // adds noise to each y-coordinate
+            Y[idx] += Math::getRandomBetween(0.03f, 0.08f);
+        }
+    }
+}
+
+// 3 X 3 averaging to smooth the terrain
+// applied after noise.
+void Height::smoothSurface()
+{
+    // to set it all smoothly at the end
+    // temporarily jolding all Y values
+    std::vector<float> temporaryY = Y;
+
+    for (int i = 1; i < rows - 1; ++i)
+    {
+        for (int j = 1; j < cols - 1; ++j)
+        {
+            int idx = index(i, j);
+
+            // if all neighbors required out present:
+            //
+            //  A B C
+            //  D E F
+            //  G H I
+            //
+            // E must have all of these neighbors
+
+            if (hasNeighbor(i, j))
+            {
+                // now get the correct index based on x and y
+                float A = Y[index(i-1, j-1)];
+                float B = Y[index(i-1, j)];
+                float C = Y[index(i-1, j+1)];
+                float D = Y[index(i,   j-1)];
+                float E = Y[index(i,   j)];
+                float F = Y[index(i,   j+1)];
+                float G = Y[index(i+1, j-1)];
+                float H = Y[index(i+1, j)];
+                float I = Y[index(i+1, j+1)];
+
+                temporaryY[idx] = (A + B + C + D + E + F + G + H + I) / 9.0f;
+            }
+        }
+    }
+
+    Y = temporaryY;
+}
+
+// helper fucntion for smoothSurface to checidx if
+// there are all the required neighbors to smooth
+bool Height::hasNeighbor(int i, int j)
+{
+    if (i > 0 && i < rows - 1 && j > 0 && j < cols - 1)
+    {
+        return true;
+    }
+
+
+    return false;
+}
+
