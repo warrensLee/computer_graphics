@@ -13,18 +13,18 @@
  *
  ******************************************************************************************/
 
-
+#pragma once
 
 struct Vec3
 {
-    int x;
-    int y;
-    int z;
+    float x;
+    float y;
+    float z;
 };
 
 struct Color
 {
-    int r;
-    int g;
-    int b;
+    float r;
+    float g;
+    float b;
 };

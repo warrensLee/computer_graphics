@@ -99,6 +99,63 @@ float Height::getSpacing() const
     return spacing;
 }
 
+float Height::getMinHeight() const
+{
+    float min = Y[0];
+
+    for (float y : Y)
+    {
+        if (y < min)
+        {
+            min = y;
+        }
+    }
+
+    return min;
+}
+
+float Height::getMaxHeight() const
+{
+    float max = Y[0];
+
+    for (float y : Y)
+    {
+        if (y > max)
+        {
+            max = y;
+        }
+    }
+
+    return max;
+}
+
+float Height::normalizeHeight(float a) const
+{
+    return (a - minHeight) / (maxHeight - minHeight);   
+}
+
+float Height::getHeightAt(int i, int j) const
+{
+    return Y[index(i, j)];
+}
+
+float Height::getNormalizedHeightAt(int i, int j) const
+{
+    if (maxHeight == minHeight)
+    {
+        return 0.0f;
+    }
+    return normalizeHeight(Y[index(i, j)]);
+}
+
+
+// setters
+void Height::setMinMax()
+{
+    minHeight = getMinHeight();
+    maxHeight= getMaxHeight();
+}
+
 
 // functionality:
 
@@ -131,6 +188,8 @@ void Height::buildSurface()
     }
 }
 
+
+
 // noise to add realism and randomness
 // to our terrain.
 // occurs after base surface is created
@@ -144,7 +203,7 @@ void Height::addNoise()
             int idx = index(i, j);
 
             // adds noise to each y-coordinate
-            Y[idx] += Math::getRandomBetween(0.03f, 0.08f);
+            Y[idx] += Math::getRandomBetween(-0.05, 0.05f);
         }
     }
 }

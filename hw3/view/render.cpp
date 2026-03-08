@@ -15,7 +15,7 @@
 
 #include "render.h"
 
-Render::Render(Height & height) : h(height)
+Render::Render(Height & height) : h(height), terrainColor()
 {
 
 }
@@ -36,11 +36,21 @@ void Render::drawWireframe(const Height& h)
         {
             const int k = h.index(i, j);
 
+            float height1 = h.getNormalizedHeightAt(i, j);
+            Color color1 = terrainColor.getColorAt(height1);
+
             // right neighbor
             if (j + 1 < cols)
             {
                 const int kr = h.index(i, j + 1);
-                glVertex3f(X[k],  Y[k],  Z[k]);
+
+                float heightRight = h.getNormalizedHeightAt(i, j + 1);
+                Color colorRight = terrainColor.getColorAt(heightRight);
+
+                glColor3f(color1.r, color1.g, color1.b);
+                glVertex3f(X[k], Y[k], Z[k]);
+
+                glColor3f(colorRight.r, colorRight.g, colorRight.b);
                 glVertex3f(X[kr], Y[kr], Z[kr]);
             }
 
@@ -48,7 +58,14 @@ void Render::drawWireframe(const Height& h)
             if (i + 1 < rows)
             {
                 const int kd = h.index(i + 1, j);
-                glVertex3f(X[k],  Y[k],  Z[k]);
+
+                float heightDown = h.getNormalizedHeightAt(i + 1, j);
+                Color colorDown = terrainColor.getColorAt(heightDown);
+
+                glColor3f(color1.r, color1.g, color1.b);
+                glVertex3f(X[k], Y[k], Z[k]);
+
+                glColor3f(colorDown.r, colorDown.g, colorDown.b);
                 glVertex3f(X[kd], Y[kd], Z[kd]);
             }
         }

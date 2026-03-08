@@ -18,11 +18,15 @@
 #include "../terrain/height.h"
 #include <OpenGL/gl.h>
 #include <GLUT/glut.h>
+#include "../terrain/height.h"
+#include "../core/types.h"
+#include "../terrain/terrainColor.h"
 
 class Render
 {
     public:
         Height& h;
+        TerrainColor terrainColor;
 
         Render(Height & height);
 

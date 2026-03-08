@@ -36,17 +36,28 @@ class Height
         int getRows() const;
         int getCols() const;
         float getSpacing() const;
+        float getHeightAt(int i, int j) const;
+        float getMinHeight() const;
+        float getMaxHeight() const;
+        float getNormalizedHeightAt(int i, int j) const;
+
+        // setters
+        void setMinMax();
 
         // functionality
         void buildSurface();
         void addNoise();
         void smoothSurface();
         bool hasNeighbor(int i, int j);
+        float normalizeHeight(float a) const;
+
 
 
     private:
-        // member vairables
+    // member vairables
         std::vector<float> X, Y, Z;
         int rows, cols;
         float spacing;
+        float minHeight;
+        float maxHeight;
 };

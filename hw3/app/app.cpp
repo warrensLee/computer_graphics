@@ -37,6 +37,7 @@ void App::init()
     height.buildSurface();
     height.addNoise();
     height.smoothSurface();
+    height.setMinMax();
 
     // now to apply coloring
     // .................... //
@@ -93,7 +94,6 @@ void App::display()
     glRotatef(60.0f, 1.0f, 0.0f, 0.0f);
     glRotatef(30.0f, 0.0f, 1.0f, 0.0f);
 
-    glColor3f(1.0f, 0.0f, 0.0f);
     renderer.drawWireframe(height);
 
     glutSwapBuffers();
