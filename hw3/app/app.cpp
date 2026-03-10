@@ -2,21 +2,25 @@
  *  File Name:      app.cpp
  *  Author:         Warren Roberts
  *  Created:        February 26, 2026
- *  Last Modified:  February 26, 2026
+ *  Last Modified:  March 10, 2026
  *
  *  Description:
- *  Defintion of commonly used math tools such as clamping, length, minimum, etc.
+ *  Implements the main application flow, including initialization of terrain,
+ *  camera, rendering systems, and OpenGL state setup.
  * 
  *  Dependencies:
- *  app.h, glut.h, gl.h
+ *  app.h and all linked subsystems
  * 
  *  Notes:
+ *  Coordinates startup behavior before entering the render loop.
  *
  ******************************************************************************************/
+
 
 #include "app.h"
 
 
+//********************** Initialization **********************//
 
 App* App::instance = nullptr;
 
@@ -34,17 +38,16 @@ void App::init()
 
     height.init();
     height.initGrid();
+
     height.buildSurface();  
     height.smoothSurface();
+
+
     height.centerHeight();
     height.setMinMax();
 
-    // now to apply coloring
-    // .................... //
-
     // diagnositics / display confix
-    printf("rows=%d cols=%d spacing=%f size=%zu\n",height.getRows(), 
-            height.getCols(), height.getSpacing(),height.getX().size());
+    printf("rows=%d cols=%d spacing=%f size=%zu\n",height.getRows(), height.getCols(), height.getSpacing(),height.getX().size());
 }
 
 void App::initOpenGL()
@@ -53,26 +56,17 @@ void App::initOpenGL()
 
     glEnable(GL_DEPTH_TEST);
 
-    // glMatrixMode(GL_PROJECTION);
-    // glLoadIdentity();
-    // glOrtho(-z, z, -z, z, -z, z);
-
-    // glMatrixMode(GL_PROJECTION);
-    // glLoadIdentity();
-    // glOrtho(-2, 2, -2, 2, -2, 2);
-    // //glScalef(0.7f, 0.7f, 0.7f);         // to get a better view of the grid
-
-    // glMatrixMode(GL_MODELVIEW);
-    // glLoadIdentity();
-
 }
+
+
+//********************** Functionality **********************//
 
 void App::display()
 {
     // printf("display called\n");
     
     // current zoom level
-    float zoom = controller.getCurrentZoom();
+    float zoom = controller.getCamera().getCurrentZoom();
     //printf("zoom = %f"), zoom;
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -89,7 +83,7 @@ void App::display()
 
     // this is awesome! it sets the camera to what the controller has
     // set it to. so now we can move around with WASD
-    glTranslatef(controller.getCameraX(), controller.getCameraY(), 0.0f);
+    glTranslatef(controller.getCamera().getCameraX(), controller.getCamera().getCameraY(), 0.0f);
 
     glRotatef(60.0f, 1.0f, 0.0f, 0.0f);
     glRotatef(30.0f, 0.0f, 1.0f, 0.0f);
@@ -100,27 +94,49 @@ void App::display()
     glutSwapBuffers();
 }
 
-void App::callDisplay()
-{
-    if (instance)
-    {
-        instance->display();
-    }
-}
+
 
 void App::reshape(int w, int h)
 {
+    // unused
     (void) w;
     (void) h;
 }
 
 void App::keyboard(unsigned char key, int x, int y)
 {
+    // unused vars
     (void) x;
     (void) y;
     controller.handleKeyDown(key);
     glutPostRedisplay();
 
+}
+
+void App::keyboardKeyUp(unsigned char key, int x, int y)
+{
+    // unused vars
+    (void) x;
+    (void) y;
+    controller.handleKeyUp(key);
+}
+
+void App::idle()
+{
+    controller.update();
+    glutPostRedisplay();
+}
+
+
+
+//********************** Callbacks **********************//
+
+void App::callKeyboardKeyUp(unsigned char key, int x, int y)
+{
+    if (instance)
+    {
+        instance->keyboardKeyUp(key, x, y);
+    }
 }
 
 void App::callKeyboard(unsigned char key, int x, int y)
@@ -131,32 +147,18 @@ void App::callKeyboard(unsigned char key, int x, int y)
     }
 }
 
-void App::keyboardKeyUp(unsigned char key, int x, int y)
-{
-    (void) x;
-    (void) y;
-    controller.handleKeyUp(key);
-}
-
-void App::callKeyboardKeyUp(unsigned char key, int x, int y)
-{
-    if (instance)
-    {
-        instance->keyboardKeyUp(key, x, y);
-    }
-}
-
-
-void App::idle()
-{
-    controller.update();
-    glutPostRedisplay();
-}
-
 void App::callIdle()
 {
     if (instance)
     {
         instance->idle();
     }    
+}
+
+void App::callDisplay()
+{
+    if (instance)
+    {
+        instance->display();
+    }
 }

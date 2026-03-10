@@ -2,16 +2,21 @@
  *  File Name:      app.h
  *  Author:         Warren Roberts
  *  Created:        February 26, 2026
- *  Last Modified:  February 26, 2026
+ *  Last Modified:  March 10, 2026
  *
  *  Description:
- *  Defintion of commonly used math tools such as clamping, length, minimum, etc.
+ *  Declares the App class responsible for managing application-level setup,
+ *  display callbacks, and integration between terrain generation and rendering.
  * 
  *  Dependencies:
- *
+ *  Terrain, view, and controller components
+ * 
  *  Notes:
+ *  Acts as the main connection point for the project.
  *
  ******************************************************************************************/
+
+
 #include <OpenGL/gl.h>
 #include <GLUT/glut.h>
 #include <stdio.h>
@@ -19,10 +24,6 @@
 #include "../core/config.h"
 #include "../controller/controller.h"
 #include "../view/render.h"
-
-
-
-
 
 #pragma once
 

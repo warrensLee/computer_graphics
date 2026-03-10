@@ -2,20 +2,26 @@
  *  File Name:      controller.cpp
  *  Author:         Warren Roberts
  *  Created:        February 26, 2026
- *  Last Modified:  February 26, 2026
+ *  Last Modified:  March 10, 2026
  *
  *  Description:
- *  Defintion of commonly used math tools such as clamping, length, minimum, etc.
+ *  Implements input handling for keyboard controls and camera interaction.
  * 
  *  Dependencies:
- *
+ *  controller.h and linked camera/application systems
+ * 
  *  Notes:
+ *  Used to manage movement, zooming, and user interaction.
  *
  ******************************************************************************************/
 
 #include "controller.h"
 
 // constructor
+Controller::Controller() : camera()
+{
+
+}
 
 // getters
 bool Controller::getZoomInPressed() const
@@ -26,11 +32,6 @@ bool Controller::getZoomInPressed() const
 bool Controller::getZoomOutPressed() const
 {
     return zoomOutPressed;
-}
-
-float Controller::getCurrentZoom() const
-{
-    return currentZoom;
 }
 
 bool Controller::getUpPressed() const
@@ -52,17 +53,6 @@ bool Controller::getRightPressed() const
 {
     return rightPressed;
 }
-
-float Controller::getCameraX() const
-{   
-    return xCameraPosition;
-}
-
-float Controller::getCameraY() const
-{
-    return yCameraPosition;
-}
-
 
 // setters   
 void Controller::setZoomInPressed(bool a)
@@ -95,15 +85,11 @@ void Controller::setRightPressed(bool a)
     rightPressed = a;
 }
 
-void Controller::setCameraX(float x) 
-{   
-    xCameraPosition = x;
+Camera Controller::getCamera() const
+{
+    return camera;
 }
 
-void Controller::setCameraY(float y) 
-{
-    yCameraPosition = y;
-}
 
 
 // functionality
@@ -114,11 +100,11 @@ void Controller::handleKeyDown(unsigned char key)
     {
     // zoom
         case 'e':
-            currentZoom += zoomIncrement;
+            camera.setCurrentZoom(camera.getCurrentZoom() + zoomIncrement);
             break;
 
         case 'q':
-            currentZoom -= zoomIncrement;
+            camera.setCurrentZoom(camera.getCurrentZoom() - zoomIncrement);
             break;
 
     // movement
@@ -136,13 +122,13 @@ void Controller::handleKeyDown(unsigned char key)
             break;
     }
     // actual clamp logic as mentioned above
-    if (currentZoom > 5.0f)
+    if (camera.getCurrentZoom() > 5.0f)
     {
-        currentZoom = 5.0f;
+        camera.setCurrentZoom(5.0f);
     }
-    if (currentZoom < 0.0f)
+    if (camera.getCurrentZoom() < 0.0f)
     {
-        currentZoom = 0.0f;
+        camera.setCurrentZoom(0.0f);
     }
 
 }
@@ -166,15 +152,19 @@ void Controller::handleKeyUp(unsigned char key)
             break;
     }
 }
+
 void Controller::update()
 {
     if (upPressed)
-        yCameraPosition -= cameraMoveSpeed;
+        camera.setCameraY(camera.getCameraY() - cameraMoveSpeed);
     if (downPressed)
-        yCameraPosition += cameraMoveSpeed;
+        camera.setCameraY(camera.getCameraY() + cameraMoveSpeed);
     if (leftPressed)
-        xCameraPosition += cameraMoveSpeed;
+        camera.setCameraX(camera.getCameraX() + cameraMoveSpeed);
     if (rightPressed)
-        xCameraPosition -= cameraMoveSpeed;
+        camera.setCameraX(camera.getCameraX() - cameraMoveSpeed);
+
 }
+
+        
 

@@ -2,15 +2,17 @@
  *  File Name:      height.cpp
  *  Author:         Warren Roberts
  *  Created:        February 26, 2026
- *  Last Modified:  February 26, 2026
+ *  Last Modified:  March 10, 2026
  *
  *  Description:
- *  Define methods and initialize grid of our polygons that will form a terrain.
+ *  Implements terrain height generation, grid initialization, smoothing,
+ *  noise application, and terrain height normalization.
  * 
  *  Dependencies:
- *  height.h, 
+ *  height.h
  * 
  *  Notes:
+ *  Stores the terrain grid and builds the heightmap used for rendering.
  *
  ******************************************************************************************/
 
@@ -131,6 +133,12 @@ float Height::getMaxHeight() const
 
 float Height::normalizeHeight(float a) const
 {
+    // this normalized height will be used as a divisor
+    // and this will keep us from dividing by 0
+    if (maxHeight == minHeight)
+    {
+        return 0.0f;
+    }
     return (a - minHeight) / (maxHeight - minHeight);   
 }
 
@@ -191,7 +199,13 @@ void Height::originalBuildSurface()
 
 void Height::buildSurface()
 {
-    const float terrainScale = 0.4f;
+    // this is the scale for our whole terrain
+    // changing it will change everything easily!
+    const float terrainScale = 0.35;
+    // I want to make a centered large mountain base in the center
+    // so first I will get the center positions
+    const float halfWidth = (cols - 1) * spacing * 0.5f;
+    const float halfDepth = (rows - 1) * spacing * 0.5f;
 
     for (int i = 0; i < rows; ++i)
     {
@@ -205,35 +219,52 @@ void Height::buildSurface()
             float sampleX = x * terrainScale;
             float sampleZ = z * terrainScale;
 
-            // broad terrain
-            float base = Math::octavePerlin(sampleX, sampleZ, 5, 0.5f, 2.0f);
+            // make them relative to the current x
+            float nx = x / halfWidth;
+            float nz = z / halfDepth;
 
-            // secondary detail
-            float hills = Math::octavePerlin(sampleX * 2.0f, sampleZ * 2.0f, 4, 0.5f, 2.0f);
+            // explain to me what this does
+            float dist = std::sqrt(nx * nx + nz * nz);
 
-            // fine detail
+            // clamp out of bounds values
+            float centerMask = 1.0f - dist;
+            if (centerMask < 0.0f)
+            {
+                centerMask = 0.0f;
+            }
+            
+            // changing the power will give us a steeper mountain
+            centerMask = std::pow(centerMask, 2.5f);
+
+            // now to make one central mountain base
+            float baseNoise = Math::octavePerlin(sampleX, sampleZ, 5, 0.5f, 2.0f);
+
+            // secondary detail around the mountain
+            float hillNoise = Math::octavePerlin(sampleX * 2.0f, sampleZ * 2.0f, 4, 0.5f, 2.0f);
+
+            // adds finer detail on the mountain
             float mountainNoise = Math::octavePerlin(sampleX * 1.3f, sampleZ * 1.3f, 5, 0.5f, 2.0f);
+
+            // makes mountains more ridged
             float ridged = 1.0f - std::fabs(mountainNoise);
             ridged *= ridged;
 
-
             // convert from roughly [-1,1] to [0,1]
-            float base01   = 0.5f * (base + 1.0f);
-            float hills01  = 0.5f * (hills + 1.0f);
-            float detail01 = 0.5f * (mountainNoise + 1.0f);
+            float baseNoise01 = 0.5f * (baseNoise + 1.0f);
+            float hillNoise01 = 0.5f * (hillNoise + 1.0f);
 
-            float height =
-                base01 * 7.0f +
-                hills01 * 2.5f +
-                detail01 * 0.7f;
+            // now with all of our terrain features we must add them to the height
+            // this will combine everything we made above
+            float height = 0.0f;
 
-            // create lower valleys and stronger highs
-            height -= (1.0f - base01) * 2.0f;
+            height += baseNoise01 * centerMask * 9.0f;
+            height += hillNoise01 * 3.0f;
+            height += ridged * 1.5f;
 
+            // actually sets height
             Y[idx] = height;
         }
     }
-
     setMinMax();
 }
 
@@ -313,8 +344,9 @@ bool Height::hasNeighbor(int i, int j)
     return false;
 }
 
-
-
+// used to center our terrain so that
+// excessive zooming isnt made to find
+// the terrain after launch
 void Height::centerHeight()
 {
     setMinMax();

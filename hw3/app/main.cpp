@@ -2,22 +2,22 @@
  *  File Name:      main.cpp
  *  Author:         Warren Roberts
  *  Created:        February 26, 2026
- *  Last Modified:  February 26, 2026
+ *  Last Modified:  March 10, 2026
  *
  *  Description:
- *  Defintion of commonly used math tools such as clamping, length, minimum, etc.
+ *  Entry point of the program. Creates the application object and starts
+ *  the OpenGL execution loop.
  * 
  *  Dependencies:
- *  app, callbacks
+ *  app.h
  * 
  *  Notes:
+ *  Contains only startup logic.
  *
  ******************************************************************************************/
 
 
 #include "app.h"
-
-
 
 
 int main(int argc, char** argv)

@@ -2,15 +2,17 @@
  *  File Name:      height.h
  *  Author:         Warren Roberts
  *  Created:        February 26, 2026
- *  Last Modified:  March 3, 2026
+ *  Last Modified:  March 10, 2026
  *
  *  Description:
- *  Defintion of commonly used math tools such as clamping, length, minimum, etc.
+ *  Declares the Height class used to store terrain grid data and provide
+ *  terrain generation methods.
  * 
  *  Dependencies:
- *  config.h, vector
+ *  math.h and types.h
  * 
  *  Notes:
+ *  Acts as the main terrain data model.
  *
  ******************************************************************************************/
 
