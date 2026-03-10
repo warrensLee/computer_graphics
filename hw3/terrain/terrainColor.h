@@ -25,13 +25,22 @@ class TerrainColor
     // constructor
         TerrainColor() = default;
     // predefined terrain colors
-        Color lightGreen = {0.55f, 0.78f, 0.42f};
-        Color darkGreen = {0.13f, 0.42f, 0.18f};
-        Color lightBrown = {0.72f, 0.58f, 0.38f};
-        Color darkBrown = {0.36f, 0.24f, 0.14f};
+        Color lightGreen = {0.52f, 0.72f, 0.32f};
+        Color darkGreen = {0.34f, 0.56f, 0.20f};
+        Color lightBrown = {0.18f, 0.38f, 0.12f};
+        Color darkBrown = {0.45f, 0.32f, 0.18f};
         Color stoneGray = {0.50f, 0.50f, 0.50f};
-        Color blackStone = {0.18f, 0.18f, 0.18f};
-        Color snowWhite = {0.96f, 0.96f, 0.98f};
+        Color blackStone = {0.25f, 0.25f, 0.25f};
+        Color snowWhite = {0.96f, 0.97f, 0.98f};
+
+    // desert theme
+        Color lightSand    = { 0.93f, 0.86f, 0.67f};
+        Color goldSand     = {0.85f, 0.74f, 0.45f};
+        Color lightTan     = {0.76f, 0.60f, 0.38f};
+        Color desertBrown  = {0.60f, 0.42f, 0.25f};
+        Color rockBrown    = {0.42f, 0.30f, 0.20f};
+        Color darkStone    = {0.25f, 0.20f, 0.18f};
+        Color sunPeak      = {0.95f, 0.90f, 0.80f};
 
 // returns height for a given height
         Color getColorAt(float a);      

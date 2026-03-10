@@ -5,7 +5,7 @@ LDFLAGS  = -framework OpenGL -framework GLUT
 TARGET = main
 
 OBJS = app/main.o app/app.o \
-       core/math.o core/random.o \
+       core/math.o \
        model/terrainSystem.o terrain/height.o terrain/terrainColor.o \
 	   controller/controller.o \
        view/render.o view/camera.o

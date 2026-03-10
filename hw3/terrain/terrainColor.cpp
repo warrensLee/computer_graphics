@@ -21,17 +21,17 @@ Color TerrainColor::getColorAt(float a)      // returns height for a given heigh
 {
     if (a < Config::low1)
     {
-        return lightGreen;
+        return darkGreen;
     }
     else if (a < Config::low2)
     {
-        return darkGreen;
+        return lightGreen;
     }
     else if (a < Config::mid1)
     {
         return lightBrown;
     }
-     else if (a < Config::mid2)
+    else if (a < Config::mid2)
     {
         return darkBrown;
     }
@@ -49,7 +49,7 @@ Color TerrainColor::getColorAt(float a)      // returns height for a given heigh
     }
     else // gonna go with random for now
     {
-        return randomColor;
+        return snowWhite;
     }
 
 }

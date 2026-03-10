@@ -58,7 +58,7 @@ class Controller
         bool rightPressed;
 
         float zoomIncrement = 0.05f;
-        float currentZoom = 2.0f;       //starting zoom
+        float currentZoom = 3.0f;       //starting zoom
 
         float xCameraPosition = 0.0f;
         float yCameraPosition = 0.5f;

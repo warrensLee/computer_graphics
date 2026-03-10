@@ -46,10 +46,15 @@ class Height
 
         // functionality
         void buildSurface();
+        void originalBuildSurface();
         void addNoise();
+        void centerHeight();
         void smoothSurface();
+
         bool hasNeighbor(int i, int j);
         float normalizeHeight(float a) const;
+
+        
 
 
 

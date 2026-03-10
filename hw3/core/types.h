@@ -15,11 +15,10 @@
 
 #pragma once
 
-struct Vec3
+struct Vec2
 {
     float x;
     float y;
-    float z;
 };
 
 struct Color

@@ -164,9 +164,9 @@ void Height::setMinMax()
 // then based on those values create
 // y coordinated that bring our surface 
 // to life!
-void Height::buildSurface()
+void Height::originalBuildSurface()
 {
-    const float scale = 0.4f;
+    const float scale = 1.3f;
 
     for (int i = 0; i < rows; ++i)
     {
@@ -182,10 +182,59 @@ void Height::buildSurface()
             // now apply the scale and base terrain surface
             // (sin(x * 2) * cos(z * 4) is my base surface
             // also tried (sin(z * 2) * cos(x * 4) * 1.7
-            Y[idx] = scale * (sin(z * 2) * cos(x * 4)) * 1.7f; //* (z/x/2);
-            //Y[idx] = scale * exp(sin(x*z));
+            Y[idx] = scale * (sin(x*2) * cos(z*3)); //* (z/x/2);
+            //Y[idx] = scale * exp((sin(x * 2) * cos(z * 4)) * 1.2f);
         }
     }
+}
+
+
+void Height::buildSurface()
+{
+    const float terrainScale = 0.4f;
+
+    for (int i = 0; i < rows; ++i)
+    {
+        for (int j = 0; j < cols; ++j)
+        {
+            int idx = index(i, j);
+
+            float x = X[idx];
+            float z = Z[idx];
+
+            float sampleX = x * terrainScale;
+            float sampleZ = z * terrainScale;
+
+            // broad terrain
+            float base = Math::octavePerlin(sampleX, sampleZ, 5, 0.5f, 2.0f);
+
+            // secondary detail
+            float hills = Math::octavePerlin(sampleX * 2.0f, sampleZ * 2.0f, 4, 0.5f, 2.0f);
+
+            // fine detail
+            float mountainNoise = Math::octavePerlin(sampleX * 1.3f, sampleZ * 1.3f, 5, 0.5f, 2.0f);
+            float ridged = 1.0f - std::fabs(mountainNoise);
+            ridged *= ridged;
+
+
+            // convert from roughly [-1,1] to [0,1]
+            float base01   = 0.5f * (base + 1.0f);
+            float hills01  = 0.5f * (hills + 1.0f);
+            float detail01 = 0.5f * (mountainNoise + 1.0f);
+
+            float height =
+                base01 * 7.0f +
+                hills01 * 2.5f +
+                detail01 * 0.7f;
+
+            // create lower valleys and stronger highs
+            height -= (1.0f - base01) * 2.0f;
+
+            Y[idx] = height;
+        }
+    }
+
+    setMinMax();
 }
 
 
@@ -203,7 +252,7 @@ void Height::addNoise()
             int idx = index(i, j);
 
             // adds noise to each y-coordinate
-            Y[idx] += Math::getRandomBetween(-0.05, 0.05f);
+            Y[idx] += Math::getRandomBetween(0.05f, 0.3f);
         }
     }
 }
@@ -264,3 +313,18 @@ bool Height::hasNeighbor(int i, int j)
     return false;
 }
 
+
+
+void Height::centerHeight()
+{
+    setMinMax();
+
+    float mid = (minHeight + maxHeight) * 0.5f;
+
+    for (float& y : Y)
+    {
+        y -= mid;
+    }
+
+    setMinMax();
+}

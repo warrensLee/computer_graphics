@@ -31,6 +31,7 @@ class Render
         Render(Height & height);
 
         void drawWireframe(const Height& h);
+        void drawSurface(const Height& h);
 
     private:
 
