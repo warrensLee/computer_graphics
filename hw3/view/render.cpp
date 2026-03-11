@@ -12,7 +12,7 @@
  *  render.h and its dependencies
  * 
  *  Notes:
- *  Filled terrain uses height-based colors and diffuse lighting.
+ *  Surface rendering applies terrain colors and diffuse lighting per triangle.
  *
  ******************************************************************************************/
 
@@ -24,39 +24,46 @@ Render::Render(Height & height) : h(height), terrainColor(), lighting()
 
 }
 
-
+// draws filled terrain with triangles (applies lighting and coloring as well)
 void Render::drawSurface(const Height& h)
 {
+    // basic getters for use later
     const auto& X = h.getX();
     const auto& Y = h.getY();
     const auto& Z = h.getZ();
     const int rows = h.getRows();
     const int cols = h.getCols();
 
+    // terrain is rendered cell-by-cell, meaning each square becomes two triangles
     glBegin(GL_TRIANGLES);
 
+    // for each grid position split into two triangles
     for (int i = 0; i < rows - 1; ++i)
     {
         for (int j = 0; j < cols - 1; ++j)
         {
+            // corners for each grid cell
             int topLeft   = h.index(i, j);
             int topRight   = h.index(i, j + 1);
             int bottomLeft = h.index(i + 1, j);
             int bottomRight  = h.index(i + 1, j + 1);
 
+            // each corners normalized height
             float heightOne   = h.getNormalizedHeightAt(i, j);
             float heightTwo   = h.getNormalizedHeightAt(i, j + 1);
             float heightThree = h.getNormalizedHeightAt(i + 1, j);
             float heightFour  = h.getNormalizedHeightAt(i + 1, j + 1);
 
-            Color colorOne   = terrainColor.getAlpineColor(heightOne);
-            Color colorTwo   = terrainColor.getAlpineColor(heightTwo);
-            Color colorThree = terrainColor.getAlpineColor(heightThree);
-            Color colorFour  = terrainColor.getAlpineColor(heightFour);
+            // get colors for each height based on their Y valie
+            Color colorOne   = terrainColor.getDesertColor(heightOne);
+            Color colorTwo   = terrainColor.getDesertColor(heightTwo);
+            Color colorThree = terrainColor.getDesertColor(heightThree);
+            Color colorFour  = terrainColor.getDesertColor(heightFour);
 
-            // triangle 1: one, three, two
+            // first triangle: top-left, bottom-left, top-right
             Vec3 normal1 = getSurfaceNormal(X, Y, Z, topLeft, bottomLeft, topRight);
-
+            
+            // apply lighting to each vertex color using triangle normal
             Color shadedOne   = lighting.shadeColor(colorOne, normal1);
             Color shadedThree = lighting.shadeColor(colorThree, normal1);
             Color shadedTwo   = lighting.shadeColor(colorTwo, normal1);
@@ -70,7 +77,7 @@ void Render::drawSurface(const Height& h)
             glColor3f(shadedTwo.r, shadedTwo.g, shadedTwo.b);
             glVertex3f(X[topRight], Y[topRight], Z[topRight]);
 
-            // triangle 2: two, three, four
+            // second triangle: top-right, bottom-left, bottom-right
             Vec3 normal2 = getSurfaceNormal(X, Y, Z, topRight, bottomLeft, bottomRight);
 
             Color shadedTwoB   = lighting.shadeColor(colorTwo, normal2);
@@ -148,6 +155,7 @@ void Render::drawWireframe(const Height& h)
     glEnd();
 }
 
+// creates a 3D vector from given values (using types.h Color struct)
 Vec3 Render::makeVec3(float x, float y, float z)
 {
     Vec3 v;
@@ -157,6 +165,7 @@ Vec3 Render::makeVec3(float x, float y, float z)
     return v;
 }
 
+// subtract one vector from another
 Vec3 Render::subtractVec3(const Vec3& a, const Vec3& b)
 {
     Vec3 result;
@@ -166,15 +175,22 @@ Vec3 Render::subtractVec3(const Vec3& a, const Vec3& b)
     return result;
 }
 
+// calclulate the triangle surface normal using defined cross-product
+// cross-product is made in math and necessary to get the surface normal
 Vec3 Render::getSurfaceNormal(const std::vector<float>& X, const std::vector<float>& Y, const std::vector<float>& Z, int a, int b, int c)
 {
+    // convert points into vectors
     Vec3 p1 = makeVec3(X[a], Y[a], Z[a]);
     Vec3 p2 = makeVec3(X[b], Y[b], Z[b]);
     Vec3 p3 = makeVec3(X[c], Y[c], Z[c]);
 
+    // create two edge vectors
     Vec3 t1 = subtractVec3(p2, p1);
     Vec3 t2 = subtractVec3(p3, p1);
 
+    // actual cross product calculation
     Vec3 normal = Math::crossProduct(t1, t2);
+
+    // normalize and return the normal (to mantain smooth lighting calculations)
     return Math::normalize(normal);
 }

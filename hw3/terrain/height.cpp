@@ -101,6 +101,7 @@ float Height::getSpacing() const
     return spacing;
 }
 
+// very simple min and max solutions
 float Height::getMinHeight() const
 {
     float min = Y[0];
@@ -227,14 +228,14 @@ void Height::buildSurface()
             float dist = std::sqrt(nx * nx + nz * nz);
 
             // clamp out of bounds values
-            float centerMask = 1.0f - dist;
-            if (centerMask < 0.0f)
+            float center = 1.0f - dist;
+            if (center < 0.0f)
             {
-                centerMask = 0.0f;
+                center = 0.0f;
             }
             
             // changing the power will give us a steeper mountain
-            centerMask = std::pow(centerMask, 2.5f);
+            center = std::pow(center, 2.5f);
 
             // now to make one central mountain base
             float baseNoise = Math::octavePerlin(sampleX, sampleZ, 5, 0.5f, 2.0f);
@@ -257,7 +258,7 @@ void Height::buildSurface()
             // this will combine everything we made above
             float height = 0.0f;
 
-            height += baseNoise01 * centerMask * 9.0f;
+            height += baseNoise01 * center * 9.0f;
             height += hillNoise01 * 3.0f;
             height += ridged * 1.5f;
 
