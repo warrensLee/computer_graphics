@@ -14,3 +14,5 @@
  *  Used by rendering and controller systems.
  *
  ******************************************************************************************/
+
+#include "texture.h"

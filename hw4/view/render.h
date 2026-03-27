@@ -20,14 +20,25 @@
 
 #include <OpenGL/gl.h>
 #include <GLUT/glut.h>
+#include "../model/object3D.h"
+#include "../model/texture.h"
 
 
 class Render
 {
     public:
+        Render() = default;
+
+        void init();
+        void draw();    
+        void init_texture(char *name, unsigned char *&texture, int &xdim, int &ydim);
 
 
     private:
+        int xdim1, ydim1;
+        int xdim2, ydim2;
+        unsigned char *texture1;
+        unsigned char *texture2;
 
         
  

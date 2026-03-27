@@ -14,3 +14,24 @@
  *  Used by rendering and controller systems.
  *
  ******************************************************************************************/
+
+#pragma once
+
+#include <OpenGL/gl.h>
+#include <GLUT/glut.h>
+#include "../core/libim/im_color.h"
+#include "../view/render.h"
+
+class Texture
+{
+    public:
+    // constructors
+        Texture() = default;
+
+
+    private:
+
+
+
+
+};

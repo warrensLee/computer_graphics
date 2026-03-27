@@ -24,14 +24,16 @@
 
 App* App::instance = nullptr;
 
-App::App() : controller()
+App::App() : renderer(), controller()
 {
+    instance = this;
 
 }
 
 void App::init()
 {
-
+    initOpenGL();
+    renderer.init();
 }
 
 void App::initOpenGL()
@@ -72,6 +74,7 @@ void App::display()
     glRotatef(60.0f, 1.0f, 0.0f, 0.0f);
     glRotatef(30.0f, 0.0f, 1.0f, 0.0f);
 
+    renderer.draw();
 
     glutSwapBuffers();
 }

@@ -17,10 +17,9 @@ LIBS     = core/libim/libim.a core/jpeg/libjpeg.a
 
 TARGET = main
 
-OBJS = core/maze.o \
-       #app/main.o app/app.o \
+OBJS = app/main.o app/app.o \
        core/math.o core/imageLoader.o \
-       model/mesh.o model/texture.o model/scene.o model/3DObject.o \
+       model/mesh.o model/texture.o model/scene.o model/object3D.o \
        controller/controller.o \
        view/render.o view/camera.o
 
@@ -32,10 +31,10 @@ $(TARGET): $(OBJS) $(LIBS)
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-jpeg/libjpeg.a:
+core/jpeg/libjpeg.a:
 	cd core/jpeg && make
 
-libim/libim.a:
+core/libim/libim.a:
 	cd core/libim && make
 
 clean:
