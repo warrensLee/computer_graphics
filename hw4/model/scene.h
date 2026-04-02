@@ -9,7 +9,7 @@
  *  defined.
  * 
  *  Dependencies:
- *  memory, vector, object3D
+ *  memory, vector, object3D, cubeObject, sphereObject
  * 
  *  Notes:
  *  Unique pointer is used to allow polymorphism in the future, allowing
@@ -20,6 +20,8 @@
 #pragma once
 
 #include "object3D.h"
+#include "cubeObject.h"
+#include "sphereObject.h"
 #include<vector>
 #include <memory>       // for unique_ptr
 
@@ -29,14 +31,11 @@ class Scene
     // constructors
         Scene();
 
-        void update();
+        void update(float dt);
 
         void addObject(std::unique_ptr<Object3D> obj);
 
-
-
         const std::vector<std::unique_ptr<Object3D>>& getObjects() const;
-
 
     private:
         // unique_ptr for possible polymorphism in the future

@@ -1,53 +1,53 @@
 /******************************************************************************************
- *  File Name:      render.cpp
+ *  File Name:      render.h
  *  Author:         Warren Roberts
- *  Created:        February 26, 2026
- *  Last Modified:  March 10, 2026
+ *  Created:        March 25, 2026
+ *  Last Modified:  April 2, 2026
  *
  *  Description:
- *  Defines the fucntions necessary to terrain as either a filled surface or wireframe. 
- *  Also includes helper methods for vector math used to calculate surface normals for lighting.
+ *  Defines the Render class, which initializes textures and draws textured
+ *  3D objects stored in the scene.
  * 
  *  Dependencies:
- *  gl.h, glut.h height.h, terrainColor.h, lighting.h
+ *  OpenGL, GLUT, object3D.h, scene.h, texture.h
  * 
  *  Notes:
- *  Filled terrain uses height-based colors and diffuse lighting.
+ *  This class handles texture setup and rendering only.
  *
  ******************************************************************************************/
 
- #pragma once
+#pragma once
 
 #include <OpenGL/gl.h>
 #include <GLUT/glut.h>
+
 #include "../model/object3D.h"
+#include "../model/sphereObject.h"
+#include "../model/cubeObject.h"
+
 #include "../model/scene.h"
 #include "../model/texture.h"
 
-
+class Scene;
 class Render
 {
-    public:
-        Render() = default;
+public:
+    Render() = default;
 
-        void init();
-        void drawObject(const Object3D& obj);
-        void drawSphereObject(const Object3D& obj);
-        void draw(const Scene& scene);    
-        void init_texture(char *name, unsigned char *&texture, int &xdim, int &ydim);
+    void init();
+    void draw(const Scene& scene);
 
+    void drawCube(const Object3D& obj);
+    void drawSphere(const Object3D& obj);
 
-    private:
-        unsigned char *texture1 = nullptr;
-        unsigned char *texture2 = nullptr;
+private:
+    void drawCubeGeometry(float xmin, float ymin, float zmin, float xmax, float ymax, float zmax);
 
-        int xdim1, ydim1;
-        int xdim2, ydim2;
+    unsigned char* texture1 = nullptr;
+    unsigned char* texture2 = nullptr;
 
-        // store all textures here to quick swap
-        GLuint texIDs[2];
+    int xdim1 = 0, ydim1 = 0;
+    int xdim2 = 0, ydim2 = 0;
 
-
-        
- 
+    GLuint texIDs[2];
 };

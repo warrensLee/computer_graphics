@@ -22,19 +22,25 @@
 // this is where we use methods to create objects
 // that will be on screen, adding them to a unique
 // pointer vector for future expansion
+
 Scene::Scene()
 {
-    auto obj1 = std::make_unique<Object3D>();
-    obj1->setTexture(0);
-    obj1->setPosition(-2.0f, 0.0f, 0.0f);
-    obj1->setSize(2.0f, 2.0f, 2.0f);
-    addObject(std::move(obj1));
+    // use auto because we have multiple types
+    // of objects, and we want to avoid repeating 
+    // the type. 
+    auto cube = std::make_unique<Cube>();
+    cube->setTexture(0);
+    cube->setPosition(-2.0f, 0.0f, 0.0f);
+    cube->setSize(2.0f, 2.0f, 2.0f);
+    cube->setRotationSpeed(0.0f, 20.0f, 0.0f);
+    addObject(std::move(cube));
 
-    auto obj2 = std::make_unique<Object3D>();
-    obj2->setTexture(1);
-    obj2->setPosition(2.0f, 2.0f, 2.0f);
-    obj2->setSize(1.5f, 1.5f, 1.5f);
-    addObject(std::move(obj2));
+    auto sphere = std::make_unique<Sphere>();
+    sphere->setTexture(1);
+    sphere->setPosition(2.0f, 0.0f, 0.0f);
+    sphere->setSize(1.5f, 1.5f, 1.5f);
+    sphere->setRotationSpeed(15.0f, 10.0f, 0.0f);
+    addObject(std::move(sphere));
 }
 
 // add object to the unique pointer vector
@@ -50,3 +56,10 @@ const std::vector<std::unique_ptr<Object3D>>& Scene::getObjects() const
     return objects;
 }
 
+void Scene::update(float dt)
+{
+    for (auto& obj : objects)
+    {
+        obj->update(dt);
+    }
+}
