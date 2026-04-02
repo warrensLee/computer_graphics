@@ -59,11 +59,39 @@ void Render::drawObject(const Object3D& obj)
 
     glTranslatef(obj.getX(), obj.getY(), obj.getZ());
 
-    float w = obj.getWidth() / 2.0f;
-    float h = obj.getHeight() / 2.0f;
-    float d = obj.getDepth() / 2.0f;
+    // Scale based on width, height, depth
+    glScalef(obj.getWidth(), obj.getHeight(), obj.getDepth());
+    
+    // For now, always draw a block
+    // In a more complete implementation, we would have different object types
+    Object3D::block(-0.5f, -0.5f, -0.5f, 0.5f, 0.5f, 0.5f);
 
-    Object3D::block(-w, -h, -d, w, h, d);
+    glPopMatrix();
+}
+
+void Render::drawSphereObject(const Object3D& obj)
+{
+    int tex = obj.getTexture();
+    if (tex < 0 || tex > 1)
+        tex = 0;
+
+    glBindTexture(GL_TEXTURE_2D, texIDs[tex]);
+
+    glPushMatrix();
+
+    glTranslatef(obj.getX(), obj.getY(), obj.getZ());
+    
+    // Scale to match the object's size
+    glScalef(obj.getWidth(), obj.getHeight(), obj.getDepth());
+    
+    // Generate and draw sphere
+    static Surface sphereSurface;
+    static bool initialized = false;
+    if (!initialized) {
+        Object3D::sphere(sphereSurface);
+        initialized = true;
+    }
+    Object3D::drawSphere(sphereSurface);
 
     glPopMatrix();
 }
@@ -74,6 +102,8 @@ void Render::draw(const Scene& scene)
    // Draw objects
    for (const auto& obj : scene.getObjects())
       {
+         // For now, always draw as block
+         // In a real implementation, we would check the object type
          drawObject(*obj);
       }
 }

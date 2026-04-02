@@ -32,6 +32,7 @@ class Render
 
         void init();
         void drawObject(const Object3D& obj);
+        void drawSphereObject(const Object3D& obj);
         void draw(const Scene& scene);    
         void init_texture(char *name, unsigned char *&texture, int &xdim, int &ydim);
 

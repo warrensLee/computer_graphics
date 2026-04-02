@@ -17,6 +17,17 @@
 #include <OpenGL/gl.h>
 #include <GLUT/glut.h>
 
+const int SIZE = 32;
+
+struct Surface {
+    float Px[SIZE][SIZE];
+    float Py[SIZE][SIZE];
+    float Pz[SIZE][SIZE];
+    float Nx[SIZE][SIZE];
+    float Ny[SIZE][SIZE];
+    float Nz[SIZE][SIZE];
+};
+
 class Object3D
 {
     public:
@@ -26,6 +37,7 @@ class Object3D
     // objects
         static void block(float xmin, float ymin, float zmin, float xmax, float ymax, float zmax);
         static void sphere(Surface &s);
+        static void drawSphere(const Surface& s);
 
 
     // get / set

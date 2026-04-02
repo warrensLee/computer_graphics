@@ -109,13 +109,38 @@ void Object3D::sphere(Surface &s)
       for (int v = 0; v < SIZE; v++)
       {
          float angle2 = v * M_PI / (SIZE - 1);
-         // s.Px[u][v] = s.Nx[u][v] = - cos(angle1) * sin(angle2);
-         // s.Py[u][v] = s.Ny[u][v] = - sin(angle1) * sin(angle2);
-         // s.Pz[u][v] = s.Nz[u][v] = - cos(angle2);
          s.Px[u][v] = s.Nx[u][v] = sin(angle2) * cos(angle1);
          s.Py[u][v] = s.Ny[u][v] = sin(angle2) * sin(angle1);
          s.Pz[u][v] = s.Nz[u][v] = cos(angle2);
       }
+   }
+}
+
+//---------------------------------------
+// Draw sphere using triangle strips
+//---------------------------------------
+void Object3D::drawSphere(const Surface& s)
+{
+   for (int u = 0; u < SIZE - 1; u++)
+   {
+      glBegin(GL_TRIANGLE_STRIP);
+      for (int v = 0; v < SIZE; v++)
+      {
+         // Calculate texture coordinates
+         float texU = (float)u / (SIZE - 1);
+         float texV = (float)v / (SIZE - 1);
+         
+         // First point
+         glTexCoord2f(texU, texV);
+         glNormal3f(s.Nx[u][v], s.Ny[u][v], s.Nz[u][v]);
+         glVertex3f(s.Px[u][v], s.Py[u][v], s.Pz[u][v]);
+         
+         // Second point
+         glTexCoord2f((float)(u + 1) / (SIZE - 1), texV);
+         glNormal3f(s.Nx[u + 1][v], s.Ny[u + 1][v], s.Nz[u + 1][v]);
+         glVertex3f(s.Px[u + 1][v], s.Py[u + 1][v], s.Pz[u + 1][v]);
+      }
+      glEnd();
    }
 }
 int Object3D::getTexture() const
