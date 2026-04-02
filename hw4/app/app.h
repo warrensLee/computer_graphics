@@ -57,5 +57,6 @@ class App
         static App* instance;
         Render renderer;
         Controller controller;
+        Scene scene;
 
 };

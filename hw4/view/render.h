@@ -21,6 +21,7 @@
 #include <OpenGL/gl.h>
 #include <GLUT/glut.h>
 #include "../model/object3D.h"
+#include "../model/scene.h"
 #include "../model/texture.h"
 
 
@@ -30,15 +31,21 @@ class Render
         Render() = default;
 
         void init();
-        void draw();    
+        void drawObject(const Object3D& obj);
+        void draw(const Scene& scene);    
         void init_texture(char *name, unsigned char *&texture, int &xdim, int &ydim);
 
 
     private:
+        unsigned char *texture1 = nullptr;
+        unsigned char *texture2 = nullptr;
+
         int xdim1, ydim1;
         int xdim2, ydim2;
-        unsigned char *texture1;
-        unsigned char *texture2;
+
+        // store all textures here to quick swap
+        GLuint texIDs[2];
+
 
         
  

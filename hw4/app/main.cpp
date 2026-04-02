@@ -26,7 +26,7 @@ int main(int argc, char** argv)
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);  // Double buffer, RGB
     glutInitWindowSize(800, 800);      
     glutInitWindowPosition(400, 400);            
-    glutCreateWindow("Computer Graphics: Homework 3, Terrain Generation on a Grid");       // Window title
+    glutCreateWindow("Computer Graphics: Homework 4, Texture Mapping onto a Model");       // Window title
 
 
     App app;

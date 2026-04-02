@@ -24,7 +24,7 @@
 
 App* App::instance = nullptr;
 
-App::App() : renderer(), controller()
+App::App() : renderer(), controller(), scene()
 {
     instance = this;
 
@@ -74,7 +74,7 @@ void App::display()
     glRotatef(60.0f, 1.0f, 0.0f, 0.0f);
     glRotatef(30.0f, 0.0f, 1.0f, 0.0f);
 
-    renderer.draw();
+    renderer.draw(scene);
 
     glutSwapBuffers();
 }

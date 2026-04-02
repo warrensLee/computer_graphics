@@ -55,13 +55,13 @@ class Controller
 
     private:
         Camera camera;
-        bool zoomInPressed;
-        bool zoomOutPressed;
+        bool zoomInPressed = false;
+        bool zoomOutPressed = false;
 
-        bool upPressed;
-        bool downPressed;
-        bool leftPressed;
-        bool rightPressed;
+        bool upPressed = false;
+        bool downPressed = false;
+        bool leftPressed = false;
+        bool rightPressed = false;
 
         float cameraMoveSpeed = 0.025f;
         float zoomIncrement = 0.05f;

@@ -5,13 +5,11 @@
  *  Last Modified:  March 10, 2026
  *
  *  Description:
- *  Declares camera position and viewing controls for scene navigation.
  * 
  *  Dependencies:
  *  none
  * 
  *  Notes:
- *  Used by rendering and controller systems.
  *
  ******************************************************************************************/
 #pragma once
@@ -19,16 +17,41 @@
 #include <OpenGL/gl.h>
 #include <GLUT/glut.h>
 
-class object3D
+class Object3D
 {
     public:
     // constructors
-        object3D() = default;
+        Object3D() = default;
 
+    // objects
         static void block(float xmin, float ymin, float zmin, float xmax, float ymax, float zmax);
+        static void sphere(Surface &s);
+
+
+    // get / set
+        float getX() const;
+        float getY() const;
+        float getZ() const;
+
+        float getWidth() const;
+        float getHeight() const;
+        float getDepth() const;
+
+        int getTexture() const;
+
+        
+        void setPosition(float px, float py, float pz);
+        void setSize(float w, float h, float d);
+
+
+        void setTexture(int t);
 
     private:
-
-
+        float x, y, z;
+        float vx, vy, vz; // velocity
+        float pitch, yaw, roll; // rotation angles
+        float width, height, depth;
+        GLuint textureArray; // OpenGL texture array
+        int texture;
 
 };

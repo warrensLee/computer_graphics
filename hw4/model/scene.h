@@ -1,33 +1,46 @@
 /******************************************************************************************
- *  File Name:      camera.h
+ *  File Name:      scene.h
  *  Author:         Warren Roberts
- *  Created:        February 26, 2026
- *  Last Modified:  March 10, 2026
+ *  Created:        March 25, 2026
+ *  Last Modified:  April 1, 2026
  *
  *  Description:
- *  Declares camera position and viewing controls for scene navigation.
+ *  This is where methods and data structures relevant to the scene are
+ *  defined.
  * 
  *  Dependencies:
- *  none
+ *  memory, vector, object3D
  * 
  *  Notes:
- *  Used by rendering and controller systems.
+ *  Unique pointer is used to allow polymorphism in the future, allowing
+ *  for a more streamlined OOP structured space.
  *
  ******************************************************************************************/
 
 #pragma once
 
-
+#include "object3D.h"
+#include<vector>
+#include <memory>       // for unique_ptr
 
 class Scene
 {
     public:
     // constructors
-        Scene() = default;
+        Scene();
+
+        void update();
+
+        void addObject(std::unique_ptr<Object3D> obj);
+
+
+
+        const std::vector<std::unique_ptr<Object3D>>& getObjects() const;
 
 
     private:
-
+        // unique_ptr for possible polymorphism in the future
+        std::vector<std::unique_ptr<Object3D>> objects;
 
 
 

@@ -1,24 +1,22 @@
 /******************************************************************************************
- *  File Name:      camera.h
+ *  File Name:      object3D.cpp
  *  Author:         Warren Roberts
- *  Created:        February 26, 2026
- *  Last Modified:  March 10, 2026
+ *  Created:        March 25, 2026
+ *  Last Modified:  March 28, 2026
  *
  *  Description:
- *  Declares camera position and viewing controls for scene navigation.
  * 
  *  Dependencies:
  *  none
  * 
  *  Notes:
- *  Used by rendering and controller systems.
  *
  ******************************************************************************************/
 
 #include "object3D.h"
 
 
-void object3D::block(float xmin, float ymin, float zmin, float xmax, float ymax, float zmax)
+void Object3D::block(float xmin, float ymin, float zmin, float xmax, float ymax, float zmax)
 {
    // Define 8 vertices
    float ax = xmin, ay = ymin, az = zmax;
@@ -97,4 +95,81 @@ void object3D::block(float xmin, float ymin, float zmin, float xmax, float ymax,
    glTexCoord2f(0.0, 3.0);
    glVertex3f(hx, hy, hz);
    glEnd();
+}
+
+//---------------------------------------
+// Initialize sphere surface and normals
+//---------------------------------------
+void Object3D::sphere(Surface &s)
+{
+   // Initialize sphere surface and normals
+   for (int u = 0; u < SIZE; u++)
+   {
+      float angle1 = 2 * u * M_PI / (SIZE - 1);
+      for (int v = 0; v < SIZE; v++)
+      {
+         float angle2 = v * M_PI / (SIZE - 1);
+         // s.Px[u][v] = s.Nx[u][v] = - cos(angle1) * sin(angle2);
+         // s.Py[u][v] = s.Ny[u][v] = - sin(angle1) * sin(angle2);
+         // s.Pz[u][v] = s.Nz[u][v] = - cos(angle2);
+         s.Px[u][v] = s.Nx[u][v] = sin(angle2) * cos(angle1);
+         s.Py[u][v] = s.Ny[u][v] = sin(angle2) * sin(angle1);
+         s.Pz[u][v] = s.Nz[u][v] = cos(angle2);
+      }
+   }
+}
+int Object3D::getTexture() const
+{
+   return texture;
+}
+
+void Object3D::setTexture(int t)
+{
+   texture = t;
+}
+
+// get / set
+float Object3D::getX() const
+{
+   return x;
+}
+
+float Object3D::getY() const
+{
+   return y;
+}
+
+float Object3D::getZ() const
+{
+   return z;
+}
+
+float Object3D::getWidth() const
+{
+   return width;
+}
+
+float Object3D::getHeight() const
+{
+   return height;
+}
+
+float Object3D::getDepth() const
+{
+   return depth;
+}
+
+
+void Object3D::setPosition(float px, float py, float pz)
+{
+   x = px;
+   y = py;
+   z = pz;
+}
+
+void Object3D::setSize(float w, float h, float d)
+{
+   width = w;
+   height = h;
+   depth = d;
 }
