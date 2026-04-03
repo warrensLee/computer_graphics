@@ -20,8 +20,6 @@
 #include "scene.h"
 #include <cstdlib>
 #include <ctime>
-#include <cstdlib>
-#include <ctime>
 
 // this is where we use methods to create objects
 // that will be on screen, adding them to a unique
@@ -114,7 +112,25 @@ void Scene::launchProjectile(float vx, float vy, float distance, float spawnX, f
     cannonBall->setTexture(textureIndex);  
     cannonBall->setPosition(ballX, ballY, ballZ);
     cannonBall->setSize(Config::CANNONBALL_WIDTH, Config::CANNONBALL_HEIGHT, Config::CANNONBALL_DEPTH);
-    cannonBall->setRotationSpeed(50.0f, 30.0f, 20.0f);
+    // Give each cannonball random rotation speeds for more realistic spinning
+    float rotX = 100.0f + static_cast<float>(std::rand() % 200);  // 100-300 degrees/sec
+    float rotY = 80.0f + static_cast<float>(std::rand() % 200);   // 80-280 degrees/sec  
+    float rotZ = 60.0f + static_cast<float>(std::rand() % 150);   // 60-210 degrees/sec
+    
+    // Make the rotation speed proportional to launch velocity for more realism
+    float speedFactor = sqrt(vx*vx + vy*vy) / 5.0f;
+    if (speedFactor > 0.5f) {
+        rotX *= speedFactor;
+        rotY *= speedFactor;
+        rotZ *= speedFactor;
+    }
+    
+    // Ensure minimum rotation speed
+    if (rotX < 100.0f) rotX = 100.0f;
+    if (rotY < 80.0f) rotY = 80.0f;
+    if (rotZ < 60.0f) rotZ = 60.0f;
+    
+    cannonBall->setRotationSpeed(rotX, rotY, rotZ);
     
     // Add to objects vector and get its index
     std::size_t objectIndex = objects.size();
