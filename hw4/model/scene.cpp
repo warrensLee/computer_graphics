@@ -75,7 +75,7 @@ void Scene::launchProjectile(float vx, float vy, float distance, float spawnX, f
     }
     
     if (activeCount >= Config::MAX_ACTIVE_CANNONBALLS) {
-        printf("Cannot launch cannonball: maximum active cannonballs (%d) reached\n", 
+        printf("Cannot launch cannonball: maximum active cannonballs (%d) reached. Wait for some to hit the ground.\n", 
                Config::MAX_ACTIVE_CANNONBALLS);
         return;
     }
@@ -147,6 +147,7 @@ void Scene::updateCannonBalls(float dt)
                     if (it->objectIndex != objects.size() - 1) {
                         std::swap(objects[it->objectIndex], objects.back());
                         // Update the index of the cannonball that was swapped
+                        // Find the cannonball that references the object we just swapped
                         for (auto& cb : cannonBalls) {
                             if (cb.objectIndex == objects.size() - 1) {
                                 cb.objectIndex = it->objectIndex;
