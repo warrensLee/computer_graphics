@@ -1,18 +1,17 @@
 /******************************************************************************************
  *  File Name:      config.h
  *  Author:         Warren Roberts
- *  Created:        February 26, 2026
+ *  Created:        March 26, 2026
  *  Last Modified:  April 3, 2026
  *
  *  Description:
- *  Stores global project constants such as terrain dimensions,
- *  grid spacing, rendering configuration values, camera settings,
+ *  Stores global project constants such as configuration values, camera settings,
  *  and cannonball parameters.
  * 
  *  Dependencies:
  *
  *  Notes:
- *  Used for shared values across multiple systems.
+ *  Used for shared values across multiple files and directories.
  *  Pragama once will make sure this file is ran one, and constexpr will ensure that these values are stored
  *  & calculated on compilation (for optimization).
  *
@@ -47,9 +46,9 @@ namespace Config
     constexpr inline float GROUND_Z_POSITION = 0.0f;
     
     // Cannonball launch parameters
-    constexpr inline float CANNONBALL_POWER_SCALE = 0.023f;
+    constexpr inline float CANNONBALL_POWER_SCALE = 0.03f;
     constexpr inline float CANNONBALL_UPWARD_BIAS = 1.0f;
-    constexpr inline float CANNONBALL_MAX_SPEED = 8.0f;
+    constexpr inline float CANNONBALL_MAX_SPEED = 10.0f;
     
     // Cannonball size
     constexpr inline float CANNONBALL_WIDTH = 2.0f;

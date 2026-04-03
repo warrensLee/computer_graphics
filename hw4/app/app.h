@@ -44,6 +44,11 @@ class App
         void keyboardKeyUp(unsigned char key, int x, int y);
         void mouseButton(int button, int state, int x, int y);
         void mouseMotion(int x, int y);
+        void drawText(float x, float y, const char* text);
+        void beginTextMode(int width, int height);
+        void dragTrajectoryLine();
+        void endTextMode();
+
 
         void idle();
 
