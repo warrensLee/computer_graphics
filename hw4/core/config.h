@@ -52,8 +52,10 @@ namespace Config
     constexpr inline float CANNONBALL_MAX_SPEED = 10.0f;
     
     // Cannonball size
-    constexpr inline float CANNONBALL_WIDTH = 0.5f;
-    constexpr inline float CANNONBALL_HEIGHT = 0.5f;
-    constexpr inline float CANNONBALL_DEPTH = 0.5f;
+    constexpr inline float CANNONBALL_WIDTH = 1.5f;
+    constexpr inline float CANNONBALL_HEIGHT = 1.5f;
+    constexpr inline float CANNONBALL_DEPTH = 1.5f;
+
+     constexpr inline float MAX_ACTIVE_CANNONBALLS = 3.0f;
 }
 
