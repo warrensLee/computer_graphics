@@ -72,5 +72,15 @@ class Controller
 
         float maxSpeed;
 
+    public:
+        // Getters for drag information to draw trajectory line
+        bool getIsDragging() const { return isDragging; }
+        float getDragStartX() const { return startX; }
+        float getDragStartY() const { return startY; }
+        float getDragEndX() const { return endX; }
+        float getDragEndY() const { return endY; }
+        // Get world coordinates for the drag start position
+        void getDragWorldCoordinates(float& worldStartX, float& worldStartY, float& worldEndX, float& worldEndY) const;
+
 };
 

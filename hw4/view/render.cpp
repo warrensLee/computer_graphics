@@ -198,3 +198,29 @@ void Render::drawGroundTexture()
 
     glEnd();
 }
+
+void Render::drawTrajectoryLine(float startX, float startY, float endX, float endY)
+{
+    // Disable texturing for the line
+    glDisable(GL_TEXTURE_2D);
+    
+    // Set line color to bright red
+    glColor3f(1.0f, 0.0f, 0.0f);
+    
+    // Set line width
+    glLineWidth(3.0f);
+    
+    // Draw the line
+    glBegin(GL_LINES);
+    glVertex3f(startX, startY, 0.1f);  // Slightly above ground to avoid z-fighting
+    glVertex3f(endX, endY, 0.1f);
+    glEnd();
+    
+    // Reset line width
+    glLineWidth(1.0f);
+    
+    // Re-enable texturing for other objects
+    glEnable(GL_TEXTURE_2D);
+    // Reset color to white
+    glColor3f(1.0f, 1.0f, 1.0f);
+}

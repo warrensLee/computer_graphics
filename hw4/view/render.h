@@ -40,6 +40,7 @@ public:
     void drawCube(const Object3D& obj);
     void drawSphere(const Object3D& obj);
     void drawGroundTexture();
+    void drawTrajectoryLine(float startX, float startY, float endX, float endY);
 
 
 private:

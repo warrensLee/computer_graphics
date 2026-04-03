@@ -18,6 +18,7 @@
 
 
 #include "app.h"
+#include "../controller/controller.h"
 
 
 //********************** initialization **********************//
@@ -91,6 +92,13 @@ void App::display()
 
     // draw the scene
     renderer.draw(scene);
+    
+    // Draw trajectory line if dragging
+    if (controller.getIsDragging()) {
+        float worldStartX, worldStartY, worldEndX, worldEndY;
+        controller.getDragWorldCoordinates(worldStartX, worldStartY, worldEndX, worldEndY);
+        renderer.drawTrajectoryLine(worldStartX, worldStartY, worldEndX, worldEndY);
+    }
 
     // swap buffers for smooth animation
     glutSwapBuffers();

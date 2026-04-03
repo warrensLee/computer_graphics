@@ -238,9 +238,44 @@ void Controller::mouseMotion(int x, int y)
         endX = x;
         endY = y;
 
-        // You can visualize drag line here
+        // Request redisplay to update the trajectory line
         glutPostRedisplay();
     }
+}
+
+void Controller::getDragWorldCoordinates(float& worldStartX, float& worldStartY, float& worldEndX, float& worldEndY) const
+{
+    if (!isDragging) {
+        worldStartX = worldStartY = worldEndX = worldEndY = 0.0f;
+        return;
+    }
+    
+    int width = glutGet(GLUT_WINDOW_WIDTH);
+    int height = glutGet(GLUT_WINDOW_HEIGHT);
+    
+    if (width == 0) width = 800;
+    if (height == 0) height = 600;
+    
+    float zoom = camera.getCurrentZoom();
+    float aspect = (float)width / (float)height;
+    float right = zoom * aspect;
+    float left = -right;
+    float top = zoom;
+    float bottom = -top;
+    
+    // Convert start screen coordinates to world coordinates
+    worldStartX = left + (right - left) * ((float)startX / (float)width);
+    worldStartY = bottom + (top - bottom) * ((float)(height - startY) / (float)height);
+    
+    // Convert end screen coordinates to world coordinates
+    worldEndX = left + (right - left) * ((float)endX / (float)width);
+    worldEndY = bottom + (top - bottom) * ((float)(height - endY) / (float)height);
+    
+    // Adjust for camera position
+    worldStartX += camera.getCameraX();
+    worldStartY += camera.getCameraY();
+    worldEndX += camera.getCameraX();
+    worldEndY += camera.getCameraY();
 }
         
 
