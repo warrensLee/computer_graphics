@@ -81,9 +81,11 @@ void App::display()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    // apply camera translation (simple fixed camera)
-    // camera is at (0, 0, 10) looking along -Z axis
-    glTranslatef(0.0f, 0.0f, -10.0f);  // move scene back
+    // apply camera translation based on camera position
+    // camera is at (x, y, z) looking along -Z axis
+    glTranslatef(-controller.getCamera().getCameraX(), 
+                 -controller.getCamera().getCameraY(), 
+                 -controller.getCamera().getCameraZ());  // move scene opposite to camera position
     
     // Add a slight downward tilt to see the ground better
     glRotatef(15.0f, 1.0f, 0.0f, 0.0f);  // pitch down 15 degrees
