@@ -81,16 +81,10 @@ void App::display()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    // apply camera translation
-    glTranslatef(controller.getCamera().getCameraX(), 
-                 controller.getCamera().getCameraY(), 
-                 controller.getCamera().getCameraZ() - 10.0f);
-
-    // apply camera rotation (roll, pitch, yaw)
-    // note: OpenGL applies transformations in reverse order
-    glRotatef(controller.getCamera().getRoll(), 0.0f, 0.0f, 1.0f);
-    glRotatef(controller.getCamera().getPitch(), 1.0f, 0.0f, 0.0f);
-    glRotatef(controller.getCamera().getYaw(), 0.0f, 1.0f, 0.0f);
+    // apply camera translation (simple fixed camera)
+    // camera is at (0, -5, 10) looking along -Z axis
+    glTranslatef(0.0f, 0.0f, -10.0f);  // move back to see the scene
+    // No rotation - camera looks straight ahead
 
     // draw the scene
     renderer.draw(scene);

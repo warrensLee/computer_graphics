@@ -52,7 +52,7 @@ class Camera
 
     // camera position - at ground level looking forward
         float xCameraPosition = 0.0f;
-        float yCameraPosition = -3.0f;   // ground level (ground is at -5.0f)
+        float yCameraPosition = -5.0f;   // standing on the ground (ground is at -5.0f)
         float zCameraPosition = 10.0f;   // back from the scene
         
     // camera rotation - looking straight ahead

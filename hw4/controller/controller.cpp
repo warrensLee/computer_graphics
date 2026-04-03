@@ -235,11 +235,27 @@ void Controller::mouseButton(int button, int state, int x, int y)
                 launchVY = launchVY / speed * maxSpeed;
             }
 
-            // Convert click position to world coordinates (approximate)
-            // For orthographic projection, we can map screen to world
-            // This is a simple approximation
-            float worldX = (startX / 800.0f - 0.5f) * 20.0f;  // Assuming 800x600 window
-            float worldY = -(startY / 600.0f - 0.5f) * 15.0f; // Invert Y
+            // Convert click position to world coordinates
+            // Get current window dimensions for accurate mapping
+            int width = glutGet(GLUT_WINDOW_WIDTH);
+            int height = glutGet(GLUT_WINDOW_HEIGHT);
+            
+            if (width == 0) width = 800;
+            if (height == 0) height = 600;
+            
+            // Map screen coordinates to world coordinates
+            // Using orthographic projection bounds from app.cpp
+            float zoom = camera.getCurrentZoom();
+            float aspect = (float)width / (float)height;
+            float right = zoom * aspect;
+            float left = -right;
+            float top = zoom;
+            float bottom = -top;
+            
+            // Convert screen (0 to width-1) to world (left to right)
+            float worldX = left + (right - left) * ((float)startX / (float)width);
+            // Convert screen (0 to height-1) to world (bottom to top) - invert Y
+            float worldY = bottom + (top - bottom) * ((float)(height - startY) / (float)height);
             
             // launch the cannon ball from click position
             printf("Launching from (%f, %f): distance=%f, vx=%f, vy=%f\n", worldX, worldY, distance, launchVX, launchVY);
