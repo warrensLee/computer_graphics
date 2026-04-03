@@ -1,21 +1,21 @@
 /******************************************************************************************
- *  File Name:      cubeObject.h
+ *  File Name:      cubeObject.cpp
  *  Author:         Warren Roberts
  *  Created:        February 26, 2026
  *  Last Modified:  March 10, 2026
  *
  *  Description:
+ *  Implements Cube drawing method
  * 
  *  Dependencies:
- *  none
+ *  cubeObject.h, render.h
  * 
  *  Notes:
  *
  ******************************************************************************************/
 
-#pragma once
-
 #include "cubeObject.h"
+#include "../view/render.h"
 
 void Cube::draw(Render& renderer) const
 {

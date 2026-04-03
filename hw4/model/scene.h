@@ -52,5 +52,5 @@ private:
 
     bool ballActive = false;
     float gravity = -0.02f;
-    float groundY = -1.0f;
+    float groundY = -0.8f;
 };
