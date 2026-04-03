@@ -164,42 +164,44 @@ void Scene::updateCannonBalls(float dt)
             // get cannonball radius (half of width)
             float radius = Config::CANNONBALL_WIDTH * 0.5f;
             
-            // wall boundaries, adjusted for cannonball radius
-            float wallBoundaryX = 10.0f - radius;   // x boundaries (fixed)
-            float wallBoundaryY = 13.0f - radius;   // y boundaries (matches visible top)
+            // wall boundaries (fixed positions)
+            float leftWall = -10.0f;
+            float rightWall = 10.0f;
+            float bottomWall = -13.0f;
+            float topWall = 13.0f;
             
             bool bounced = false;
             
             // check left wall collision (x boundary)
-            if (it->x <= -wallBoundaryX) {
-                it->x = -wallBoundaryX;            // push back to just touching the wall
+            if (it->x - radius <= leftWall) {
+                it->x = leftWall + radius;         // push back to just touching the wall
                 it->vx = -it->vx * 0.7f;           // reverse x direction with energy loss
                 bounced = true;
                 printf("cannonball hit left wall at x=%.2f\n", it->x);
             } 
             // check right wall collision
-            else if (it->x >= wallBoundaryX) {
-                it->x = wallBoundaryX;             // push back to just touching the wall
+            else if (it->x + radius >= rightWall) {
+                it->x = rightWall - radius;        // push back to just touching the wall
                 it->vx = -it->vx * 0.7f;           // reverse x direction with energy loss
                 bounced = true;
                 printf("cannonball hit right wall at x=%.2f\n", it->x);
             }
             
             // check bottom wall collision (y boundary)
-            if (it->y <= -wallBoundaryY) 
+            if (it->y - radius <= bottomWall) 
             {
-                it->y = -wallBoundaryY;            // push back to just touching the wall
+                it->y = bottomWall + radius;       // push back to just touching the wall
                 it->vy = -it->vy * 0.7f;           // reverse y direction with energy loss
                 bounced = true;
                 printf("cannonball hit bottom wall at y=%.2f\n", it->y);
             } 
             // check top wall collision
-            else if (it->y >= wallBoundaryY) 
+            else if (it->y + radius >= topWall) 
             {
-                it->y = wallBoundaryY;             // push back to just touching the wall
+                it->y = topWall - radius;          // push back to just touching the wall
                 it->vy = -it->vy * 0.7f;           // reverse y direction with energy loss
                 bounced = true;
-                printf("cannonball hit top wall at y=%.2f (boundary=%.2f)\n", it->y, wallBoundaryY);
+                printf("cannonball hit top wall at y=%.2f\n", it->y);
             }
             
             // if a bounce occurred, apply additional damping
