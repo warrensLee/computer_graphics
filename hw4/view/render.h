@@ -56,5 +56,5 @@ private:
     int xdim3 = 0, ydim3 = 0;
     int xdim4 = 0, ydim4 = 0;
 
-    GLuint texIDs[3];
+    GLuint texIDs[4];
 };

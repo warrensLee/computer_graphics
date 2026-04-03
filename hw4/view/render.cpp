@@ -122,7 +122,7 @@ void Render::drawCubeGeometry(float xmin, float ymin, float zmin,
 void Render::drawCube(const Object3D& obj)
 {
     int tex = obj.getTexture();
-    if (tex < 0 || tex > 2)
+    if (tex < 0 || tex > 3)
         tex = 0;
 
     glBindTexture(GL_TEXTURE_2D, texIDs[tex]);
@@ -142,7 +142,7 @@ void Render::drawCube(const Object3D& obj)
 void Render::drawSphere(const Object3D& obj)
 {
     int tex = obj.getTexture();
-    if (tex < 0 || tex > 2)
+    if (tex < 0 || tex > 3)
         tex = 0;
 
     glBindTexture(GL_TEXTURE_2D, texIDs[tex]);
@@ -166,6 +166,10 @@ void Render::draw(const Scene& scene)
 {
     glColor3f(1.0f, 1.0f, 1.0f);
 
+    // Draw ground first
+    drawGroundTexture();
+
+    // Draw all scene objects
     for (const auto& obj : scene.getObjects())
     {
         obj->draw(*this);
