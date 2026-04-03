@@ -52,8 +52,8 @@ class Camera
 
     // camera position
         float xCameraPosition = 0.0f;
-        float yCameraPosition = 0.0f;
-        float zCameraPosition = 0.0f;
+        float yCameraPosition = 4.0f;
+        float zCameraPosition = 12.0f;
         
     // camera rotation (in degrees)
         float yaw = 30.0f;      // rotation around Y axis (left/right)
