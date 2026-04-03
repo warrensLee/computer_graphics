@@ -178,7 +178,6 @@ void Render::draw(const Scene& scene)
 
 void Render::drawGroundTexture()
 {
-    glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, texIDs[3]);
 
     glBegin(GL_QUADS);
@@ -189,6 +188,4 @@ void Render::drawGroundTexture()
     glTexCoord2f(0.0f, 1.0f); glVertex2f(-1.0f, -1.0f);
 
     glEnd();
-
-    glDisable(GL_TEXTURE_2D);
 }

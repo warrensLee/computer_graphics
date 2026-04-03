@@ -20,7 +20,6 @@
 #include <OpenGL/gl.h>
 #include <GLUT/glut.h>
 #include "../core/libim/im_color.h"
-#include "../view/render.h"
 
 class Texture
 {
