@@ -247,8 +247,10 @@ void Controller::mouseButton(int button, int state, int x, int y)
             int width = glutGet(GLUT_WINDOW_WIDTH);
             int height = glutGet(GLUT_WINDOW_HEIGHT);
             
-            if (width == 0) width = 800;
-            if (height == 0) height = 600;
+            if (width == 0) 
+                width = 800;
+            if (height == 0) 
+                height = 600;
             
             // Map screen coordinates to world coordinates
             // Using orthographic projection bounds from app.cpp
