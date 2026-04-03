@@ -49,7 +49,7 @@ void App::initOpenGL()
 
 void App::display()
 {
-    // Get window dimensions
+    // get actual window dimensions
     int width = glutGet(GLUT_WINDOW_WIDTH);
     int height = glutGet(GLUT_WINDOW_HEIGHT);
     
@@ -60,10 +60,10 @@ void App::display()
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     
-    // Calculate aspect ratio
+    // calculate aspect ratio
     float aspect = (float)width / (float)height;
     
-    // use proper near and far planes (positive values)
+    // near and far planes (positive values)
     float near = 0.1f;
     float far = 50.0f;
     
