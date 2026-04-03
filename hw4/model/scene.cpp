@@ -130,6 +130,7 @@ void Scene::launchProjectile(float vx, float vy, float distance, float spawnX, f
     if (rotY < 80.0f) rotY = 80.0f;
     if (rotZ < 60.0f) rotZ = 60.0f;
     
+    printf("Setting cannonball rotation speed: (%.1f, %.1f, %.1f) degrees/sec\n", rotX, rotY, rotZ);
     cannonBall->setRotationSpeed(rotX, rotY, rotZ);
     
     // Add to objects vector and get its index
