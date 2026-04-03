@@ -95,8 +95,9 @@ void Scene::launchProjectile(float vx, float vy, float distance)
 
     ballActive = true;
     
-    // Also, create a visual cannon ball object
+    // create a cannon ball object
     auto cannonBall = std::make_unique<Sphere>();
+
     // Use texture index 2 for cannonball.jpg
     int textureIndex = 2;
     printf("Setting cannon ball texture to index %d\n", textureIndex);
@@ -120,8 +121,8 @@ void Scene::updateCannonBall(float dt)
         {
             ballY = groundY;
             ballActive = false;
-            // Remove the cannon ball object when it hits the ground
-            // Assuming the last object is the cannon ball
+            // now remove the cannon ball object when it hits the ground
+            // anssuming the last object is the cannon ball
             if (!objects.empty()) {
                 objects.pop_back();
             }
