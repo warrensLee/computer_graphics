@@ -54,8 +54,8 @@ class App
         static void callIdle();
         static void callMouseButton(int button, int state, int x, int y);
         static void callMouseMotion(int x, int y);
-        static void specialKey(int key, int x, int y);
-        static void specialKeyUp(int key, int x, int y);
+        void specialKey(int key, int x, int y);
+        void specialKeyUp(int key, int x, int y);
         static void callLaunchProjectile(float launchVX, float launchVY, float distance);
 
 
