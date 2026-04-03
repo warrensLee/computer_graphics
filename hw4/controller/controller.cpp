@@ -84,13 +84,13 @@ void Controller::handleKeyDown(unsigned char key)
     }
     
     // clamp zoom to reasonable bounds
-    if (camera.getCurrentZoom() > 15.0f)
+    if (camera.getCurrentZoom() > 20.0f)
     {
-        camera.setCurrentZoom(15.0f);
+        camera.setCurrentZoom(20.0f);
     }
-    if (camera.getCurrentZoom() < 1.0f)  // minimum zoom (more zoomed in)
+    if (camera.getCurrentZoom() < 2.0f)  // minimum zoom (more zoomed in)
     {
-        camera.setCurrentZoom(1.0f);
+        camera.setCurrentZoom(2.0f);
     }
 }
 
@@ -264,7 +264,11 @@ void Controller::mouseButton(int button, int state, int x, int y)
             // Convert screen (0 to height-1) to world (bottom to top) - invert Y
             float worldY = bottom + (top - bottom) * ((float)(height - startY) / (float)height);
             
-            // No additional adjustment - the orthographic projection is linear
+            // Adjust for camera position (scene is translated opposite to camera)
+            // In app.cpp: glTranslatef(-cameraX, -cameraY, -cameraZ)
+            // So we need to add camera position to get correct world position
+            worldX += camera.getCameraX();
+            worldY += camera.getCameraY();
             
             // launch the cannon ball from click position
             printf("Launching from (%f, %f): distance=%f, vx=%f, vy=%f\n", worldX, worldY, distance, launchVX, launchVY);
