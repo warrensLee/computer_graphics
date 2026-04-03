@@ -21,16 +21,14 @@
 #include <cstdlib>
 #include <ctime>
 
-// this is where we use methods to create objects
-// that will be on screen, adding them to a unique
-// pointer vector for future expansion
+// create initial scene objects
 
 Scene::Scene()
 {
-    // Seed random number generator for random rotation speeds
+    // seed random number generator for rotation speeds
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
     
-    // Create objects at appropriate positions
+    // create a cube object
     auto cube = std::make_unique<Cube>();
     cube->setTexture(0);
     cube->setPosition(-5.0f, -2.0f, 0.0f);
@@ -38,6 +36,7 @@ Scene::Scene()
     cube->setRotationSpeed(0.0f, 20.0f, 0.0f);
     addObject(std::move(cube));
 
+    // create a sphere object
     auto sphere = std::make_unique<Sphere>();
     sphere->setTexture(1);
     sphere->setPosition(5.0f, -2.0f, 0.0f);
@@ -73,53 +72,53 @@ void Scene::update(float dt)
 
 void Scene::launchProjectile(float vx, float vy, float distance, float spawnX, float spawnY)
 {
-    // Check if we can launch more cannonballs
+    // check if we can launch more cannonballs
     int activeCount = 0;
     for (const auto& cb : cannonBalls) {
         if (cb.active) activeCount++;
     }
     
     if (activeCount >= Config::MAX_ACTIVE_CANNONBALLS) {
-        printf("Cannot launch cannonball: maximum active cannonballs (%d) reached. Wait for some to hit the ground.\n", 
+        printf("cannot launch cannonball: maximum active cannonballs (%d) reached. wait for some to hit the ground.\n", 
             Config::MAX_ACTIVE_CANNONBALLS);
         return;
     }
     
-    printf("Scene::launchProjectile called with vx=%f, vy=%f, distance=%f, spawn=(%f, %f)\n", vx, vy, distance, spawnX, spawnY);
+    printf("scene::launchprojectile called with vx=%f, vy=%f, distance=%f, spawn=(%f, %f)\n", vx, vy, distance, spawnX, spawnY);
     
-    // start at click location, but ensure it's at a reasonable height
+    // start at click location, adjust height if needed
     float ballX = spawnX;
     float ballY = spawnY;
     
-    // if spawn position is too low, adjust it
+    // ensure spawn position is above ground
     if (ballY < groundY + 1.0f) 
     {
-        ballY = groundY + 2.0f;  // Well above ground
+        ballY = groundY + 2.0f;  // well above ground
     }
     
-    // ensure it's not too high
+    // limit maximum height
     if (ballY > 5.0f) {
         ballY = 5.0f;
     }
     
     float ballZ = 0.0f;
 
-    // create a cannon ball object
+    // create a cannonball object
     auto cannonBall = std::make_unique<Sphere>();
 
     // use texture index 2 for cannonball.jpg
     int textureIndex = 2;
-    printf("Setting cannon ball texture to index %d\n", textureIndex);
+    printf("setting cannon ball texture to index %d\n", textureIndex);
     cannonBall->setTexture(textureIndex);  
     cannonBall->setPosition(ballX, ballY, ballZ);
     cannonBall->setSize(Config::CANNONBALL_WIDTH, Config::CANNONBALL_HEIGHT, Config::CANNONBALL_DEPTH);
 
-    // give each cannonball random rotation speeds for more realistic spinning
+    // give each cannonball random rotation speeds for realistic spinning
     float rotX = 100.0f + static_cast<float>(std::rand() % 200);  // 100-300 degrees/sec
     float rotY = 80.0f + static_cast<float>(std::rand() % 200);   // 80-280 degrees/sec  
     float rotZ = 60.0f + static_cast<float>(std::rand() % 150);   // 60-210 degrees/sec
     
-    // Make the rotation speed proportional to launch velocity for more realism
+    // make rotation speed proportional to launch velocity
     float speedFactor = sqrt(vx*vx + vy*vy) / 5.0f;
     if (speedFactor > 0.5f) {
         rotX *= speedFactor;
@@ -127,19 +126,19 @@ void Scene::launchProjectile(float vx, float vy, float distance, float spawnX, f
         rotZ *= speedFactor;
     }
     
-    // Ensure minimum rotation speed
+    // ensure minimum rotation speed
     if (rotX < 100.0f) rotX = 100.0f;
     if (rotY < 80.0f) rotY = 80.0f;
     if (rotZ < 60.0f) rotZ = 60.0f;
     
-    printf("Setting cannonball rotation speed: (%.1f, %.1f, %.1f) degrees/sec\n", rotX, rotY, rotZ);
+    printf("setting cannonball rotation speed: (%.1f, %.1f, %.1f) degrees/sec\n", rotX, rotY, rotZ);
     cannonBall->setRotationSpeed(rotX, rotY, rotZ);
     
-    // Add to objects vector and get its index
+    // add to objects vector and get its index
     std::size_t objectIndex = objects.size();
     addObject(std::move(cannonBall));
     
-    // Add to cannonBalls tracking
+    // add to cannonballs tracking
     CannonBall cb;
     cb.x = ballX;
     cb.y = ballY;
@@ -152,68 +151,74 @@ void Scene::launchProjectile(float vx, float vy, float distance, float spawnX, f
 
 void Scene::updateCannonBalls(float dt)
 {
-    // iterate thru each cannonball
+    // iterate through each cannonball
     for (auto it = cannonBalls.begin(); it != cannonBalls.end(); ) {
         if (it->active) {
-            // change position
+            // update position
             it->x += it->vx * dt;
             it->y += it->vy * dt;
             
-            // change velocity with gravity
+            // apply gravity to vertical velocity
             it->vy += gravity * dt;
             
-            // Check for wall collisions before ground check
-            // Use reasonable wall boundaries that match the visible area
-            float wallBoundaryX = 10.0f;  // Visible area is about ±9
-            float wallBoundaryY = 10.0f;  // Same for y
+            // get cannonball radius (half of width)
+            float radius = Config::CANNONBALL_WIDTH * 0.5f;
+            
+            // wall boundaries - adjust for cannonball radius
+            float wallBoundaryX = 10.0f - radius;   // visible area minus radius
+            float wallBoundaryY = 10.0f - radius;   // same for y
             
             bool bounced = false;
             
-            // Check left/right walls (x boundaries)
+            // check left wall collision (x boundary)
             if (it->x <= -wallBoundaryX) {
-                it->x = -wallBoundaryX;  // Push back inside
-                it->vx = -it->vx * 0.7f;  // Reverse x direction and reduce speed
+                it->x = -wallBoundaryX;            // push back to just touching the wall
+                it->vx = -it->vx * 0.7f;           // reverse x direction with energy loss
                 bounced = true;
-                printf("Cannonball hit LEFT wall at x=%.2f\n", it->x);
-            } else if (it->x >= wallBoundaryX) {
-                it->x = wallBoundaryX;   // Push back inside
-                it->vx = -it->vx * 0.7f;  // Reverse x direction and reduce speed
+                printf("cannonball hit left wall at x=%.2f\n", it->x);
+            } 
+            // check right wall collision
+            else if (it->x >= wallBoundaryX) {
+                it->x = wallBoundaryX;             // push back to just touching the wall
+                it->vx = -it->vx * 0.7f;           // reverse x direction with energy loss
                 bounced = true;
-                printf("Cannonball hit RIGHT wall at x=%.2f\n", it->x);
+                printf("cannonball hit right wall at x=%.2f\n", it->x);
             }
             
-            // Check front/back walls (y boundaries) - in our 2D view, y is the other horizontal axis
+            // check bottom wall collision (y boundary)
             if (it->y <= -wallBoundaryY) 
             {
-                it->y = -wallBoundaryY;  // Push back inside
-                it->vy = -it->vy * 0.7f;  // Reverse y direction and reduce speed
+                it->y = -wallBoundaryY;            // push back to just touching the wall
+                it->vy = -it->vy * 0.7f;           // reverse y direction with energy loss
                 bounced = true;
-                printf("Cannonball hit BOTTOM wall at y=%.2f\n", it->y);
+                printf("cannonball hit bottom wall at y=%.2f\n", it->y);
             } 
+            // check top wall collision
             else if (it->y >= wallBoundaryY) 
             {
-                it->y = wallBoundaryY;   // Push back inside
-                it->vy = -it->vy * 0.7f;  // Reverse y direction and reduce speed
+                it->y = wallBoundaryY;             // push back to just touching the wall
+                it->vy = -it->vy * 0.7f;           // reverse y direction with energy loss
                 bounced = true;
-                printf("Cannonball hit TOP wall at y=%.2f\n", it->y);
+                printf("cannonball hit top wall at y=%.2f\n", it->y);
             }
             
+            // if a bounce occurred, apply additional damping
             if (bounced) 
             {
-                printf("Cannonball bounced at (%.2f, %.2f) with velocity (%.2f, %.2f)\n", 
+                printf("cannonball bounced at (%.2f, %.2f) with velocity (%.2f, %.2f)\n", 
                        it->x, it->y, it->vx, it->vy);
-                // Apply additional energy loss for realism
+                // small additional energy loss for realism
                 it->vx *= 0.9f;
                 it->vy *= 0.9f;
             }
             
-            // check if hit ground
+            // check if hit the ground
             if (it->y <= groundY) 
             {
                 it->y = groundY;
                 it->active = false;
                 
-                // now remove the corresponding object from the objects vector
+                // remove the corresponding object from the objects vector
                 if (it->objectIndex < objects.size()) 
                 {
                     // move to end and pop
@@ -221,7 +226,6 @@ void Scene::updateCannonBalls(float dt)
                     {
                         std::swap(objects[it->objectIndex], objects.back());
                         // update the index of the cannonball that was swapped
-                        // find the cannonball that references the object we just swapped
                         for (auto& cb : cannonBalls) 
                         {
                             if (cb.objectIndex == objects.size() - 1) 
@@ -234,14 +238,14 @@ void Scene::updateCannonBalls(float dt)
                     objects.pop_back();
                 }
 
-                printf("Cannon ball hit the ground and was removed\n");
+                printf("cannon ball hit the ground and was removed\n");
                 
-                // Remove from cannonBalls vector
+                // remove from cannonballs vector
                 it = cannonBalls.erase(it);
                 continue;
             }
             
-            // Update the corresponding object's position
+            // update the corresponding object's position
             if (it->objectIndex < objects.size()) 
             {
                 objects[it->objectIndex]->setPosition(it->x, it->y, 0.0f);
@@ -251,7 +255,7 @@ void Scene::updateCannonBalls(float dt)
         } 
         else 
         {
-            // Remove inactive cannonballs
+            // remove inactive cannonballs
             it = cannonBalls.erase(it);
         }
     }
