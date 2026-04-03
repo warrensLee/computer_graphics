@@ -63,7 +63,7 @@ class Controller
         bool lookDownPressed = false;     // down arrow key
 
         float cameraMoveSpeed = 0.5f;
-        float zoomIncrement = 1.0f;
+        float zoomIncrement = 0.5f;      // smaller increment for finer zoom control
         float rotationSpeed = 1.0f;      // degrees per frame
 
         bool isDragging = false;
