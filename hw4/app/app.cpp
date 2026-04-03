@@ -65,7 +65,7 @@ void App::display()
     
     // Use proper near and far planes (positive values)
     float nearPlane = 0.1f;
-    float farPlane = 100.0f;
+    float farPlane = 50.0f;
     
     // Adjust orthographic bounds based on zoom and aspect ratio
     float right = zoom * aspect;
@@ -79,7 +79,8 @@ void App::display()
     glLoadIdentity();
 
     // Apply camera translation (note: z translation to move back for better view)
-    glTranslatef(controller.getCamera().getCameraX(), controller.getCamera().getCameraY(), -5.0f);
+    // In orthographic projection, z translation doesn't affect size, only depth ordering
+    glTranslatef(controller.getCamera().getCameraX(), controller.getCamera().getCameraY(), -10.0f);
 
     // Apply fixed rotation for isometric view
     glRotatef(60.0f, 1.0f, 0.0f, 0.0f);

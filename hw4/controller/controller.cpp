@@ -81,13 +81,13 @@ void Controller::handleKeyDown(unsigned char key)
             break;
     }
     // actual clamp logic as mentioned above
-    if (camera.getCurrentZoom() > 5.0f)
+    if (camera.getCurrentZoom() > 20.0f)
     {
-        camera.setCurrentZoom(5.0f);
+        camera.setCurrentZoom(20.0f);
     }
-    if (camera.getCurrentZoom() < 0.0f)
+    if (camera.getCurrentZoom() < 0.5f)
     {
-        camera.setCurrentZoom(0.0f);
+        camera.setCurrentZoom(0.5f);
     }
 
 }
