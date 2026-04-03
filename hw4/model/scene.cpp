@@ -92,7 +92,8 @@ void Scene::launchProjectile(float vx, float vy, float distance, float spawnX, f
     float ballY = spawnY;
     
     // if spawn position is too low, adjust it
-    if (ballY < groundY + 1.0f) {
+    if (ballY < groundY + 1.0f) 
+    {
         ballY = groundY + 2.0f;  // Well above ground
     }
     
