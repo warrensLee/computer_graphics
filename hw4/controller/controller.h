@@ -55,9 +55,12 @@ class Controller
         bool downPressed = false;
         bool leftPressed = false;
         bool rightPressed = false;
+        bool rotateLeftPressed = false;   // 'z' key
+        bool rotateRightPressed = false;  // 'x' key
 
         float cameraMoveSpeed = 0.5f;
         float zoomIncrement = 1.0f;
+        float rotationSpeed = 1.0f;      // degrees per frame
 
         bool isDragging = false;
 

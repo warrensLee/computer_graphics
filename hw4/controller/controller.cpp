@@ -79,6 +79,13 @@ void Controller::handleKeyDown(unsigned char key)
         case 'd':
             rightPressed = true;
             break;
+    // rotation
+        case 'z':
+            rotateLeftPressed = true;
+            break;
+        case 'x':
+            rotateRightPressed = true;
+            break;
     }
     // actual clamp logic as mentioned above
     if (camera.getCurrentZoom() > 20.0f)
@@ -109,6 +116,13 @@ void Controller::handleKeyUp(unsigned char key)
         case 'd':
             rightPressed = false;
             break;
+    // rotation
+        case 'z':
+            rotateLeftPressed = false;
+            break;
+        case 'x':
+            rotateRightPressed = false;
+            break;
     }
 }
 
@@ -122,6 +136,12 @@ void Controller::update()
         camera.setCameraX(camera.getCameraX() + cameraMoveSpeed);
     if (rightPressed)
         camera.setCameraX(camera.getCameraX() - cameraMoveSpeed);
+    
+    // Apply rotation
+    if (rotateLeftPressed)
+        camera.rotateYaw(rotationSpeed);
+    if (rotateRightPressed)
+        camera.rotateYaw(-rotationSpeed);
 
 }
 

@@ -27,13 +27,20 @@ class Camera
         float getCameraX() const;
         float getCameraY() const;
         float getCurrentZoom() const;
-
+        float getYaw() const;
+        float getPitch() const;
+        float getRoll() const;
     
     // setters
         void setCameraX(float x);
         void setCameraY(float y);
         void setCurrentZoom(float z);
-
+        void setYaw(float yaw);
+        void setPitch(float pitch);
+        void setRoll(float roll);
+        void rotateYaw(float delta);
+        void rotatePitch(float delta);
+        void rotateRoll(float delta);
 
     // functionality
 
@@ -41,9 +48,14 @@ class Camera
     // zoom 
         float currentZoom;       //starting zoom
 
-    // camera
+    // camera position
         float xCameraPosition;
         float yCameraPosition;
-
+        float zCameraPosition;
+        
+    // camera rotation (in degrees)
+        float yaw;      // rotation around Y axis (left/right)
+        float pitch;    // rotation around X axis (up/down)
+        float roll;     // rotation around Z axis (tilt)
 
 };

@@ -63,7 +63,7 @@ void App::display()
     // Calculate aspect ratio
     float aspect = (float)width / (float)height;
     
-    // Use proper near and far planes (positive values)
+    // use proper near and far planes (positive values)
     float near = 0.1f;
     float far = 50.0f;
     
@@ -78,13 +78,14 @@ void App::display()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    // Apply camera translation (note: z translation to move back for better view)
-    // In orthographic projection, z translation doesn't affect size, only depth ordering
+    // Apply camera translation
     glTranslatef(controller.getCamera().getCameraX(), controller.getCamera().getCameraY(), -10.0f);
 
-    // Apply fixed rotation for isometric view
-    glRotatef(60.0f, 1.0f, 0.0f, 0.0f);
-    glRotatef(30.0f, 0.0f, 1.0f, 0.0f);
+    // Apply camera rotation (in order: roll, pitch, yaw)
+    // Note: OpenGL applies transformations in reverse order
+    glRotatef(controller.getCamera().getRoll(), 0.0f, 0.0f, 1.0f);
+    glRotatef(controller.getCamera().getPitch(), 1.0f, 0.0f, 0.0f);
+    glRotatef(controller.getCamera().getYaw(), 0.0f, 1.0f, 0.0f);
 
     renderer.draw(scene);
 
