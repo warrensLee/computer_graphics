@@ -29,14 +29,14 @@ Scene::Scene()
     auto cube = std::make_unique<Cube>();
     cube->setTexture(0);
     cube->setPosition(-5.0f, -2.0f, 0.0f);
-    cube->setSize(1.0f, 1.0f, 1.0f);
+    cube->setSize(2.0f, 2.0f, 2.0f);
     cube->setRotationSpeed(0.0f, 20.0f, 0.0f);
     addObject(std::move(cube));
 
     auto sphere = std::make_unique<Sphere>();
     sphere->setTexture(1);
     sphere->setPosition(5.0f, -2.0f, 0.0f);
-    sphere->setSize(1.0f, 1.0f, 1.0f);
+    sphere->setSize(2.0f, 2.0f, 2.0f);
     sphere->setRotationSpeed(15.0f, 10.0f, 0.0f);
     addObject(std::move(sphere));
 }
@@ -76,7 +76,7 @@ void Scene::launchProjectile(float vx, float vy, float distance, float spawnX, f
     
     if (activeCount >= Config::MAX_ACTIVE_CANNONBALLS) {
         printf("Cannot launch cannonball: maximum active cannonballs (%d) reached. Wait for some to hit the ground.\n", 
-               Config::MAX_ACTIVE_CANNONBALLS);
+            Config::MAX_ACTIVE_CANNONBALLS);
         return;
     }
     
