@@ -92,7 +92,7 @@ void Scene::launchProjectile(float vx, float vy, float distance)
     
     // Also, create a visual cannon ball object
     auto cannonBall = std::make_unique<Sphere>();
-    cannonBall->setTexture(3);  // Use a different texture index if available
+    cannonBall->setTexture(4);  // Use a different texture index if available
     cannonBall->setPosition(ballX, ballY, 0.0f);
     cannonBall->setSize(0.5f, 0.5f, 0.5f);
     cannonBall->setRotationSpeed(0.0f, 0.0f, 0.0f);
