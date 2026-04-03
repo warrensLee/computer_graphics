@@ -72,6 +72,8 @@ class Controller
         float startY = 0.0f;
         float endX = 0.0f;
         float endY = 0.0f;
+        float clickWorldX = 0.0f;
+        float clickWorldY = 0.0f;
 
         float maxSpeed = 3.0f;
 

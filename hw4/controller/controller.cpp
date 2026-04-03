@@ -158,7 +158,7 @@ void Controller::handleSpecialKeyUp(int key)
 
 void Controller::update()
 {
-    // handle camera movement
+    // handle camera movement (optional - we can keep this or remove)
     if (upPressed)
         camera.setCameraY(camera.getCameraY() - cameraMoveSpeed);
     if (downPressed)
@@ -168,17 +168,19 @@ void Controller::update()
     if (rightPressed)
         camera.setCameraX(camera.getCameraX() - cameraMoveSpeed);
     
-    // handle camera rotation (yaw)
+    // Disable camera rotation for simplicity
+    // (commented out to keep camera fixed)
+    /*
     if (rotateLeftPressed)
         camera.rotateYaw(rotationSpeed);
     if (rotateRightPressed)
         camera.rotateYaw(-rotationSpeed);
     
-    // handle looking up/down (pitch)
     if (lookUpPressed)
         camera.rotatePitch(rotationSpeed);
     if (lookDownPressed)
         camera.rotatePitch(-rotationSpeed);
+    */
 }
 
 void Controller::mouseButton(int button, int state, int x, int y)
@@ -191,6 +193,9 @@ void Controller::mouseButton(int button, int state, int x, int y)
             isDragging = true;
             startX = x;
             startY = y;
+            // Store click position for spawning cannon ball
+            clickWorldX = 0.0f;  // We'll calculate this
+            clickWorldY = 0.0f;
         }
         else if (state == GLUT_UP)
         {
@@ -230,9 +235,15 @@ void Controller::mouseButton(int button, int state, int x, int y)
                 launchVY = launchVY / speed * maxSpeed;
             }
 
-            // launch the cannon ball
-            printf("Launching: distance=%f, vx=%f, vy=%f\n", distance, launchVX, launchVY);
-            App::callLaunchProjectile(launchVX, launchVY, distance);
+            // Convert click position to world coordinates (approximate)
+            // For orthographic projection, we can map screen to world
+            // This is a simple approximation
+            float worldX = (startX / 800.0f - 0.5f) * 20.0f;  // Assuming 800x600 window
+            float worldY = -(startY / 600.0f - 0.5f) * 15.0f; // Invert Y
+            
+            // launch the cannon ball from click position
+            printf("Launching from (%f, %f): distance=%f, vx=%f, vy=%f\n", worldX, worldY, distance, launchVX, launchVY);
+            App::callLaunchProjectile(launchVX, launchVY, distance, worldX, worldY);
         }
     }
 }

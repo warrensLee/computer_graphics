@@ -17,8 +17,8 @@
 
 #include "camera.h"
 
-Camera::Camera() : currentZoom(10.0f), xCameraPosition(0.0f), yCameraPosition(0.0f), zCameraPosition(0.0f),
-                   yaw(30.0f), pitch(60.0f), roll(0.0f)
+Camera::Camera() : currentZoom(15.0f), xCameraPosition(0.0f), yCameraPosition(-3.0f), zCameraPosition(10.0f),
+                   yaw(0.0f), pitch(0.0f), roll(0.0f)
 {
 }
 

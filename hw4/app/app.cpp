@@ -265,10 +265,10 @@ void App::callMouseMotion(int x, int y)
     }
 }
 
-void App::callLaunchProjectile(float launchVX, float launchVY, float distance)
+void App::callLaunchProjectile(float launchVX, float launchVY, float distance, float spawnX, float spawnY)
 {
     if (instance) {
-        instance->scene.launchProjectile(launchVX, launchVY, distance);
+        instance->scene.launchProjectile(launchVX, launchVY, distance, spawnX, spawnY);
     } 
     else 
     {

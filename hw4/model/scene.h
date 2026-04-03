@@ -35,7 +35,7 @@ public:
 
     void addObject(std::unique_ptr<Object3D> obj);
 
-    void launchProjectile(float vx, float vy, float distance);
+    void launchProjectile(float vx, float vy, float distance, float spawnX = 0.0f, float spawnY = 0.0f);
     void updateCannonBall(float dt);
 
     const std::vector<std::unique_ptr<Object3D>> &getObjects() const;
@@ -51,6 +51,6 @@ private:
     float ballVY = 0.0f;
 
     bool ballActive = false;
-    float gravity = -0.02f;
+    float gravity = -0.2f;      // stronger gravity
     float groundY = -5.0f;
 };

@@ -73,7 +73,7 @@ void Scene::update(float dt)
     }
 }
 
-void Scene::launchProjectile(float vx, float vy, float distance)
+void Scene::launchProjectile(float vx, float vy, float distance, float spawnX, float spawnY)
 {
     // If there's already an active cannon ball, remove it first
     if (ballActive && !objects.empty()) {
@@ -82,11 +82,12 @@ void Scene::launchProjectile(float vx, float vy, float distance)
         printf("Removed existing cannon ball before launching new one\n");
     }
     
-    printf("Scene::launchProjectile called with vx=%f, vy=%f, distance=%f\n", vx, vy, distance);
+    printf("Scene::launchProjectile called with vx=%f, vy=%f, distance=%f, spawn=(%f, %f)\n", 
+           vx, vy, distance, spawnX, spawnY);
     
-    // Start at cannon location
-    ballX = 0.0f;
-    ballY = 0.0f;
+    // Start at click location
+    ballX = spawnX;
+    ballY = spawnY;
 
     // Set launch velocity (vx and vy are already scaled appropriately)
     ballVX = vx;
