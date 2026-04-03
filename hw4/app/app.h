@@ -51,6 +51,8 @@ class App
         static void callreshape(int w, int h);
         static void callKeyboard(unsigned char key, int x, int y);
         static void callKeyboardKeyUp(unsigned char key, int x, int y);
+        static void callSpecialKey(int key, int x, int y);
+        static void callSpecialKeyUp(int key, int x, int y);
         static void callIdle();
         static void callMouseButton(int button, int state, int x, int y);
         static void callMouseMotion(int x, int y);
