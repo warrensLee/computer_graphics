@@ -79,13 +79,6 @@ void Controller::handleKeyDown(unsigned char key)
         case 'd':
             rightPressed = true;
             break;
-    // rotation
-        case 'z':
-            rotateLeftPressed = true;
-            break;
-        case 'x':
-            rotateRightPressed = true;
-            break;
     }
     // actual clamp logic as mentioned above
     if (camera.getCurrentZoom() > 20.0f)
@@ -116,12 +109,47 @@ void Controller::handleKeyUp(unsigned char key)
         case 'd':
             rightPressed = false;
             break;
+    }
+}
+
+void Controller::handleSpecialKeyDown(int key)
+{
+    switch(key)
+    {
     // rotation
-        case 'z':
+        case GLUT_KEY_LEFT:
+            rotateLeftPressed = true;
+            break;
+        case GLUT_KEY_RIGHT:
+            rotateRightPressed = true;
+            break;
+    // look up/down
+        case GLUT_KEY_UP:
+            lookUpPressed = true;
+            break;
+        case GLUT_KEY_DOWN:
+            lookDownPressed = true;
+            break;
+    }
+}
+
+void Controller::handleSpecialKeyUp(int key)
+{
+    switch(key)
+    {
+    // rotation
+        case GLUT_KEY_LEFT:
             rotateLeftPressed = false;
             break;
-        case 'x':
+        case GLUT_KEY_RIGHT:
             rotateRightPressed = false;
+            break;
+    // look up/down
+        case GLUT_KEY_UP:
+            lookUpPressed = false;
+            break;
+        case GLUT_KEY_DOWN:
+            lookDownPressed = false;
             break;
     }
 }
@@ -142,6 +170,12 @@ void Controller::update()
         camera.rotateYaw(rotationSpeed);
     if (rotateRightPressed)
         camera.rotateYaw(-rotationSpeed);
+    
+    // Apply pitch (look up/down)
+    if (lookUpPressed)
+        camera.rotatePitch(rotationSpeed);
+    if (lookDownPressed)
+        camera.rotatePitch(-rotationSpeed);
 
 }
 

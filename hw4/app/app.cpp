@@ -115,6 +115,21 @@ void App::keyboardKeyUp(unsigned char key, int x, int y)
     controller.handleKeyUp(key);
 }
 
+void App::specialKey(int key, int x, int y)
+{
+    (void) x;
+    (void) y;
+    controller.handleSpecialKeyDown(key);
+    glutPostRedisplay();
+}
+
+void App::specialKeyUp(int key, int x, int y)
+{
+    (void) x;
+    (void) y;
+    controller.handleSpecialKeyUp(key);
+}
+
 void App::idle()
 {
     controller.update();
@@ -162,6 +177,30 @@ void App::callKeyboard(unsigned char key, int x, int y)
     if (instance)
     {
         instance->keyboard(key, x, y);
+    }
+    else 
+    {
+        printf("ERROR: App instance is null\n");
+    }
+}
+
+void App::callSpecialKey(int key, int x, int y)
+{
+    if (instance)
+    {
+        instance->specialKey(key, x, y);
+    }
+    else 
+    {
+        printf("ERROR: App instance is null\n");
+    }
+}
+
+void App::callSpecialKeyUp(int key, int x, int y)
+{
+    if (instance)
+    {
+        instance->specialKeyUp(key, x, y);
     }
     else 
     {
