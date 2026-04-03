@@ -26,10 +26,10 @@ void Render::init()
 {
     glEnable(GL_TEXTURE_2D);
 
-    Texture::init_texture((char*)"textures/brick.jpg", texture1, xdim1, ydim1);
-    Texture::init_texture((char*)"textures/gravel.jpg", texture2, xdim2, ydim2);
-    Texture::init_texture((char*)"textures/cannonball.jpg", cannonballTexture, xdim3, ydim3);
-    Texture::init_texture((char*)"textures/grass.jpg", groundTexture, xdim4, ydim4);
+    Texture::init_texture("textures/brick.jpg", texture1, xdim1, ydim1);
+    Texture::init_texture("textures/gravel.jpg", texture2, xdim2, ydim2);
+    Texture::init_texture("textures/cannonball.jpg", cannonballTexture, xdim3, ydim3);
+    Texture::init_texture("textures/grass.jpg", groundTexture, xdim4, ydim4);
 
     glGenTextures(4, texIDs);
 

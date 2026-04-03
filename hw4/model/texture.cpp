@@ -20,7 +20,7 @@
 //---------------------------------------
 // Initialize texture image
 //---------------------------------------
-void Texture::init_texture(char *name, unsigned char *&texture, int &xdim, int &ydim)
+void Texture::init_texture(const char *name, unsigned char *&texture, int &xdim, int &ydim)
 {
    // Read jpg image
    im_color image;
