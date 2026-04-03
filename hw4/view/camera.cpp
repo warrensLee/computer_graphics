@@ -16,9 +16,16 @@
  ******************************************************************************************/
 
 #include "camera.h"
+#include "../core/config.h"
 
-Camera::Camera() : currentZoom(10.0f), xCameraPosition(0.0f), yCameraPosition(5.0f), zCameraPosition(20.0f),
-                   yaw(0.0f), pitch(0.0f), roll(0.5f)
+Camera::Camera() : 
+    currentZoom(Config::CAMERA_ZOOM_START), 
+    xCameraPosition(Config::CAMERA_START_X), 
+    yCameraPosition(Config::CAMERA_START_Y), 
+    zCameraPosition(Config::CAMERA_START_Z),
+    yaw(Config::CAMERA_START_YAW), 
+    pitch(Config::CAMERA_START_PITCH), 
+    roll(Config::CAMERA_START_ROLL)
 {
 
 }

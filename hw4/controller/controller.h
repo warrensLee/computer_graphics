@@ -62,9 +62,10 @@ class Controller
         bool lookUpPressed = false;       // up arrow key
         bool lookDownPressed = false;     // down arrow key
 
-        float cameraMoveSpeed = 0.25f;
-        float zoomIncrement = 0.2f;      // smaller increment for finer zoom control
-        float rotationSpeed = 1.0f;      // degrees per frame
+        // These will be initialized in the constructor using Config values
+        float cameraMoveSpeed;
+        float zoomIncrement;
+        float rotationSpeed;
 
         bool isDragging = false;
 
@@ -75,7 +76,7 @@ class Controller
         float clickWorldX = 0.0f;
         float clickWorldY = 0.0f;
 
-        float maxSpeed = 10.0f;
+        float maxSpeed;
 
 };
 

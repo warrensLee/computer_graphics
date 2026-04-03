@@ -17,12 +17,18 @@
 
 #include "controller.h"
 #include "../app/app.h"
+#include "../core/config.h"
 #include <GLUT/glut.h>
 
 // constructor
-Controller::Controller() : camera()
+Controller::Controller() : 
+    camera(),
+    cameraMoveSpeed(Config::CAMERA_MOVE_SPEED),
+    zoomIncrement(Config::CAMERA_ZOOM_INCREMENT),
+    rotationSpeed(Config::CAMERA_ROTATION_SPEED),
+    maxSpeed(Config::CANNONBALL_MAX_SPEED)
 {
-    // nothing to initialize here
+    // nothing else to initialize here
 }
 
 // getters
@@ -84,13 +90,13 @@ void Controller::handleKeyDown(unsigned char key)
     }
     
     // clamp zoom to reasonable bounds
-    if (camera.getCurrentZoom() > 20.0f)
+    if (camera.getCurrentZoom() > Config::CAMERA_ZOOM_MAX)
     {
-        camera.setCurrentZoom(20.0f);
+        camera.setCurrentZoom(Config::CAMERA_ZOOM_MAX);
     }
-    if (camera.getCurrentZoom() < 2.0f)  // minimum zoom (more zoomed in)
+    if (camera.getCurrentZoom() < Config::CAMERA_ZOOM_MIN)  // minimum zoom (more zoomed in)
     {
-        camera.setCurrentZoom(2.0f);
+        camera.setCurrentZoom(Config::CAMERA_ZOOM_MIN);
     }
 }
 
@@ -224,7 +230,7 @@ void Controller::mouseButton(int button, int state, int x, int y)
 
             // scale by distance for power
             // note: screen y increases downwards, world y increases upwards
-            float powerScale = 0.02f;  // reasonable power scale
+            float powerScale = Config::CANNONBALL_POWER_SCALE;  // reasonable power scale
             float launchVX = dirX;
             float launchVY = -dirY;  // invert y for world coordinates
 
@@ -233,7 +239,7 @@ void Controller::mouseButton(int button, int state, int x, int y)
             launchVY *= distance * powerScale;
             
             // Add some upward bias to make the cannon ball go in an arc
-            launchVY += 1.0f;  // give it some initial upward velocity
+            launchVY += Config::CANNONBALL_UPWARD_BIAS;  // give it some initial upward velocity
 
             // clamp speed to maximum
             float speed = sqrt(launchVX * launchVX + launchVY * launchVY);

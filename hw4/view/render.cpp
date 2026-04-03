@@ -16,6 +16,7 @@
  ******************************************************************************************/
 
 #include "render.h"
+#include "../core/config.h"
 #include <cmath>
 
 #ifndef M_PI
@@ -186,8 +187,8 @@ void Render::drawGroundTexture()
     glBegin(GL_QUADS);
 
     // Draw a ground plane in the x-y plane at z=0.0f (visible to camera at z=20 looking along -Z)
-    float groundSize = 50.0f;  // Make ground larger to be visible
-    float groundZ = 0.0f;
+    float groundSize = Config::GROUND_SIZE;  // Make ground larger to be visible
+    float groundZ = Config::GROUND_Z_POSITION;
     
     // The ground is in the x-y plane at z=0
     glTexCoord2f(0.0f, 0.0f); glVertex3f(-groundSize, -groundSize, groundZ);
