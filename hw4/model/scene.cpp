@@ -85,9 +85,13 @@ void Scene::launchProjectile(float vx, float vy, float distance, float spawnX, f
     printf("Scene::launchProjectile called with vx=%f, vy=%f, distance=%f, spawn=(%f, %f)\n", 
            vx, vy, distance, spawnX, spawnY);
     
-    // start at click location
+    // start at click location, but ensure it's above ground
     ballX = spawnX;
     ballY = spawnY;
+    // If spawn position is below ground, adjust it
+    if (ballY < groundY) {
+        ballY = groundY + 0.1f;  // Just above ground
+    }
 
     // Set launch velocity (vx and vy are already scaled appropriately)
     ballVX = vx;
