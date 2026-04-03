@@ -91,7 +91,12 @@ void Scene::launchProjectile(float vx, float vy, float distance, float spawnX, f
     
     // If spawn position is below ground, adjust it
     if (ballY < groundY) {
-        ballY = groundY + 0.1f;  // Just above ground
+        ballY = groundY + 1.0f;  // Well above ground
+    }
+    
+    // Also ensure it's not too high
+    if (ballY > 10.0f) {
+        ballY = 10.0f;
     }
 
     // Set launch velocity (vx and vy are already scaled appropriately)

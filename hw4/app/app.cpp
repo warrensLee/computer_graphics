@@ -82,9 +82,9 @@ void App::display()
     glLoadIdentity();
 
     // apply camera translation (simple fixed camera)
-    // camera is at (0, -5, 10) looking along -Z axis
-    glTranslatef(0.0f, 0.0f, -10.0f);  // move back to see the scene
-    // No rotation - camera looks straight ahead
+    // camera is at (0, 0, 10) looking along -Z axis
+    glTranslatef(0.0f, 0.0f, -10.0f);  // move scene back
+    // No rotation - camera looks straight ahead along -Z
 
     // draw the scene
     renderer.draw(scene);

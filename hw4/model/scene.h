@@ -51,6 +51,6 @@ private:
     float ballVY = 0.0f;
 
     bool ballActive = false;
-    float gravity = -1.0f;      // much stronger gravity
+    float gravity = -2.0f;      // even stronger gravity
     float groundY = -5.0f;
 };

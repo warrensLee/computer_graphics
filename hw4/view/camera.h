@@ -50,9 +50,9 @@ class Camera
     // zoom 
         float currentZoom = 15.0f;       // starting zoom (larger for wider view)
 
-    // camera position - slightly above ground looking forward
+    // camera position - at a good viewing height
         float xCameraPosition = 0.0f;
-        float yCameraPosition = -4.0f;   // slightly above ground (ground is at -5.0f)
+        float yCameraPosition = 0.0f;    // at eye level (ground is at -5.0f, objects at -2.0f)
         float zCameraPosition = 10.0f;   // back from the scene
         
     // camera rotation - looking straight ahead
