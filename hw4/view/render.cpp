@@ -26,9 +26,9 @@ void Render::init()
 {
     glEnable(GL_TEXTURE_2D);
 
-    Texture::init_texture("textures/brick.jpg", texture1, xdim1, ydim1);
-    Texture::init_texture("textures/gravel.jpg", texture2, xdim2, ydim2);
-    Texture::init_texture("textures/cannonball.jpg", texture3, xdim3, ydim3);
+    Texture::init_texture((char*)"textures/brick.jpg", texture1, xdim1, ydim1);
+    Texture::init_texture((char*)"textures/gravel.jpg", texture2, xdim2, ydim2);
+    Texture::init_texture((char*)"textures/cannonball.jpg", texture3, xdim3, ydim3);
 
     glGenTextures(3, texIDs);
 

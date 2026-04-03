@@ -28,6 +28,6 @@ class Texture
     // constructors
         Texture() = default;
 
-        static void init_texture(const char *name, unsigned char *&texture, int &xdim, int &ydim);
+        static void init_texture(char *name, unsigned char *&texture, int &xdim, int &ydim);
 
 };
