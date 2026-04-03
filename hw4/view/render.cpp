@@ -28,9 +28,10 @@ void Render::init()
 
     Texture::init_texture((char*)"textures/brick.jpg", texture1, xdim1, ydim1);
     Texture::init_texture((char*)"textures/gravel.jpg", texture2, xdim2, ydim2);
-    Texture::init_texture((char*)"textures/cannonball.jpg", texture3, xdim3, ydim3);
+    Texture::init_texture((char*)"textures/cannonball.jpg", cannonballTexture, xdim3, ydim3);
+    Texture::init_texture((char*)"textures/grass.jpg", groundTexture, xdim4, ydim4);
 
-    glGenTextures(3, texIDs);
+    glGenTextures(4, texIDs);
 
     glBindTexture(GL_TEXTURE_2D, texIDs[0]);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -51,7 +52,14 @@ void Render::init()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, xdim3, ydim3, 0, GL_RGB, GL_UNSIGNED_BYTE, texture3);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, xdim3, ydim3, 0, GL_RGB, GL_UNSIGNED_BYTE, cannonballTexture);
+
+    glBindTexture(GL_TEXTURE_2D, texIDs[3]);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, xdim4, ydim4, 0, GL_RGB, GL_UNSIGNED_BYTE, groundTexture);
 
 }
 
@@ -162,4 +170,21 @@ void Render::draw(const Scene& scene)
     {
         obj->draw(*this);
     }
+}
+
+void Render::drawGroundTexture()
+{
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, texIDs[3]);
+
+    glBegin(GL_QUADS);
+
+    glTexCoord2f(0.0f, 0.0f); glVertex2f(-1.0f, -0.8f);
+    glTexCoord2f(5.0f, 0.0f); glVertex2f( 1.0f, -0.8f);
+    glTexCoord2f(5.0f, 1.0f); glVertex2f( 1.0f, -1.0f);
+    glTexCoord2f(0.0f, 1.0f); glVertex2f(-1.0f, -1.0f);
+
+    glEnd();
+
+    glDisable(GL_TEXTURE_2D);
 }

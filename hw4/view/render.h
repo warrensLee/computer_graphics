@@ -39,17 +39,22 @@ public:
 
     void drawCube(const Object3D& obj);
     void drawSphere(const Object3D& obj);
+    void drawGroundTexture();
+
 
 private:
     void drawCubeGeometry(float xmin, float ymin, float zmin, float xmax, float ymax, float zmax);
 
     unsigned char* texture1 = nullptr;
     unsigned char* texture2 = nullptr;  
-    unsigned char* texture3 = nullptr;
+    unsigned char* cannonballTexture = nullptr;
+    unsigned char* groundTexture = nullptr;
+
 
     int xdim1 = 0, ydim1 = 0;
     int xdim2 = 0, ydim2 = 0;
     int xdim3 = 0, ydim3 = 0;
+    int xdim4 = 0, ydim4 = 0;
 
     GLuint texIDs[3];
 };
