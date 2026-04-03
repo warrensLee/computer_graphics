@@ -56,6 +56,7 @@ namespace Config
     constexpr inline float CANNONBALL_HEIGHT = 1.5f;
     constexpr inline float CANNONBALL_DEPTH = 1.5f;
 
-     constexpr inline float MAX_ACTIVE_CANNONBALLS = 3.0f;
+    // Maximum number of cannonballs that can be active at once
+    constexpr inline int MAX_ACTIVE_CANNONBALLS = 3;
 }
 
