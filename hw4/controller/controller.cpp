@@ -5,22 +5,24 @@
  *  Last Modified:  March 10, 2026
  *
  *  Description:
- *  Implements input handling for keyboard controls and camera interaction.
+ *  implements input handling for keyboard controls and camera interaction.
  * 
  *  Dependencies:
  *  controller.h and linked camera/application systems
  * 
  *  Notes:
- *  Used to manage movement, zooming, and user interaction.
+ *  used to manage movement, zooming, and user interaction.
  *
  ******************************************************************************************/
 
 #include "controller.h"
 #include "../app/app.h"
+#include <GLUT/glut.h>
+
 // constructor
 Controller::Controller() : camera()
 {
-
+    // nothing to initialize here
 }
 
 // getters
@@ -54,10 +56,10 @@ const Camera& Controller::getCamera() const
 // functionality
 void Controller::handleKeyDown(unsigned char key)
 {
-     // implementing a zoom bound of 0.0 to  5.0
+    // handle zoom and movement keys
     switch(key)
     {
-    // zoom
+    // zoom in/out
         case 'e':
             camera.setCurrentZoom(camera.getCurrentZoom() + zoomIncrement);
             break;
@@ -80,16 +82,16 @@ void Controller::handleKeyDown(unsigned char key)
             rightPressed = true;
             break;
     }
-    // actual clamp logic as mentioned above
+    
+    // clamp zoom to reasonable bounds
     if (camera.getCurrentZoom() > 20.0f)
     {
         camera.setCurrentZoom(20.0f);
     }
-    if (camera.getCurrentZoom() < 0.5f)
+    if (camera.getCurrentZoom() < 1.0f)
     {
-        camera.setCurrentZoom(0.5f);
+        camera.setCurrentZoom(1.0f);
     }
-
 }
 
 void Controller::handleKeyUp(unsigned char key)
@@ -156,6 +158,7 @@ void Controller::handleSpecialKeyUp(int key)
 
 void Controller::update()
 {
+    // handle camera movement
     if (upPressed)
         camera.setCameraY(camera.getCameraY() - cameraMoveSpeed);
     if (downPressed)
@@ -165,18 +168,17 @@ void Controller::update()
     if (rightPressed)
         camera.setCameraX(camera.getCameraX() - cameraMoveSpeed);
     
-    // Apply rotation
+    // handle camera rotation (yaw)
     if (rotateLeftPressed)
         camera.rotateYaw(rotationSpeed);
     if (rotateRightPressed)
         camera.rotateYaw(-rotationSpeed);
     
-    // Apply pitch (look up/down)
+    // handle looking up/down (pitch)
     if (lookUpPressed)
         camera.rotatePitch(rotationSpeed);
     if (lookDownPressed)
         camera.rotatePitch(-rotationSpeed);
-
 }
 
 void Controller::mouseButton(int button, int state, int x, int y)
@@ -185,51 +187,50 @@ void Controller::mouseButton(int button, int state, int x, int y)
     {
         if (state == GLUT_DOWN)
         {
+            // start dragging
             isDragging = true;
             startX = x;
             startY = y;
         }
         else if (state == GLUT_UP)
         {
+            // end dragging and launch cannon ball
             isDragging = false;
             endX = x;
             endY = y;
 
-            // Compute shot vector here
+            // compute drag vector
             float dx = endX - startX;
             float dy = endY - startY;
 
             float distance = sqrt(dx * dx + dy * dy);
             
-            // safe guard to avoid dividing by 0
+            // avoid division by zero
             if (distance == 0.0f)
                 return;
 
-            // Normalize direction
+            // normalize direction
             float dirX = dx / distance;
             float dirY = dy / distance;
 
-            // Scale by distance for power, and adjust signs for coordinate system
-            // In screen coordinates, y increases downwards, but in world coordinates, y should increase upwards
-            // So invert dy
+            // scale by distance for power
+            // note: screen y increases downwards, world y increases upwards
             float powerScale = 0.02f;
             float launchVX = dirX;
-            float launchVY = -dirY;  // Invert for proper world coordinates
+            float launchVY = -dirY;  // invert y for world coordinates
 
-            // Scale by distance (power)
+            // apply power scaling
             launchVX *= distance * powerScale;
             launchVY *= distance * powerScale;
 
-            // Clamp maximum speed if needed
+            // clamp speed to maximum
             float speed = sqrt(launchVX * launchVX + launchVY * launchVY);
-
-            // make sure its not going crazy fast
             if (speed > maxSpeed) {
                 launchVX = launchVX / speed * maxSpeed;
                 launchVY = launchVY / speed * maxSpeed;
             }
 
-            // now to launch
+            // launch the cannon ball
             printf("Launching: distance=%f, vx=%f, vy=%f\n", distance, launchVX, launchVY);
             App::callLaunchProjectile(launchVX, launchVY, distance);
         }

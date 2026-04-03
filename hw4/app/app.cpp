@@ -5,14 +5,14 @@
  *  Last Modified:  March 10, 2026
  *
  *  Description:
- *  Implements the main application flow, including initialization of terrain,
+ *  implements the main application flow, including initialization of terrain,
  *  camera, rendering systems, and OpenGL state setup.
  * 
  *  Dependencies:
  *  app.h and all linked subsystems
  * 
  *  Notes:
- *  Coordinates startup behavior before entering the render loop.
+ *  coordinates startup behavior before entering the render loop.
  *
  ******************************************************************************************/
 
@@ -20,14 +20,13 @@
 #include "app.h"
 
 
-//********************** Initialization **********************//
+//********************** initialization **********************//
 
 App* App::instance = nullptr;
 
 App::App() : renderer(), controller(), scene()
 {
     instance = this;
-
 }
 
 void App::init()
@@ -38,10 +37,11 @@ void App::init()
 
 void App::initOpenGL()
 {
+    // set black background
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
+    // enable depth testing for 3D
     glEnable(GL_DEPTH_TEST);
-
 }
 
 
@@ -49,25 +49,27 @@ void App::initOpenGL()
 
 void App::display()
 {
-    // get actual window dimensions
+    // get window size for aspect ratio
     int width = glutGet(GLUT_WINDOW_WIDTH);
     int height = glutGet(GLUT_WINDOW_HEIGHT);
     
     float zoom = controller.getCamera().getCurrentZoom();
     
+    // clear buffers
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    // set up projection matrix
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     
     // calculate aspect ratio
     float aspect = (float)width / (float)height;
     
-    // near and far planes (positive values)
+    // near and far clipping planes
     float near = 0.1f;
     float far = 50.0f;
     
-    // Adjust orthographic bounds based on zoom and aspect ratio
+    // adjust orthographic bounds based on zoom and aspect ratio
     float right = zoom * aspect;
     float left = -right;
     float top = zoom;
@@ -75,22 +77,25 @@ void App::display()
     
     glOrtho(left, right, bottom, top, near, far);
 
+    // switch to modelview matrix for scene rendering
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    // Apply camera translation
+    // apply camera translation
     glTranslatef(controller.getCamera().getCameraX(), 
                  controller.getCamera().getCameraY(), 
                  controller.getCamera().getCameraZ() - 10.0f);
 
-    // Apply camera rotation (in order: roll, pitch, yaw)
-    // Note: OpenGL applies transformations in reverse order
+    // apply camera rotation (roll, pitch, yaw)
+    // note: OpenGL applies transformations in reverse order
     glRotatef(controller.getCamera().getRoll(), 0.0f, 0.0f, 1.0f);
     glRotatef(controller.getCamera().getPitch(), 1.0f, 0.0f, 0.0f);
     glRotatef(controller.getCamera().getYaw(), 0.0f, 1.0f, 0.0f);
 
+    // draw the scene
     renderer.draw(scene);
 
+    // swap buffers for smooth animation
     glutSwapBuffers();
 }
 
@@ -132,18 +137,22 @@ void App::specialKeyUp(int key, int x, int y)
 
 void App::idle()
 {
+    // update controller state (movement, rotation)
     controller.update();
-    // Update the scene with delta time
-    // For simplicity, use a fixed delta time
+    
+    // calculate delta time for smooth animation
     static int lastTime = 0;
     int currentTime = glutGet(GLUT_ELAPSED_TIME);
     float dt = 0.0f;
     if (lastTime != 0) {
-        dt = (currentTime - lastTime) / 1000.0f;  // Convert to seconds
+        dt = (currentTime - lastTime) / 1000.0f;  // convert to seconds
     }
     lastTime = currentTime;
     
+    // update scene objects
     scene.update(dt);
+    
+    // request redisplay
     glutPostRedisplay();
 }
 
