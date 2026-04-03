@@ -273,6 +273,7 @@ void Controller::mouseButton(int button, int state, int x, int y)
             worldY += camera.getCameraY();
             
             // launch the cannon ball from click position
+            printf("Mouse click at screen (%d, %d) -> world (%f, %f)\n", startX, startY, worldX, worldY);
             printf("Launching from (%f, %f): distance=%f, vx=%f, vy=%f\n", worldX, worldY, distance, launchVX, launchVY);
             App::callLaunchProjectile(launchVX, launchVY, distance, worldX, worldY);
         }

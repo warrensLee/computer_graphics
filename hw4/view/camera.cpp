@@ -17,9 +17,15 @@
 
 #include "camera.h"
 
-Camera::Camera() : currentZoom(8.0f), xCameraPosition(0.0f), yCameraPosition(0.0f), zCameraPosition(10.0f),
+Camera::Camera() : currentZoom(8.0f), xCameraPosition(0.0f), yCameraPosition(-2.0f), zCameraPosition(10.0f),
                    yaw(0.0f), pitch(0.0f), roll(0.0f)
 {
+    // Starting camera position:
+    // x: 0.0f (left/right)
+    // y: -2.0f (up/down) - lower to see ground better
+    // z: 10.0f (forward/back - positive means camera is in front of scene)
+    // zoom: 8.0f (smaller = more zoomed in)
+    // To change starting position, modify the values above and in camera.h
 }
 
 float Camera::getCameraX() const

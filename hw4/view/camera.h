@@ -52,8 +52,8 @@ class Camera
 
     // camera position - clear starting position
         float xCameraPosition = 0.0f;
-        float yCameraPosition = 0.0f;    // camera height
-        float zCameraPosition = 15.0f;   // camera distance from scene
+        float yCameraPosition = -2.0f;    // camera height (lower to see ground better)
+        float zCameraPosition = 10.0f;   // camera distance from scene (matches constructor)
         
     // camera rotation - looking straight ahead
         float yaw = 0.0f;      // rotation around Y axis (left/right)
