@@ -114,7 +114,7 @@ void Scene::launchProjectile(float vx, float vy, float distance, float spawnX, f
     printf("Setting cannon ball texture to index %d\n", textureIndex);
     cannonBall->setTexture(textureIndex);  
     cannonBall->setPosition(ballX, ballY, ballZ);
-    cannonBall->setSize(0.8f, 0.8f, 0.8f);
+    cannonBall->setSize(Config::CANNONBALL_WIDTH, Config::CANNONBALL_HEIGHT, Config::CANNONBALL_DEPTH);
     cannonBall->setRotationSpeed(0.2f, 0.2f, 0.2f);
     addObject(std::move(cannonBall));
 }

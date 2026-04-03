@@ -20,6 +20,7 @@
 #pragma once
 
 #include "object3D.h"
+#include "../core/config.h"
 #include "cubeObject.h"
 #include "sphereObject.h"
 #include <vector>
