@@ -56,8 +56,8 @@ class Controller
         bool leftPressed = false;
         bool rightPressed = false;
 
-        float cameraMoveSpeed = 0.025f;
-        float zoomIncrement = 0.05f;
+        float cameraMoveSpeed = 0.1f;
+        float zoomIncrement = 0.5f;
 
         bool isDragging = false;
 

@@ -49,28 +49,39 @@ void App::initOpenGL()
 
 void App::display()
 {
-    // printf("display called\n");
+    // Get window dimensions
+    int width = glutGet(GLUT_WINDOW_WIDTH);
+    int height = glutGet(GLUT_WINDOW_HEIGHT);
     
-    // current zoom level
     float zoom = controller.getCamera().getCurrentZoom();
-    //printf("zoom = %f"), zoom;
-
+    
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-
-    // this will adjust out zoom factor based on what
-    // our controller handles the zoom. 
-    glOrtho(-zoom, zoom, -zoom, zoom, -zoom, zoom);
+    
+    // Calculate aspect ratio
+    float aspect = (float)width / (float)height;
+    
+    // Use proper near and far planes (positive values)
+    float nearPlane = 0.1f;
+    float farPlane = 100.0f;
+    
+    // Adjust orthographic bounds based on zoom and aspect ratio
+    float right = zoom * aspect;
+    float left = -right;
+    float top = zoom;
+    float bottom = -top;
+    
+    glOrtho(left, right, bottom, top, nearPlane, farPlane);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    // this is awesome! it sets the camera to what the controller has
-    // set it to. so now we can move around with WASD
-    glTranslatef(controller.getCamera().getCameraX(), controller.getCamera().getCameraY(), 0.0f);
+    // Apply camera translation (note: z translation to move back for better view)
+    glTranslatef(controller.getCamera().getCameraX(), controller.getCamera().getCameraY(), -5.0f);
 
+    // Apply fixed rotation for isometric view
     glRotatef(60.0f, 1.0f, 0.0f, 0.0f);
     glRotatef(30.0f, 0.0f, 1.0f, 0.0f);
 

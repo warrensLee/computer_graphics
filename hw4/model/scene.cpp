@@ -25,20 +25,18 @@
 
 Scene::Scene()
 {
-    // use auto because we have multiple types
-    // of objects, and we want to avoid repeating
-    // the type.
+    // Create objects at appropriate positions
     auto cube = std::make_unique<Cube>();
     cube->setTexture(0);
-    cube->setPosition(-2.0f, 0.0f, 0.0f);
-    cube->setSize(2.0f, 2.0f, 2.0f);
+    cube->setPosition(-5.0f, 0.0f, 0.0f);
+    cube->setSize(1.0f, 1.0f, 1.0f);
     cube->setRotationSpeed(0.0f, 20.0f, 0.0f);
     addObject(std::move(cube));
 
     auto sphere = std::make_unique<Sphere>();
     sphere->setTexture(1);
-    sphere->setPosition(2.0f, 0.0f, 0.0f);
-    sphere->setSize(1.5f, 1.5f, 1.5f);
+    sphere->setPosition(5.0f, 0.0f, 0.0f);
+    sphere->setSize(1.0f, 1.0f, 1.0f);
     sphere->setRotationSpeed(15.0f, 10.0f, 0.0f);
     addObject(std::move(sphere));
 }

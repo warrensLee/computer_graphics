@@ -182,10 +182,14 @@ void Render::drawGroundTexture()
 
     glBegin(GL_QUADS);
 
-    glTexCoord2f(0.0f, 0.0f); glVertex2f(-1.0f, -0.8f);
-    glTexCoord2f(5.0f, 0.0f); glVertex2f( 1.0f, -0.8f);
-    glTexCoord2f(5.0f, 1.0f); glVertex2f( 1.0f, -1.0f);
-    glTexCoord2f(0.0f, 1.0f); glVertex2f(-1.0f, -1.0f);
+    // Draw a larger ground plane
+    float groundSize = 20.0f;
+    float groundY = -5.0f;
+    
+    glTexCoord2f(0.0f, 0.0f); glVertex3f(-groundSize, groundY, -groundSize);
+    glTexCoord2f(5.0f, 0.0f); glVertex3f( groundSize, groundY, -groundSize);
+    glTexCoord2f(5.0f, 5.0f); glVertex3f( groundSize, groundY,  groundSize);
+    glTexCoord2f(0.0f, 5.0f); glVertex3f(-groundSize, groundY,  groundSize);
 
     glEnd();
 }
