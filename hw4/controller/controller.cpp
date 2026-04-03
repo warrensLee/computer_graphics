@@ -84,13 +84,13 @@ void Controller::handleKeyDown(unsigned char key)
     }
     
     // clamp zoom to reasonable bounds
-    if (camera.getCurrentZoom() > 15.0f)
+    if (camera.getCurrentZoom() > 20.0f)
     {
-        camera.setCurrentZoom(15.0f);
+        camera.setCurrentZoom(20.0f);
     }
-    if (camera.getCurrentZoom() < 1.0f)  // minimum zoom (more zoomed in)
+    if (camera.getCurrentZoom() < 2.0f)  // minimum zoom (more zoomed in)
     {
-        camera.setCurrentZoom(1.0f);
+        camera.setCurrentZoom(2.0f);
     }
 }
 
@@ -158,19 +158,19 @@ void Controller::handleSpecialKeyUp(int key)
 
 void Controller::update()
 {
-    // handle camera movement - make intuitive
-    // W: move camera up (scene moves down) - press W to see more of what's above
-    // S: move camera down (scene moves up) - press S to see more of what's below
-    // A: move camera left (scene moves right) - press A to see more to the left
-    // D: move camera right (scene moves left) - press D to see more to the right
+    // handle camera movement - reversed for intuitive control
+    // W: move camera down (scene moves up) - press W to see more below
+    // S: move camera up (scene moves down) - press S to see more above
+    // A: move camera right (scene moves left) - press A to see more to the right
+    // D: move camera left (scene moves right) - press D to see more to the left
     if (upPressed)
-        camera.setCameraY(camera.getCameraY() + cameraMoveSpeed);  // W: move camera up
+        camera.setCameraY(camera.getCameraY() - cameraMoveSpeed);  // W: move camera down
     if (downPressed)
-        camera.setCameraY(camera.getCameraY() - cameraMoveSpeed);  // S: move camera down
+        camera.setCameraY(camera.getCameraY() + cameraMoveSpeed);  // S: move camera up
     if (leftPressed)
-        camera.setCameraX(camera.getCameraX() - cameraMoveSpeed);  // A: move camera left
+        camera.setCameraX(camera.getCameraX() + cameraMoveSpeed);  // A: move camera right
     if (rightPressed)
-        camera.setCameraX(camera.getCameraX() + cameraMoveSpeed);  // D: move camera right
+        camera.setCameraX(camera.getCameraX() - cameraMoveSpeed);  // D: move camera left
     
     // Disable camera rotation for simplicity
     // (commented out to keep camera fixed)
