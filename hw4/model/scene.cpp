@@ -68,7 +68,6 @@ void Scene::update(float dt)
     updateCannonBall(dt);
     
     // Update the position of the cannon ball object if it exists
-    // We need to find the cannon ball in the objects list
     // For simplicity, let's assume the last object is the cannon ball
     if (ballActive && !objects.empty()) {
         // Update the last object's position to match ballX, ballY
@@ -92,7 +91,10 @@ void Scene::launchProjectile(float vx, float vy, float distance)
     
     // Also, create a visual cannon ball object
     auto cannonBall = std::make_unique<Sphere>();
-    cannonBall->setTexture(4);  // Use a different texture index if available
+    // Use texture index 2 for cannonball.jpg
+    int textureIndex = 2;
+    printf("Setting cannon ball texture to index %d\n", textureIndex);
+    cannonBall->setTexture(textureIndex);  
     cannonBall->setPosition(ballX, ballY, 0.0f);
     cannonBall->setSize(0.5f, 0.5f, 0.5f);
     cannonBall->setRotationSpeed(0.0f, 0.0f, 0.0f);
@@ -112,6 +114,11 @@ void Scene::updateCannonBall(float dt)
         {
             ballY = groundY;
             ballActive = false;
+            // Remove the cannon ball object when it hits the ground
+            // Assuming the last object is the cannon ball
+            if (!objects.empty()) {
+                objects.pop_back();
+            }
         }
     }
 }
