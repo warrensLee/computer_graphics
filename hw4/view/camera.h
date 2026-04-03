@@ -20,7 +20,7 @@ class Camera
 {
     public:
     // constructors
-        Camera() = default;
+        Camera();
          
                 
     // getters
@@ -39,11 +39,11 @@ class Camera
 
     private:
     // zoom 
-        float currentZoom = 4.0f;       //starting zoom
+        float currentZoom;       //starting zoom
 
     // camera
-        float xCameraPosition = 0.0f;
-        float yCameraPosition = 0.5f;
+        float xCameraPosition;
+        float yCameraPosition;
 
 
 };

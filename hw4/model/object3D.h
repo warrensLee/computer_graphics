@@ -65,8 +65,6 @@ public:
     int getTexture() const;
     void setTexture(int t);
 
-
-
 private:
     float x = 0.0f;
     float y = 0.0f;
@@ -89,6 +87,4 @@ private:
     float depth = 1.0f;
 
     int texture = 0;
-    
-    float gravity = -0.02f;
 };

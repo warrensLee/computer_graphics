@@ -41,3 +41,5 @@ clean:
 	rm -f $(OBJS) $(TARGET)
 	cd core/jpeg && make clean || true
 	cd core/libim && make clean || true
+
+.PHONY: all clean

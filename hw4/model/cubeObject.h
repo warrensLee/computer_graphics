@@ -8,7 +8,7 @@
  *  Defines the Cube class, a textured cube object that inherits from Object3D.
 
  *  Dependencies:
- *  none
+ *  object3D.h
  * 
  *  Notes:
  *
@@ -17,7 +17,8 @@
 #pragma once
 
 #include "object3D.h"
-#include "../view/render.h"
+
+class Render;
 
 class Cube : public Object3D
 {

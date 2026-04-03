@@ -5,9 +5,10 @@
  *  Last Modified:  March 10, 2026
  *
  *  Description:
+ *  Defines the Sphere class, a textured sphere object that inherits from Object3D.
  * 
  *  Dependencies:
- *  none
+ *  object3D.h
  * 
  *  Notes:
  *
@@ -16,7 +17,8 @@
 #pragma once
 
 #include "object3D.h"
-#include "../view/render.h"
+
+class Render;
 
 class Sphere : public Object3D
 {
