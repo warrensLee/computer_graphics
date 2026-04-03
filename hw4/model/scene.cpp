@@ -85,7 +85,7 @@ void Scene::launchProjectile(float vx, float vy, float distance, float spawnX, f
     printf("Scene::launchProjectile called with vx=%f, vy=%f, distance=%f, spawn=(%f, %f)\n", 
            vx, vy, distance, spawnX, spawnY);
     
-    // Start at click location
+    // start at click location
     ballX = spawnX;
     ballY = spawnY;
 
