@@ -47,6 +47,11 @@ void Render::init()
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, xdim2, ydim2, 0, GL_RGB, GL_UNSIGNED_BYTE, texture2);
     
     glBindTexture(GL_TEXTURE_2D, texIDs[2]);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, xdim3, ydim3, 0, GL_RGB, GL_UNSIGNED_BYTE, texture3);
 
 }
 
@@ -109,7 +114,7 @@ void Render::drawCubeGeometry(float xmin, float ymin, float zmin,
 void Render::drawCube(const Object3D& obj)
 {
     int tex = obj.getTexture();
-    if (tex < 0 || tex > 1)
+    if (tex < 0 || tex > 2)
         tex = 0;
 
     glBindTexture(GL_TEXTURE_2D, texIDs[tex]);
@@ -129,7 +134,7 @@ void Render::drawCube(const Object3D& obj)
 void Render::drawSphere(const Object3D& obj)
 {
     int tex = obj.getTexture();
-    if (tex < 0 || tex > 1)
+    if (tex < 0 || tex > 2)
         tex = 0;
 
     glBindTexture(GL_TEXTURE_2D, texIDs[tex]);
