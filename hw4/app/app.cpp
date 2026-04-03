@@ -87,7 +87,8 @@ void App::display()
                  -controller.getCamera().getCameraY(), 
                  -controller.getCamera().getCameraZ());  // move scene opposite to camera position
     
-    // No rotation for simplicity - camera looks straight ahead
+    // Rotate camera to look slightly downward to see the ground
+    glRotatef(30.0f, 1.0f, 0.0f, 0.0f);  // pitch down 30 degrees
 
     // draw the scene
     renderer.draw(scene);

@@ -178,18 +178,24 @@ void Render::draw(const Scene& scene)
 
 void Render::drawGroundTexture()
 {
+    // Disable depth testing for ground to ensure it's always visible
+    glDisable(GL_DEPTH_TEST);
+    
     glBindTexture(GL_TEXTURE_2D, texIDs[3]);
 
     glBegin(GL_QUADS);
 
     // Draw a larger ground plane
-    float groundSize = 20.0f;
+    float groundSize = 30.0f;  // Make ground larger
     float groundY = -5.0f;
     
     glTexCoord2f(0.0f, 0.0f); glVertex3f(-groundSize, groundY, -groundSize);
-    glTexCoord2f(5.0f, 0.0f); glVertex3f( groundSize, groundY, -groundSize);
-    glTexCoord2f(5.0f, 5.0f); glVertex3f( groundSize, groundY,  groundSize);
-    glTexCoord2f(0.0f, 5.0f); glVertex3f(-groundSize, groundY,  groundSize);
+    glTexCoord2f(10.0f, 0.0f); glVertex3f( groundSize, groundY, -groundSize);
+    glTexCoord2f(10.0f, 10.0f); glVertex3f( groundSize, groundY,  groundSize);
+    glTexCoord2f(0.0f, 10.0f); glVertex3f(-groundSize, groundY,  groundSize);
 
     glEnd();
+    
+    // Re-enable depth testing for other objects
+    glEnable(GL_DEPTH_TEST);
 }
