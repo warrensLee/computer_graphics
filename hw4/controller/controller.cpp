@@ -220,13 +220,16 @@ void Controller::mouseButton(int button, int state, int x, int y)
 
             // scale by distance for power
             // note: screen y increases downwards, world y increases upwards
-            float powerScale = 0.02f;
+            float powerScale = 0.05f;  // increased for more power
             float launchVX = dirX;
             float launchVY = -dirY;  // invert y for world coordinates
 
             // apply power scaling
             launchVX *= distance * powerScale;
             launchVY *= distance * powerScale;
+            
+            // Add some upward bias to make the cannon ball go in an arc
+            launchVY += 2.0f;  // give it some initial upward velocity
 
             // clamp speed to maximum
             float speed = sqrt(launchVX * launchVX + launchVY * launchVY);
@@ -255,7 +258,12 @@ void Controller::mouseButton(int button, int state, int x, int y)
             // Convert screen (0 to width-1) to world (left to right)
             float worldX = left + (right - left) * ((float)startX / (float)width);
             // Convert screen (0 to height-1) to world (bottom to top) - invert Y
+            // Also adjust for camera pitch (15 degrees down)
             float worldY = bottom + (top - bottom) * ((float)(height - startY) / (float)height);
+            
+            // Adjust for camera being at y=0 looking down 15 degrees
+            // This is approximate - the camera sees the ground at y=-5
+            worldY -= 2.0f;  // shift down to account for camera height
             
             // launch the cannon ball from click position
             printf("Launching from (%f, %f): distance=%f, vx=%f, vy=%f\n", worldX, worldY, distance, launchVX, launchVY);

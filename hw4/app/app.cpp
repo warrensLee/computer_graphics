@@ -84,7 +84,9 @@ void App::display()
     // apply camera translation (simple fixed camera)
     // camera is at (0, 0, 10) looking along -Z axis
     glTranslatef(0.0f, 0.0f, -10.0f);  // move scene back
-    // No rotation - camera looks straight ahead along -Z
+    
+    // Add a slight downward tilt to see the ground better
+    glRotatef(15.0f, 1.0f, 0.0f, 0.0f);  // pitch down 15 degrees
 
     // draw the scene
     renderer.draw(scene);

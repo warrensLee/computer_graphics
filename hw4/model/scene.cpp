@@ -85,19 +85,22 @@ void Scene::launchProjectile(float vx, float vy, float distance, float spawnX, f
     printf("Scene::launchProjectile called with vx=%f, vy=%f, distance=%f, spawn=(%f, %f)\n", 
            vx, vy, distance, spawnX, spawnY);
     
-    // start at click location, but ensure it's above ground
+    // start at click location, but ensure it's at a reasonable height
     ballX = spawnX;
     ballY = spawnY;
     
-    // If spawn position is below ground, adjust it
-    if (ballY < groundY) {
-        ballY = groundY + 1.0f;  // Well above ground
+    // If spawn position is too low, adjust it
+    if (ballY < groundY + 1.0f) {
+        ballY = groundY + 2.0f;  // Well above ground
     }
     
     // Also ensure it's not too high
-    if (ballY > 10.0f) {
-        ballY = 10.0f;
+    if (ballY > 5.0f) {
+        ballY = 5.0f;
     }
+    
+    // Add some randomness to the Z position for depth
+    float ballZ = 0.0f;
 
     // Set launch velocity (vx and vy are already scaled appropriately)
     ballVX = vx;
@@ -112,7 +115,7 @@ void Scene::launchProjectile(float vx, float vy, float distance, float spawnX, f
     int textureIndex = 2;
     printf("Setting cannon ball texture to index %d\n", textureIndex);
     cannonBall->setTexture(textureIndex);  
-    cannonBall->setPosition(ballX, ballY, 0.0f);
+    cannonBall->setPosition(ballX, ballY, ballZ);
     cannonBall->setSize(0.5f, 0.5f, 0.5f);
     cannonBall->setRotationSpeed(0.0f, 0.0f, 0.0f);
     addObject(std::move(cannonBall));

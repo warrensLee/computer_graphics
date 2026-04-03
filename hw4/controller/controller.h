@@ -75,7 +75,7 @@ class Controller
         float clickWorldX = 0.0f;
         float clickWorldY = 0.0f;
 
-        float maxSpeed = 3.0f;
+        float maxSpeed = 10.0f;
 
 };
 
