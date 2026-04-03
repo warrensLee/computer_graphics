@@ -16,7 +16,7 @@
  ******************************************************************************************/
 
 #include "controller.h"
-
+#include "../app/app.h"
 // constructor
 Controller::Controller() : camera()
 {
@@ -166,5 +166,67 @@ void Controller::update()
 
 }
 
+void Controller::mouseButton(int button, int state, int x, int y)
+{
+    if (button == GLUT_LEFT_BUTTON)
+    {
+        if (state == GLUT_DOWN)
+        {
+            isDragging = true;
+            startX = x;
+            startY = y;
+        }
+        else if (state == GLUT_UP)
+        {
+            isDragging = false;
+            endX = x;
+            endY = y;
+
+            // Compute shot vector here
+            float dx = endX - startX;
+            float dy = endY - startY;
+
+            float distance = sqrt(dx * dx + dy * dy);
+            
+            // safe guard to avoid dividing by 0
+            if (distance == 0.0f)
+                return;
+
+            // Normalize direction
+            float dirX = dx / distance;
+            float dirY = dy / distance;
+
+            float powerScale = 0.02f;
+            float launchVX = dx / distance;
+            float launchVY = -dy / distance;
+
+            // now to clamp so it doesnt go too far
+            if (launchVX > 3.0f) 
+                launchVX = 3.0f;
+            if (launchVX < -3.0f) 
+                launchVX = -3.0f;
+            if (launchVY > 3.0f) 
+                launchVY = 3.0f;
+            if (launchVY < -3.0f) 
+                launchVY = -3.0f;
+
+            // This is your "launch"
+            if (distance > 0.0f)
+                App::callLaunchProjectile(launchVX, launchVY, distance);
+        }
+    }
+}
+
+void Controller::mouseMotion(int x, int y)
+{
+    if (isDragging)
+    {
+        endX = x;
+        endY = y;
+
+        // You can visualize drag line here
+        glutPostRedisplay();
+    }
+}
         
 

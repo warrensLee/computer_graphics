@@ -112,6 +112,15 @@ void App::idle()
     glutPostRedisplay();
 }
 
+void App::mouseButton(int button, int state, int x, int y)
+{
+    controller.mouseButton(button, state, x, y);
+}
+
+void App::mouseMotion(int x, int y)
+{
+    controller.mouseMotion(x, y);
+}
 
 
 //********************** Callbacks **********************//
@@ -146,4 +155,29 @@ void App::callDisplay()
     {
         instance->display();
     }
+}
+
+void App::callMouseButton(int button, int state, int x, int y)
+{
+    if (instance)
+    {
+        printf("calling mouse button");
+        instance->mouseButton(button, state, x, y);
+    }    
+}
+
+void App::callMouseMotion(int x, int y)
+{
+    if (instance)
+    {
+        printf("calling mouse motion");
+        instance->mouseMotion(x, y);
+    }
+}
+
+void App::callLaunchProjectile(float launchVX, float launchVY, float distance)
+{
+    printf("launching projectile");
+    instance->scene.launchProjectile(launchVX, launchVY, distance);
+
 }
