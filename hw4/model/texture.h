@@ -5,13 +5,13 @@
  *  Last Modified:  April 2, 2026
  *
  *  Description:
- *  Declares camera position and viewing controls for scene navigation.
+ *  Declares texture loading functionality.
  * 
  *  Dependencies:
- *  none
+ *  OpenGL, GLUT, im_color
  * 
  *  Notes:
- *  Used by rendering and controller systems.
+ *  Used by rendering system.
  *
  ******************************************************************************************/
 

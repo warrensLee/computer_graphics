@@ -81,12 +81,6 @@ void App::display()
 
 
 
-void App::reshape(int w, int h)
-{
-    // unused
-    (void) w;
-    (void) h;
-}
 
 void App::keyboard(unsigned char key, int x, int y)
 {

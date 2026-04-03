@@ -24,16 +24,6 @@ Controller::Controller() : camera()
 }
 
 // getters
-bool Controller::getZoomInPressed() const
-{
-    return zoomInPressed;
-}
-
-bool Controller::getZoomOutPressed() const
-{
-    return zoomOutPressed;
-}
-
 bool Controller::getUpPressed() const
 {
     return upPressed;
@@ -52,37 +42,6 @@ bool Controller::getLeftPressed() const
 bool Controller::getRightPressed() const
 {
     return rightPressed;
-}
-
-// setters   
-void Controller::setZoomInPressed(bool a)
-{
-    zoomInPressed = a;
-}
-
-void Controller::setZoomOutPressed(bool a)
-{
-    zoomOutPressed = a;
-}
-
-void Controller::setUpPressed(bool a)
-{
-    upPressed = a;
-}
-
-void Controller::setDownPressed(bool a)
-{
-    downPressed = a;
-}
-
-void Controller::setLeftPressed(bool a)
-{
-    leftPressed = a;
-}
-
-void Controller::setRightPressed(bool a)
-{
-    rightPressed = a;
 }
 
 Camera Controller::getCamera() const

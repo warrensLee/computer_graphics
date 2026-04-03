@@ -33,23 +33,11 @@ class Controller
     // getters
         Camera getCamera() const;
 
-        bool getZoomInPressed() const;
-        bool getZoomOutPressed() const;
-
+        // Movement state getters (used internally)
         bool getUpPressed() const;
         bool getDownPressed() const;
         bool getLeftPressed() const;
         bool getRightPressed() const;
-
-
-
-    // setters   
-        void setZoomInPressed(bool a);
-        void setZoomOutPressed(bool a);
-        void setUpPressed(bool a);
-        void setDownPressed(bool a);
-        void setLeftPressed(bool a);
-        void setRightPressed(bool a);  
 
 
     // functionality
@@ -63,9 +51,6 @@ class Controller
 
     private:
         Camera camera;
-        bool zoomInPressed = false;
-        bool zoomOutPressed = false;
-
         bool upPressed = false;
         bool downPressed = false;
         bool leftPressed = false;

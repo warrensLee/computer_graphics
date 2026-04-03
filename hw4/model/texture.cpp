@@ -1,17 +1,17 @@
 /******************************************************************************************
- *  File Name:      camera.h
+ *  File Name:      texture.cpp
  *  Author:         Warren Roberts
  *  Created:        February 26, 2026
  *  Last Modified:  March 10, 2026
  *
  *  Description:
- *  Declares camera position and viewing controls for scene navigation.
+ *  Implements texture loading from JPEG files.
  * 
  *  Dependencies:
- *  none
+ *  texture.h, im_color
  * 
  *  Notes:
- *  Used by rendering and controller systems.
+ *  Used by rendering system.
  *
  ******************************************************************************************/
 
