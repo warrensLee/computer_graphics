@@ -64,8 +64,8 @@ void App::display()
     float aspect = (float)width / (float)height;
     
     // Use proper near and far planes (positive values)
-    float nearPlane = 0.1f;
-    float farPlane = 50.0f;
+    float near = 0.1f;
+    float far = 50.0f;
     
     // Adjust orthographic bounds based on zoom and aspect ratio
     float right = zoom * aspect;
@@ -73,7 +73,7 @@ void App::display()
     float top = zoom;
     float bottom = -top;
     
-    glOrtho(left, right, bottom, top, nearPlane, farPlane);
+    glOrtho(left, right, bottom, top, near, far);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
