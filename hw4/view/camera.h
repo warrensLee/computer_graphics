@@ -48,16 +48,16 @@ class Camera
 
     private:
     // zoom 
-        float currentZoom = 10.0f;       // starting zoom (wider view)
+        float currentZoom;       // starting zoom (wider view)
 
     // camera position - better viewing position
-        float xCameraPosition = 0.0f;
-        float yCameraPosition = 5.0f;    // camera height (higher to see more)
-        float zCameraPosition = 20.0f;   // camera distance from scene
+        float xCameraPosition;
+        float yCameraPosition;    // camera height (higher to see more)
+        float zCameraPosition;   // camera distance from scene
         
     // camera rotation - looking straight ahead
-        float yaw = 0.0f;      // rotation around Y axis (left/right)
-        float pitch = 0.0f;    // rotation around X axis (up/down)
-        float roll = 0.5f;     // rotation around Z axis (tilt)
+        float yaw;      // rotation around Y axis (left/right)
+        float pitch;    // rotation around X axis (up/down)
+        float roll;     // rotation around Z axis (tilt)
 
 };

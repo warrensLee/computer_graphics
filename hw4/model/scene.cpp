@@ -164,7 +164,7 @@ void Scene::updateCannonBalls(float dt)
             // get cannonball radius (half of width)
             float radius = Config::CANNONBALL_WIDTH * 0.5f;
             
-            // wall boundaries - adjust for cannonball radius
+            // wall boundaries - adjusted for cannonball radius
             float wallBoundaryX = 10.0f - radius;   // x boundaries (fixed)
             float wallBoundaryY = 13.0f - radius;   // y boundaries (matches visible top)
             
