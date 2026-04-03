@@ -84,13 +84,13 @@ void Controller::handleKeyDown(unsigned char key)
     }
     
     // clamp zoom to reasonable bounds
-    if (camera.getCurrentZoom() > 20.0f)
+    if (camera.getCurrentZoom() > 15.0f)
     {
-        camera.setCurrentZoom(20.0f);
+        camera.setCurrentZoom(15.0f);
     }
-    if (camera.getCurrentZoom() < 2.0f)  // minimum zoom (more zoomed in)
+    if (camera.getCurrentZoom() < 1.0f)  // minimum zoom (more zoomed in)
     {
-        camera.setCurrentZoom(2.0f);
+        camera.setCurrentZoom(1.0f);
     }
 }
 
