@@ -25,6 +25,7 @@
 #include "../core/config.h"
 #include "../controller/controller.h"
 #include "../view/render.h"
+#include "../model/scene.h"
 
 
 class App
