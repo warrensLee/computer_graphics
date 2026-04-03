@@ -19,6 +19,7 @@
 
 #include "app.h"
 #include "../controller/controller.h"
+#include <string>
 
 
 //********************** initialization **********************//
@@ -100,6 +101,53 @@ void App::display()
         renderer.drawTrajectoryLine(worldStartX, worldStartY, worldEndX, worldEndY);
     }
 
+    // Render text instructions at the top of the screen
+    // Save current projection matrix
+    glMatrixMode(GL_PROJECTION);
+    glPushMatrix();
+    glLoadIdentity();
+    
+    // Set up orthographic projection matching window dimensions
+    int width = glutGet(GLUT_WINDOW_WIDTH);
+    int height = glutGet(GLUT_WINDOW_HEIGHT);
+    gluOrtho2D(0, width, 0, height);
+    
+    // Switch to modelview matrix for text rendering
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+    glLoadIdentity();
+    
+    // Disable depth testing for text
+    glDisable(GL_DEPTH_TEST);
+    
+    // Set text color to white
+    glColor3f(1.0f, 1.0f, 1.0f);
+    
+    // Position text at the top center
+    std::string text = "A/D to move right and left and click and drag to launch cannon ball";
+    int textWidth = 0;
+    for (char c : text) {
+        textWidth += glutBitmapWidth(GLUT_BITMAP_HELVETICA_12, c);
+    }
+    
+    int x = (width - textWidth) / 2;
+    int y = height - 20; // 20 pixels from top
+    
+    // Render each character
+    glRasterPos2i(x, y);
+    for (char c : text) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
+    }
+    
+    // Restore OpenGL state
+    glEnable(GL_DEPTH_TEST);
+    glPopMatrix();
+    
+    // Restore projection matrix
+    glMatrixMode(GL_PROJECTION);
+    glPopMatrix();
+    glMatrixMode(GL_MODELVIEW);
+    
     // swap buffers for smooth animation
     glutSwapBuffers();
 }
