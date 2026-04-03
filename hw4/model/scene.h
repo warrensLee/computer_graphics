@@ -37,7 +37,7 @@ public:
     void addObject(std::unique_ptr<Object3D> obj);
 
     void launchProjectile(float vx, float vy, float distance, float spawnX = 0.0f, float spawnY = 0.0f);
-    void updateCannonBall(float dt);
+    void updateCannonBalls(float dt);
 
     const std::vector<std::unique_ptr<Object3D>> &getObjects() const;
 
@@ -45,13 +45,18 @@ private:
     // unique_ptr for possible polymorphism in the future
     std::vector<std::unique_ptr<Object3D>> objects;
 
-    float ballX = 0.0f;
-    float ballY = 0.0f;
-
-    float ballVX = 0.0f;
-    float ballVY = 0.0f;
-
-    bool ballActive = false;
+    // Structure to track active cannonballs
+    struct CannonBall {
+        float x;
+        float y;
+        float vx;
+        float vy;
+        bool active;
+        std::size_t objectIndex; // Index in objects vector
+    };
+    
+    std::vector<CannonBall> cannonBalls;
+    
     float gravity = -2.0f;      // even stronger gravity
     float groundY = -5.0f;
 };

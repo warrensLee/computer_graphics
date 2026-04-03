@@ -62,31 +62,29 @@ void Scene::update(float dt)
         obj->update(dt);
     }
     
-    // Update cannon ball physics
-    updateCannonBall(dt);
-    
-    // Update the position of the cannon ball object if it exists
-    // For simplicity, let's assume the last object is the cannon ball
-    if (ballActive && !objects.empty()) {
-        // Update the last object's position to match ballX, ballY
-        objects.back()->setPosition(ballX, ballY, 0.0f);
-    }
+    // Update cannon balls physics
+    updateCannonBalls(dt);
 }
 
 void Scene::launchProjectile(float vx, float vy, float distance, float spawnX, float spawnY)
 {
-    // if there's already an active cannon ball, remove it first
-    if (ballActive && !objects.empty()) {
-        // remove the last object (which should be the current cannon ball)
-        objects.pop_back();
-        printf("Removed existing cannon ball before launching new one\n");
+    // Check if we can launch more cannonballs
+    int activeCount = 0;
+    for (const auto& cb : cannonBalls) {
+        if (cb.active) activeCount++;
+    }
+    
+    if (activeCount >= Config::MAX_ACTIVE_CANNONBALLS) {
+        printf("Cannot launch cannonball: maximum active cannonballs (%d) reached\n", 
+               Config::MAX_ACTIVE_CANNONBALLS);
+        return;
     }
     
     printf("Scene::launchProjectile called with vx=%f, vy=%f, distance=%f, spawn=(%f, %f)\n", vx, vy, distance, spawnX, spawnY);
     
     // start at click location, but ensure it's at a reasonable height
-    ballX = spawnX;
-    ballY = spawnY;
+    float ballX = spawnX;
+    float ballY = spawnY;
     
     // if spawn position is too low, adjust it
     if (ballY < groundY + 1.0f) {
@@ -100,12 +98,6 @@ void Scene::launchProjectile(float vx, float vy, float distance, float spawnX, f
     
     float ballZ = 0.0f;
 
-    // set launch velocity
-    ballVX = vx;
-    ballVY = vy;
-
-    ballActive = true;
-    
     // create a cannon ball object
     auto cannonBall = std::make_unique<Sphere>();
 
@@ -116,28 +108,69 @@ void Scene::launchProjectile(float vx, float vy, float distance, float spawnX, f
     cannonBall->setPosition(ballX, ballY, ballZ);
     cannonBall->setSize(Config::CANNONBALL_WIDTH, Config::CANNONBALL_HEIGHT, Config::CANNONBALL_DEPTH);
     cannonBall->setRotationSpeed(0.2f, 0.2f, 0.2f);
+    
+    // Add to objects vector and get its index
+    std::size_t objectIndex = objects.size();
     addObject(std::move(cannonBall));
+    
+    // Add to cannonBalls tracking
+    CannonBall cb;
+    cb.x = ballX;
+    cb.y = ballY;
+    cb.vx = vx;
+    cb.vy = vy;
+    cb.active = true;
+    cb.objectIndex = objectIndex;
+    cannonBalls.push_back(cb);
 }
 
-void Scene::updateCannonBall(float dt)
+void Scene::updateCannonBalls(float dt)
 {
-    if (ballActive)
-    {
-        ballX += ballVX * dt;
-        ballY += ballVY * dt;
-
-        ballVY += gravity * dt;
-
-        if (ballY <= groundY)
-        {
-            ballY = groundY;
-            ballActive = false;
-            // remove the cannon ball object when it hits the ground
-            if (!objects.empty()) 
-            {
-                objects.pop_back();
+    // Update each cannonball
+    for (auto it = cannonBalls.begin(); it != cannonBalls.end(); ) {
+        if (it->active) {
+            // Update position
+            it->x += it->vx * dt;
+            it->y += it->vy * dt;
+            
+            // Update velocity with gravity
+            it->vy += gravity * dt;
+            
+            // Check if hit ground
+            if (it->y <= groundY) {
+                it->y = groundY;
+                it->active = false;
+                
+                // Remove the corresponding object from the objects vector
+                if (it->objectIndex < objects.size()) {
+                    // Move to end and pop
+                    if (it->objectIndex != objects.size() - 1) {
+                        std::swap(objects[it->objectIndex], objects.back());
+                        // Update the index of the cannonball that was swapped
+                        for (auto& cb : cannonBalls) {
+                            if (cb.objectIndex == objects.size() - 1) {
+                                cb.objectIndex = it->objectIndex;
+                                break;
+                            }
+                        }
+                    }
+                    objects.pop_back();
+                }
                 printf("Cannon ball hit the ground and was removed\n");
+                
+                // Remove from cannonBalls vector
+                it = cannonBalls.erase(it);
+                continue;
             }
+            
+            // Update the corresponding object's position
+            if (it->objectIndex < objects.size()) {
+                objects[it->objectIndex]->setPosition(it->x, it->y, 0.0f);
+            }
+            ++it;
+        } else {
+            // Remove inactive cannonballs
+            it = cannonBalls.erase(it);
         }
     }
 }
