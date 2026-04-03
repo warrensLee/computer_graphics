@@ -28,8 +28,9 @@ void Render::init()
 
     Texture::init_texture((char*)"textures/brick.jpg", texture1, xdim1, ydim1);
     Texture::init_texture((char*)"textures/gravel.jpg", texture2, xdim2, ydim2);
+    Texture::init_texture((char*)"textures/cannonball.jpg", texture3, xdim3, ydim3);
 
-    glGenTextures(2, texIDs);
+    glGenTextures(3, texIDs);
 
     glBindTexture(GL_TEXTURE_2D, texIDs[0]);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -44,6 +45,9 @@ void Render::init()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, xdim2, ydim2, 0, GL_RGB, GL_UNSIGNED_BYTE, texture2);
+    
+    glBindTexture(GL_TEXTURE_2D, texIDs[2]);
+
 }
 
 void Render::drawCubeGeometry(float xmin, float ymin, float zmin,

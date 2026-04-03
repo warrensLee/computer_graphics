@@ -16,6 +16,7 @@
  *
  ******************************************************************************************/
 
+#pragma once
 
 #include <OpenGL/gl.h>
 #include <GLUT/glut.h>
@@ -25,7 +26,6 @@
 #include "../controller/controller.h"
 #include "../view/render.h"
 
-#pragma once
 
 class App
 {
@@ -41,6 +41,8 @@ class App
         void reshape(int w, int h);
         void keyboard(unsigned char key, int x, int y);
         void keyboardKeyUp(unsigned char key, int x, int y);
+        void mouseButton(int button, int state, int x, int y);
+        void mouseMotion(int x, int y);
         void idle();
 
 
@@ -50,6 +52,10 @@ class App
         static void callKeyboard(unsigned char key, int x, int y);
         static void callKeyboardKeyUp(unsigned char key, int x, int y);
         static void callIdle();
+        static void callMouseButton(int button, int state, int x, int y);
+        static void callMouseMotion(int x, int y);
+        static void callLaunchProjectile(float launchVX, float launchVY, float distance);
+
 
         
     private:

@@ -16,9 +16,13 @@
  *
  ******************************************************************************************/
 
+#pragma once
+
+#include <OpenGL/gl.h>
+#include <GLUT/glut.h>
+#include <cmath>
 #include "../view/camera.h"
 
-#pragma once
 
 class Controller
 {
@@ -51,6 +55,10 @@ class Controller
     // functionality
         void handleKeyDown(unsigned char key);
         void handleKeyUp(unsigned char key);
+
+        void mouseButton(int button, int state, int x, int y);
+        void mouseMotion(int x, int y);
+
         void update();
 
     private:
@@ -65,5 +73,15 @@ class Controller
 
         float cameraMoveSpeed = 0.025f;
         float zoomIncrement = 0.05f;
+
+        bool isDragging = false;
+
+        float startX = 0.0f;
+        float startY = 0.0f;
+        float endX = 0.0f;
+        float endY = 0.0f;
+
+        float maxSpeed = 3.0f;
+
 };
 

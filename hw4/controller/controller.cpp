@@ -208,14 +208,15 @@ void Controller::mouseButton(int button, int state, int x, int y)
             launchVY *= distance * powerScale;
 
             // Clamp maximum speed if needed
-            float maxSpeed = 3.0f;
             float speed = sqrt(launchVX * launchVX + launchVY * launchVY);
+
+            // make sure its not going crazy fast
             if (speed > maxSpeed) {
                 launchVX = launchVX / speed * maxSpeed;
                 launchVY = launchVY / speed * maxSpeed;
             }
 
-            // This is your "launch"
+            // now to launch
             printf("Launching: distance=%f, vx=%f, vy=%f\n", distance, launchVX, launchVY);
             App::callLaunchProjectile(launchVX, launchVY, distance);
         }

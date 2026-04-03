@@ -89,4 +89,6 @@ private:
     float depth = 1.0f;
 
     int texture = 0;
+    
+    float gravity = -0.02f;
 };

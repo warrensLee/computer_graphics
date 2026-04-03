@@ -37,3 +37,9 @@ struct Color
     float g;
     float b;
 };
+
+struct DragState {
+    bool active;
+    Vec2 start;
+    Vec2 end;
+};

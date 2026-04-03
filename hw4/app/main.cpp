@@ -37,6 +37,8 @@ int main(int argc, char** argv)
     glutDisplayFunc(app.callDisplay);
     glutKeyboardFunc(app.callKeyboard);
     glutKeyboardUpFunc(app.callKeyboardKeyUp);
+    glutMouseFunc(app.callMouseButton);
+    glutMotionFunc(app.callMouseMotion);
     
     glutIdleFunc(app.callIdle);
 

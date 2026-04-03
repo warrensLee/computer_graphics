@@ -142,6 +142,10 @@ void App::callKeyboardKeyUp(unsigned char key, int x, int y)
     {
         instance->keyboardKeyUp(key, x, y);
     }
+    else 
+    {
+        printf("ERROR: App instance is null\n");
+    }
 }
 
 void App::callKeyboard(unsigned char key, int x, int y)
@@ -150,6 +154,10 @@ void App::callKeyboard(unsigned char key, int x, int y)
     {
         instance->keyboard(key, x, y);
     }
+    else 
+    {
+        printf("ERROR: App instance is null\n");
+    }
 }
 
 void App::callIdle()
@@ -157,7 +165,11 @@ void App::callIdle()
     if (instance)
     {
         instance->idle();
-    }    
+    }   
+    else 
+    {
+        printf("ERROR: App instance is null\n");
+    } 
 }
 
 void App::callDisplay()
@@ -165,6 +177,10 @@ void App::callDisplay()
     if (instance)
     {
         instance->display();
+    }
+    else 
+    {
+        printf("ERROR: App instance is null\n");
     }
 }
 
@@ -175,6 +191,10 @@ void App::callMouseButton(int button, int state, int x, int y)
         printf("calling mouse button");
         instance->mouseButton(button, state, x, y);
     }    
+    else 
+    {
+        printf("ERROR: App instance is null\n");
+    }
 }
 
 void App::callMouseMotion(int x, int y)
@@ -184,6 +204,10 @@ void App::callMouseMotion(int x, int y)
         printf("calling mouse motion");
         instance->mouseMotion(x, y);
     }
+    else 
+    {
+        printf("ERROR: App instance is null\n");
+    }
 }
 
 void App::callLaunchProjectile(float launchVX, float launchVY, float distance)
@@ -191,7 +215,9 @@ void App::callLaunchProjectile(float launchVX, float launchVY, float distance)
     printf("launching projectile\n");
     if (instance) {
         instance->scene.launchProjectile(launchVX, launchVY, distance);
-    } else {
+    } 
+    else 
+    {
         printf("ERROR: App instance is null\n");
     }
 }
