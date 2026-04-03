@@ -242,8 +242,7 @@ void Controller::mouseButton(int button, int state, int x, int y)
                 launchVY = launchVY / speed * maxSpeed;
             }
 
-            // Convert click position to world coordinates
-            // Get current window dimensions for accurate mapping
+            // Convert click position to world coordinates on the ground plane (z=0)
             int width = glutGet(GLUT_WINDOW_WIDTH);
             int height = glutGet(GLUT_WINDOW_HEIGHT);
             
@@ -272,8 +271,9 @@ void Controller::mouseButton(int button, int state, int x, int y)
             worldX += camera.getCameraX();
             worldY += camera.getCameraY();
             
-            // launch the cannon ball from click position
-            printf("Mouse click at screen (%d, %d) -> world (%f, %f)\n", startX, startY, worldX, worldY);
+            // The ground is at z=0, so the cannonball should be launched from (worldX, worldY, 0)
+            // But launchProjectile expects x and y coordinates, which match worldX and worldY
+            printf("Mouse click at screen (%d, %d) -> world (%f, %f, 0.0)\n", startX, startY, worldX, worldY);
             printf("Launching from (%f, %f): distance=%f, vx=%f, vy=%f\n", worldX, worldY, distance, launchVX, launchVY);
             App::callLaunchProjectile(launchVX, launchVY, distance, worldX, worldY);
         }

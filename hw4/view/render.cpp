@@ -178,24 +178,22 @@ void Render::draw(const Scene& scene)
 
 void Render::drawGroundTexture()
 {
-    // Disable depth testing for ground to ensure it's always visible
-    glDisable(GL_DEPTH_TEST);
+    // Enable depth testing for proper 3D rendering
+    glEnable(GL_DEPTH_TEST);
     
     glBindTexture(GL_TEXTURE_2D, texIDs[3]);
 
     glBegin(GL_QUADS);
 
-    // Draw a larger ground plane
-    float groundSize = 30.0f;  // Make ground larger
-    float groundY = -5.0f;
+    // Draw a ground plane in the x-y plane at z=0.0f (visible to camera at z=20 looking along -Z)
+    float groundSize = 50.0f;  // Make ground larger to be visible
+    float groundZ = 0.0f;
     
-    glTexCoord2f(0.0f, 0.0f); glVertex3f(-groundSize, groundY, -groundSize);
-    glTexCoord2f(10.0f, 0.0f); glVertex3f( groundSize, groundY, -groundSize);
-    glTexCoord2f(10.0f, 10.0f); glVertex3f( groundSize, groundY,  groundSize);
-    glTexCoord2f(0.0f, 10.0f); glVertex3f(-groundSize, groundY,  groundSize);
+    // The ground is in the x-y plane at z=0
+    glTexCoord2f(0.0f, 0.0f); glVertex3f(-groundSize, -groundSize, groundZ);
+    glTexCoord2f(10.0f, 0.0f); glVertex3f( groundSize, -groundSize, groundZ);
+    glTexCoord2f(10.0f, 10.0f); glVertex3f( groundSize,  groundSize, groundZ);
+    glTexCoord2f(0.0f, 10.0f); glVertex3f(-groundSize,  groundSize, groundZ);
 
     glEnd();
-    
-    // Re-enable depth testing for other objects
-    glEnable(GL_DEPTH_TEST);
 }
