@@ -88,6 +88,7 @@ void Scene::launchProjectile(float vx, float vy, float distance, float spawnX, f
     // start at click location, but ensure it's above ground
     ballX = spawnX;
     ballY = spawnY;
+    
     // If spawn position is below ground, adjust it
     if (ballY < groundY) {
         ballY = groundY + 0.1f;  // Just above ground
