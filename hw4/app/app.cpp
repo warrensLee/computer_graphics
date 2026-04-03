@@ -188,7 +188,6 @@ void App::callMouseButton(int button, int state, int x, int y)
 {
     if (instance)
     {
-        printf("calling mouse button");
         instance->mouseButton(button, state, x, y);
     }    
     else 
@@ -201,7 +200,6 @@ void App::callMouseMotion(int x, int y)
 {
     if (instance)
     {
-        printf("calling mouse motion");
         instance->mouseMotion(x, y);
     }
     else 
@@ -212,7 +210,6 @@ void App::callMouseMotion(int x, int y)
 
 void App::callLaunchProjectile(float launchVX, float launchVY, float distance)
 {
-    printf("launching projectile\n");
     if (instance) {
         instance->scene.launchProjectile(launchVX, launchVY, distance);
     } 
