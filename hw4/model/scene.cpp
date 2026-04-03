@@ -67,7 +67,7 @@ void Scene::update(float dt)
         obj->update(dt);
     }
     
-    // Update cannon balls physics
+    // update cannon balls physics
     updateCannonBalls(dt);
 }
 
@@ -112,7 +112,8 @@ void Scene::launchProjectile(float vx, float vy, float distance, float spawnX, f
     cannonBall->setTexture(textureIndex);  
     cannonBall->setPosition(ballX, ballY, ballZ);
     cannonBall->setSize(Config::CANNONBALL_WIDTH, Config::CANNONBALL_HEIGHT, Config::CANNONBALL_DEPTH);
-    // Give each cannonball random rotation speeds for more realistic spinning
+
+    // give each cannonball random rotation speeds for more realistic spinning
     float rotX = 100.0f + static_cast<float>(std::rand() % 200);  // 100-300 degrees/sec
     float rotY = 80.0f + static_cast<float>(std::rand() % 200);   // 80-280 degrees/sec  
     float rotZ = 60.0f + static_cast<float>(std::rand() % 150);   // 60-210 degrees/sec
@@ -150,30 +151,35 @@ void Scene::launchProjectile(float vx, float vy, float distance, float spawnX, f
 
 void Scene::updateCannonBalls(float dt)
 {
-    // Update each cannonball
+    // iterate thru each cannonball
     for (auto it = cannonBalls.begin(); it != cannonBalls.end(); ) {
         if (it->active) {
-            // Update position
+            // change position
             it->x += it->vx * dt;
             it->y += it->vy * dt;
             
-            // Update velocity with gravity
+            // change velocity with gravity
             it->vy += gravity * dt;
             
-            // Check if hit ground
-            if (it->y <= groundY) {
+            // check if hit ground
+            if (it->y <= groundY) 
+            {
                 it->y = groundY;
                 it->active = false;
                 
-                // Remove the corresponding object from the objects vector
-                if (it->objectIndex < objects.size()) {
-                    // Move to end and pop
-                    if (it->objectIndex != objects.size() - 1) {
+                // now remove the corresponding object from the objects vector
+                if (it->objectIndex < objects.size()) 
+                {
+                    // move to end and pop
+                    if (it->objectIndex != objects.size() - 1) 
+                    {
                         std::swap(objects[it->objectIndex], objects.back());
-                        // Update the index of the cannonball that was swapped
-                        // Find the cannonball that references the object we just swapped
-                        for (auto& cb : cannonBalls) {
-                            if (cb.objectIndex == objects.size() - 1) {
+                        // update the index of the cannonball that was swapped
+                        // find the cannonball that references the object we just swapped
+                        for (auto& cb : cannonBalls) 
+                        {
+                            if (cb.objectIndex == objects.size() - 1) 
+                            {
                                 cb.objectIndex = it->objectIndex;
                                 break;
                             }
@@ -181,6 +187,15 @@ void Scene::updateCannonBalls(float dt)
                     }
                     objects.pop_back();
                 }
+
+                // if we reach the side of a wall bounce
+                if (it->y <= -1.0 || it->y >= 1.0f || it->x <= -1.0 || it->x >= 1.0)
+                {
+                    printf("cannonball hit a wall and bounced\n");
+                    it->vx *= -0.85f;
+                    it->vy *= -0.85f;
+                }
+
                 printf("Cannon ball hit the ground and was removed\n");
                 
                 // Remove from cannonBalls vector
