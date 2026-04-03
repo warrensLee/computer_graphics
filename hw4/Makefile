@@ -18,7 +18,6 @@ LIBS     = core/libim/libim.a core/jpeg/libjpeg.a
 TARGET = main
 
 OBJS = app/main.o app/app.o \
-       core/math.o \
        model/texture.o model/scene.o model/object3D.o model/sphereObject.o model/cubeObject.o \
        controller/controller.o \
        view/render.o view/camera.o

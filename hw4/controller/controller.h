@@ -22,6 +22,7 @@
 #include <GLUT/glut.h>
 #include <cmath>
 #include "../view/camera.h"
+#include "../core/config.h"
 
 
 class Controller
@@ -57,10 +58,6 @@ class Controller
         bool rightPressed = false;
 
         // These will be initialized in the constructor using Config values
-        float cameraMoveSpeed;
-        float zoomIncrement;
-        float rotationSpeed;
-
         bool isDragging = false;
 
         float startX = 0.0f;
@@ -69,9 +66,7 @@ class Controller
         float endY = 0.0f;
         float clickWorldX = 0.0f;
         float clickWorldY = 0.0f;
-
-        float maxSpeed;
-
+        
     public:
         // Getters for drag information to draw trajectory line
         bool getIsDragging() const { return isDragging; }

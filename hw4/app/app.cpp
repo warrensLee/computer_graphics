@@ -93,7 +93,6 @@ void App::display()
 
     // text content and draw method
     drawText(textX, textY, "DRAG TO LAUNCH CANNONBALL");
-    drawText(textX, textY - 30, "A / D TO MOVE CAMERA LEFT & RIGHT");
 
     endTextMode();
 

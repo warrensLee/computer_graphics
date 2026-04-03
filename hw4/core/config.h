@@ -21,36 +21,36 @@
 
 namespace Config
 {
-    // Camera starting position
+    // camera starting position
     constexpr inline float CAMERA_START_X = 0.0f;
     constexpr inline float CAMERA_START_Y = 4.0f;
     constexpr inline float CAMERA_START_Z = 10.0f;
     
-    // Camera rotation
+    // camera rotation
     constexpr inline float CAMERA_START_YAW = 0.0f;
     constexpr inline float CAMERA_START_PITCH = 0.0f;
     constexpr inline float CAMERA_START_ROLL = 0.5f;
     
-    // Camera movement
+    // camera movement
     constexpr inline float CAMERA_MOVE_SPEED = 0.25f;
     constexpr inline float CAMERA_ZOOM_INCREMENT = 0.2f;
     constexpr inline float CAMERA_ROTATION_SPEED = 1.0f;
     
-    // Zoom limits
+    // zoom bounds
     constexpr inline float CAMERA_ZOOM_MIN = 2.0f;
     constexpr inline float CAMERA_ZOOM_MAX = 20.0f;
     constexpr inline float CAMERA_ZOOM_START = 9.0f;
     
-    // Ground settings
+    // ground settings
     constexpr inline float GROUND_SIZE = 50.0f;
     constexpr inline float GROUND_Z_POSITION = 0.0f;
     
-    // Cannonball launch parameters
+    // cannonball launch parameters
     constexpr inline float CANNONBALL_POWER_SCALE = 0.03f;
     constexpr inline float CANNONBALL_UPWARD_BIAS = 1.0f;
     constexpr inline float CANNONBALL_MAX_SPEED = 10.0f;
     
-    // Cannonball size
+    // cannonball size
     constexpr inline float CANNONBALL_WIDTH = 2.0f;
     constexpr inline float CANNONBALL_HEIGHT = 2.0f;
     constexpr inline float CANNONBALL_DEPTH = 2.0f;

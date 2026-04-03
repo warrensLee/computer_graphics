@@ -21,14 +21,8 @@
 #include <GLUT/glut.h>
 
 // constructor
-Controller::Controller() : 
-    camera(),
-    cameraMoveSpeed(Config::CAMERA_MOVE_SPEED),
-    zoomIncrement(Config::CAMERA_ZOOM_INCREMENT),
-    rotationSpeed(Config::CAMERA_ROTATION_SPEED),
-    maxSpeed(Config::CANNONBALL_MAX_SPEED)
+Controller::Controller() : camera()
 {
-    // nothing else to initialize here
 }
 
 // getters
@@ -62,80 +56,68 @@ const Camera& Controller::getCamera() const
 // functionality
 void Controller::handleKeyDown(unsigned char key)
 {
-    // handle zoom and movement keys
-    switch(key)
-    {
-    // zoom in/out
-        case 'e':
-            camera.setCurrentZoom(camera.getCurrentZoom() + zoomIncrement);
-            break;
+    // // handle zoom and movement keys
+    // switch(key)
+    // {
+    // // zoom in/out
+    //     case 'e':
+    //         camera.setCurrentZoom(camera.getCurrentZoom() + Config::CAMERA_ZOOM_INCREMENT);
+    //         break;
 
-        case 'q':
-            camera.setCurrentZoom(camera.getCurrentZoom() - zoomIncrement);
-            break;
+    //     case 'q':
+    //         camera.setCurrentZoom(camera.getCurrentZoom() - Config::CAMERA_ZOOM_INCREMENT);
+    //         break;
 
-    // movement
-        case 'w':
-            upPressed = true;
-            break;
-        case 'a':
-            leftPressed = true;
-            break;
-        case 's':
-            downPressed = true;
-            break;
-        case 'd':
-            rightPressed = true;
-            break;
-    }
+    // // movement
+    //     case 'w':
+    //         upPressed = true;
+    //         break;
+    //     case 'a':
+    //         leftPressed = true;
+    //         break;
+    //     case 's':
+    //         downPressed = true;
+    //         break;
+    //     case 'd':
+    //         rightPressed = true;
+    //         break;
+    // }
     
-    // clamp zoom to reasonable bounds
-    if (camera.getCurrentZoom() > Config::CAMERA_ZOOM_MAX)
-    {
-        camera.setCurrentZoom(Config::CAMERA_ZOOM_MAX);
-    }
-    if (camera.getCurrentZoom() < Config::CAMERA_ZOOM_MIN)  // minimum zoom (more zoomed in)
-    {
-        camera.setCurrentZoom(Config::CAMERA_ZOOM_MIN);
-    }
+    // // clamp zoom to reasonable bounds
+    // if (camera.getCurrentZoom() > Config::CAMERA_ZOOM_MAX)
+    // {
+    //     camera.setCurrentZoom(Config::CAMERA_ZOOM_MAX);
+    // }
+    // if (camera.getCurrentZoom() < Config::CAMERA_ZOOM_MIN)  // minimum zoom (more zoomed in)
+    // {
+    //     camera.setCurrentZoom(Config::CAMERA_ZOOM_MIN);
+    // }
 }
 
 void Controller::handleKeyUp(unsigned char key)
 {
-    switch(key)
-    {
-    // movement
-        case 'w':
-            upPressed = false;
-            break;
-        case 'a':
-            leftPressed = false;
-            break;
-        case 's':
-            downPressed = false;
-            break;
-        case 'd':
-            rightPressed = false;
-            break;
-    }
+    // switch(key)
+    // {
+    // // movement
+    //     case 'w':
+    //         upPressed = false;
+    //         break;
+    //     case 'a':
+    //         leftPressed = false;
+    //         break;
+    //     case 's':
+    //         downPressed = false;
+    //         break;
+    //     case 'd':
+    //         rightPressed = false;
+    //         break;
+    // }
 }
 
 
 void Controller::update()
 {
-    // handle camera movement - intuitive controls
-    // W: move camera up (scene moves down) - press W to see more above
-    // S: move camera down (scene moves up) - press S to see more below
-    // A: move camera left (scene moves right) - press A to see more to the left
-    // D: move camera right (scene moves left) - press D to see more to the right
-    // if (upPressed)
-    //     camera.setCameraY(camera.getCameraY() + cameraMoveSpeed);  // W: move camera up
-    // if (downPressed)
-    //     camera.setCameraY(camera.getCameraY() - cameraMoveSpeed);  // S: move camera down
-    if (leftPressed)
-        camera.setCameraX(camera.getCameraX() - cameraMoveSpeed);  // A: move camera left
-    if (rightPressed)
-        camera.setCameraX(camera.getCameraX() + cameraMoveSpeed);  // D: move camera right
+
 }
 
 void Controller::mouseButton(int button, int state, int x, int y)
@@ -188,9 +170,10 @@ void Controller::mouseButton(int button, int state, int x, int y)
 
             // clamp speed to maximum
             float speed = sqrt(launchVX * launchVX + launchVY * launchVY);
-            if (speed > maxSpeed) {
-                launchVX = launchVX / speed * maxSpeed;
-                launchVY = launchVY / speed * maxSpeed;
+
+            if (speed > Config::CANNONBALL_MAX_SPEED) {
+                launchVX = launchVX / speed * Config::CANNONBALL_MAX_SPEED;
+                launchVY = launchVY / speed * Config::CANNONBALL_MAX_SPEED;
             }
 
             // Convert click position to world coordinates on the ground plane (z=0)
@@ -245,7 +228,8 @@ void Controller::mouseMotion(int x, int y)
 
 void Controller::getDragWorldCoordinates(float& worldStartX, float& worldStartY, float& worldEndX, float& worldEndY) const
 {
-    if (!isDragging) {
+    if (!isDragging) 
+    {
         worldStartX = worldStartY = worldEndX = worldEndY = 0.0f;
         return;
     }
@@ -253,8 +237,10 @@ void Controller::getDragWorldCoordinates(float& worldStartX, float& worldStartY,
     int width = glutGet(GLUT_WINDOW_WIDTH);
     int height = glutGet(GLUT_WINDOW_HEIGHT);
     
-    if (width == 0) width = 800;
-    if (height == 0) height = 600;
+    if (width == 0) 
+        width = 800;
+    if (height == 0) 
+        height = 600;
     
     float zoom = camera.getCurrentZoom();
     float aspect = (float)width / (float)height;
