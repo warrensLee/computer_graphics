@@ -54,7 +54,7 @@ class App
         static void callKeyboardKeyUp(unsigned char key, int x, int y);
         static void callIdle();
         static void callMouseButton(int button, int state, int x, int y);
-        static void callMouseMotion(int x, int y);\
+        static void callMouseMotion(int x, int y);
         static void callLaunchProjectile(float launchVX, float launchVY, float distance, float spawnX = 0.0f, float spawnY = 0.0f);
 
 

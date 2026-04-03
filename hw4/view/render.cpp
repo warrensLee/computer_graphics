@@ -201,6 +201,8 @@ void Render::drawGroundTexture()
 
 void Render::drawTrajectoryLine(float startX, float startY, float endX, float endY)
 {
+    // Disable depth testing to ensure the line is always visible
+    glDisable(GL_DEPTH_TEST);
     // Disable texturing for the line
     glDisable(GL_TEXTURE_2D);
     
@@ -221,6 +223,8 @@ void Render::drawTrajectoryLine(float startX, float startY, float endX, float en
     
     // Re-enable texturing for other objects
     glEnable(GL_TEXTURE_2D);
+    // Re-enable depth testing
+    glEnable(GL_DEPTH_TEST);
     // Reset color to white
     glColor3f(1.0f, 1.0f, 1.0f);
 }
