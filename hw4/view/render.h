@@ -27,8 +27,6 @@
 
 #include "../model/scene.h"
 #include "../model/texture.h"
-
-class Scene;
 class Render
 {
 public:
