@@ -163,39 +163,44 @@ void Scene::updateCannonBalls(float dt)
             it->vy += gravity * dt;
             
             // Check for wall collisions before ground check
-            // Use ground size from Config for wall boundaries
-            float wallBoundary = Config::GROUND_SIZE * 0.8f;  // Use 80% of ground size for walls
+            // Use reasonable wall boundaries that match the visible area
+            float wallBoundaryX = 10.0f;  // Visible area is about ±9
+            float wallBoundaryY = 10.0f;  // Same for y
+            
             bool bounced = false;
             
             // Check left/right walls (x boundaries)
-            if (it->x <= -wallBoundary) {
-                it->x = -wallBoundary;  // Push back inside
+            if (it->x <= -wallBoundaryX) {
+                it->x = -wallBoundaryX;  // Push back inside
                 it->vx = -it->vx * 0.7f;  // Reverse x direction and reduce speed
                 bounced = true;
-            } else if (it->x >= wallBoundary) {
-                it->x = wallBoundary;   // Push back inside
+                printf("Cannonball hit LEFT wall at x=%.2f\n", it->x);
+            } else if (it->x >= wallBoundaryX) {
+                it->x = wallBoundaryX;   // Push back inside
                 it->vx = -it->vx * 0.7f;  // Reverse x direction and reduce speed
                 bounced = true;
+                printf("Cannonball hit RIGHT wall at x=%.2f\n", it->x);
             }
             
-            // Check front/back walls (y boundaries) - note: y is vertical in our coordinate system
-            // Actually, in our coordinate system, y is up/down, but for walls we should check z
-            // However, since we're in 2D (x-y plane), we'll treat y as the other horizontal axis
-            if (it->y <= -wallBoundary) {
-                it->y = -wallBoundary;  // Push back inside
+            // Check front/back walls (y boundaries) - in our 2D view, y is the other horizontal axis
+            if (it->y <= -wallBoundaryY) {
+                it->y = -wallBoundaryY;  // Push back inside
                 it->vy = -it->vy * 0.7f;  // Reverse y direction and reduce speed
                 bounced = true;
-            } else if (it->y >= wallBoundary) {
-                it->y = wallBoundary;   // Push back inside
+                printf("Cannonball hit BOTTOM wall at y=%.2f\n", it->y);
+            } else if (it->y >= wallBoundaryY) {
+                it->y = wallBoundaryY;   // Push back inside
                 it->vy = -it->vy * 0.7f;  // Reverse y direction and reduce speed
                 bounced = true;
+                printf("Cannonball hit TOP wall at y=%.2f\n", it->y);
             }
             
             if (bounced) {
-                printf("Cannonball hit a wall at (%.2f, %.2f) and bounced\n", it->x, it->y);
-                // Also apply some energy loss to the other component for more realistic bounce
-                it->vx *= 0.95f;
-                it->vy *= 0.95f;
+                printf("Cannonball bounced at (%.2f, %.2f) with velocity (%.2f, %.2f)\n", 
+                       it->x, it->y, it->vx, it->vy);
+                // Apply additional energy loss for realism
+                it->vx *= 0.9f;
+                it->vy *= 0.9f;
             }
             
             // check if hit ground
