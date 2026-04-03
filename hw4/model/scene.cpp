@@ -75,34 +75,32 @@ void Scene::update(float dt)
 
 void Scene::launchProjectile(float vx, float vy, float distance, float spawnX, float spawnY)
 {
-    // If there's already an active cannon ball, remove it first
+    // if there's already an active cannon ball, remove it first
     if (ballActive && !objects.empty()) {
-        // Remove the last object (which should be the current cannon ball)
+        // remove the last object (which should be the current cannon ball)
         objects.pop_back();
         printf("Removed existing cannon ball before launching new one\n");
     }
     
-    printf("Scene::launchProjectile called with vx=%f, vy=%f, distance=%f, spawn=(%f, %f)\n", 
-           vx, vy, distance, spawnX, spawnY);
+    printf("Scene::launchProjectile called with vx=%f, vy=%f, distance=%f, spawn=(%f, %f)\n", vx, vy, distance, spawnX, spawnY);
     
     // start at click location, but ensure it's at a reasonable height
     ballX = spawnX;
     ballY = spawnY;
     
-    // If spawn position is too low, adjust it
+    // if spawn position is too low, adjust it
     if (ballY < groundY + 1.0f) {
         ballY = groundY + 2.0f;  // Well above ground
     }
     
-    // Also ensure it's not too high
+    // ensure it's not too high
     if (ballY > 5.0f) {
         ballY = 5.0f;
     }
     
-    // Add some randomness to the Z position for depth
     float ballZ = 0.0f;
 
-    // Set launch velocity (vx and vy are already scaled appropriately)
+    // set launch velocity
     ballVX = vx;
     ballVY = vy;
 
@@ -111,13 +109,13 @@ void Scene::launchProjectile(float vx, float vy, float distance, float spawnX, f
     // create a cannon ball object
     auto cannonBall = std::make_unique<Sphere>();
 
-    // Use texture index 2 for cannonball.jpg
+    // use texture index 2 for cannonball.jpg
     int textureIndex = 2;
     printf("Setting cannon ball texture to index %d\n", textureIndex);
     cannonBall->setTexture(textureIndex);  
     cannonBall->setPosition(ballX, ballY, ballZ);
-    cannonBall->setSize(0.5f, 0.5f, 0.5f);
-    cannonBall->setRotationSpeed(0.0f, 0.0f, 0.0f);
+    cannonBall->setSize(0.8f, 0.8f, 0.8f);
+    cannonBall->setRotationSpeed(0.2f, 0.2f, 0.2f);
     addObject(std::move(cannonBall));
 }
 
@@ -134,8 +132,9 @@ void Scene::updateCannonBall(float dt)
         {
             ballY = groundY;
             ballActive = false;
-            // Remove the cannon ball object when it hits the ground
-            if (!objects.empty()) {
+            // remove the cannon ball object when it hits the ground
+            if (!objects.empty()) 
+            {
                 objects.pop_back();
                 printf("Cannon ball hit the ground and was removed\n");
             }

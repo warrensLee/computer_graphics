@@ -39,9 +39,10 @@ int main(int argc, char** argv)
     glutKeyboardUpFunc(app.callKeyboardKeyUp);
     glutMouseFunc(app.callMouseButton);
     glutMotionFunc(app.callMouseMotion);
+
     
     glutIdleFunc(app.callIdle);
 
-    glutMainLoop();                                // Start event loop
+    glutMainLoop();                                // start event loop
     return 0;
 }

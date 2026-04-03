@@ -43,8 +43,6 @@ class Controller
     // functionality
         void handleKeyDown(unsigned char key);
         void handleKeyUp(unsigned char key);
-        void handleSpecialKeyDown(int key);
-        void handleSpecialKeyUp(int key);
 
         void mouseButton(int button, int state, int x, int y);
         void mouseMotion(int x, int y);
@@ -57,10 +55,6 @@ class Controller
         bool downPressed = false;
         bool leftPressed = false;
         bool rightPressed = false;
-        bool rotateLeftPressed = false;   // left arrow key
-        bool rotateRightPressed = false;  // right arrow key
-        bool lookUpPressed = false;       // up arrow key
-        bool lookDownPressed = false;     // down arrow key
 
         // These will be initialized in the constructor using Config values
         float cameraMoveSpeed;

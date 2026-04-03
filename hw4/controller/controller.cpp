@@ -120,47 +120,6 @@ void Controller::handleKeyUp(unsigned char key)
     }
 }
 
-void Controller::handleSpecialKeyDown(int key)
-{
-    switch(key)
-    {
-    // rotation
-        case GLUT_KEY_LEFT:
-            rotateLeftPressed = true;
-            break;
-        case GLUT_KEY_RIGHT:
-            rotateRightPressed = true;
-            break;
-    // look up/down
-        case GLUT_KEY_UP:
-            lookUpPressed = true;
-            break;
-        case GLUT_KEY_DOWN:
-            lookDownPressed = true;
-            break;
-    }
-}
-
-void Controller::handleSpecialKeyUp(int key)
-{
-    switch(key)
-    {
-    // rotation
-        case GLUT_KEY_LEFT:
-            rotateLeftPressed = false;
-            break;
-        case GLUT_KEY_RIGHT:
-            rotateRightPressed = false;
-            break;
-    // look up/down
-        case GLUT_KEY_UP:
-            lookUpPressed = false;
-            break;
-        case GLUT_KEY_DOWN:
-            lookDownPressed = false;
-            break;
-    }
-}
 
 void Controller::update()
 {
@@ -169,28 +128,14 @@ void Controller::update()
     // S: move camera down (scene moves up) - press S to see more below
     // A: move camera left (scene moves right) - press A to see more to the left
     // D: move camera right (scene moves left) - press D to see more to the right
-    if (upPressed)
-        camera.setCameraY(camera.getCameraY() + cameraMoveSpeed);  // W: move camera up
-    if (downPressed)
-        camera.setCameraY(camera.getCameraY() - cameraMoveSpeed);  // S: move camera down
+    // if (upPressed)
+    //     camera.setCameraY(camera.getCameraY() + cameraMoveSpeed);  // W: move camera up
+    // if (downPressed)
+    //     camera.setCameraY(camera.getCameraY() - cameraMoveSpeed);  // S: move camera down
     if (leftPressed)
         camera.setCameraX(camera.getCameraX() - cameraMoveSpeed);  // A: move camera left
     if (rightPressed)
         camera.setCameraX(camera.getCameraX() + cameraMoveSpeed);  // D: move camera right
-    
-    // Disable camera rotation for simplicity
-    // (commented out to keep camera fixed)
-    /*
-    if (rotateLeftPressed)
-        camera.rotateYaw(rotationSpeed);
-    if (rotateRightPressed)
-        camera.rotateYaw(-rotationSpeed);
-    
-    if (lookUpPressed)
-        camera.rotatePitch(rotationSpeed);
-    if (lookDownPressed)
-        camera.rotatePitch(-rotationSpeed);
-    */
 }
 
 void Controller::mouseButton(int button, int state, int x, int y)

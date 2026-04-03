@@ -58,6 +58,6 @@ class Camera
     // camera rotation - looking straight ahead
         float yaw = 0.0f;      // rotation around Y axis (left/right)
         float pitch = 0.0f;    // rotation around X axis (up/down)
-        float roll = 0.0f;     // rotation around Z axis (tilt)
+        float roll = 0.5f;     // rotation around Z axis (tilt)
 
 };

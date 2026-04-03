@@ -9,7 +9,7 @@
  *  camera, rendering systems, and OpenGL state setup.
  * 
  *  Dependencies:
- *  app.h and all linked subsystems
+ *  app.h
  * 
  *  Notes:
  *  coordinates startup behavior before entering the render loop.
@@ -117,21 +117,6 @@ void App::keyboardKeyUp(unsigned char key, int x, int y)
     controller.handleKeyUp(key);
 }
 
-void App::specialKey(int key, int x, int y)
-{
-    (void) x;
-    (void) y;
-    controller.handleSpecialKeyDown(key);
-    glutPostRedisplay();
-}
-
-void App::specialKeyUp(int key, int x, int y)
-{
-    (void) x;
-    (void) y;
-    controller.handleSpecialKeyUp(key);
-}
-
 void App::idle()
 {
     // update controller state (movement, rotation)
@@ -141,9 +126,10 @@ void App::idle()
     static int lastTime = 0;
     int currentTime = glutGet(GLUT_ELAPSED_TIME);
     float dt = 0.0f;
-    if (lastTime != 0) {
+
+    if (lastTime != 0) 
         dt = (currentTime - lastTime) / 1000.0f;  // convert to seconds
-    }
+    
     lastTime = currentTime;
     
     // update scene objects
@@ -183,30 +169,6 @@ void App::callKeyboard(unsigned char key, int x, int y)
     if (instance)
     {
         instance->keyboard(key, x, y);
-    }
-    else 
-    {
-        printf("ERROR: App instance is null\n");
-    }
-}
-
-void App::callSpecialKey(int key, int x, int y)
-{
-    if (instance)
-    {
-        instance->specialKey(key, x, y);
-    }
-    else 
-    {
-        printf("ERROR: App instance is null\n");
-    }
-}
-
-void App::callSpecialKeyUp(int key, int x, int y)
-{
-    if (instance)
-    {
-        instance->specialKeyUp(key, x, y);
     }
     else 
     {
