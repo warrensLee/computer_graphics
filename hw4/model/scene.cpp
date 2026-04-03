@@ -183,19 +183,23 @@ void Scene::updateCannonBalls(float dt)
             }
             
             // Check front/back walls (y boundaries) - in our 2D view, y is the other horizontal axis
-            if (it->y <= -wallBoundaryY) {
+            if (it->y <= -wallBoundaryY) 
+            {
                 it->y = -wallBoundaryY;  // Push back inside
                 it->vy = -it->vy * 0.7f;  // Reverse y direction and reduce speed
                 bounced = true;
                 printf("Cannonball hit BOTTOM wall at y=%.2f\n", it->y);
-            } else if (it->y >= wallBoundaryY) {
+            } 
+            else if (it->y >= wallBoundaryY) 
+            {
                 it->y = wallBoundaryY;   // Push back inside
                 it->vy = -it->vy * 0.7f;  // Reverse y direction and reduce speed
                 bounced = true;
                 printf("Cannonball hit TOP wall at y=%.2f\n", it->y);
             }
             
-            if (bounced) {
+            if (bounced) 
+            {
                 printf("Cannonball bounced at (%.2f, %.2f) with velocity (%.2f, %.2f)\n", 
                        it->x, it->y, it->vx, it->vy);
                 // Apply additional energy loss for realism
@@ -238,11 +242,15 @@ void Scene::updateCannonBalls(float dt)
             }
             
             // Update the corresponding object's position
-            if (it->objectIndex < objects.size()) {
+            if (it->objectIndex < objects.size()) 
+            {
                 objects[it->objectIndex]->setPosition(it->x, it->y, 0.0f);
             }
+
             ++it;
-        } else {
+        } 
+        else 
+        {
             // Remove inactive cannonballs
             it = cannonBalls.erase(it);
         }

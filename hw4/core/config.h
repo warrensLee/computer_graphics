@@ -40,21 +40,21 @@ namespace Config
     // Zoom limits
     constexpr inline float CAMERA_ZOOM_MIN = 2.0f;
     constexpr inline float CAMERA_ZOOM_MAX = 20.0f;
-    constexpr inline float CAMERA_ZOOM_START = 10.0f;
+    constexpr inline float CAMERA_ZOOM_START = 9.0f;
     
     // Ground settings
     constexpr inline float GROUND_SIZE = 50.0f;
     constexpr inline float GROUND_Z_POSITION = 0.0f;
     
     // Cannonball launch parameters
-    constexpr inline float CANNONBALL_POWER_SCALE = 0.03f;
+    constexpr inline float CANNONBALL_POWER_SCALE = 0.023f;
     constexpr inline float CANNONBALL_UPWARD_BIAS = 1.0f;
-    constexpr inline float CANNONBALL_MAX_SPEED = 10.0f;
+    constexpr inline float CANNONBALL_MAX_SPEED = 8.0f;
     
     // Cannonball size
-    constexpr inline float CANNONBALL_WIDTH = 1.5f;
-    constexpr inline float CANNONBALL_HEIGHT = 1.5f;
-    constexpr inline float CANNONBALL_DEPTH = 1.5f;
+    constexpr inline float CANNONBALL_WIDTH = 2.0f;
+    constexpr inline float CANNONBALL_HEIGHT = 2.0f;
+    constexpr inline float CANNONBALL_DEPTH = 2.0f;
 
     // Maximum number of cannonballs that can be active at once
     constexpr inline int MAX_ACTIVE_CANNONBALLS = 3;
