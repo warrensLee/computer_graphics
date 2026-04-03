@@ -18,6 +18,10 @@
  ******************************************************************************************/
 
 #include "scene.h"
+#include <cstdlib>
+#include <ctime>
+#include <cstdlib>
+#include <ctime>
 
 // this is where we use methods to create objects
 // that will be on screen, adding them to a unique
@@ -25,6 +29,9 @@
 
 Scene::Scene()
 {
+    // Seed random number generator for random rotation speeds
+    std::srand(static_cast<unsigned int>(std::time(nullptr)));
+    
     // Create objects at appropriate positions
     auto cube = std::make_unique<Cube>();
     cube->setTexture(0);
@@ -107,7 +114,7 @@ void Scene::launchProjectile(float vx, float vy, float distance, float spawnX, f
     cannonBall->setTexture(textureIndex);  
     cannonBall->setPosition(ballX, ballY, ballZ);
     cannonBall->setSize(Config::CANNONBALL_WIDTH, Config::CANNONBALL_HEIGHT, Config::CANNONBALL_DEPTH);
-    cannonBall->setRotationSpeed(0.2f, 0.2f, 0.2f);
+    cannonBall->setRotationSpeed(50.0f, 30.0f, 20.0f);
     
     // Add to objects vector and get its index
     std::size_t objectIndex = objects.size();
