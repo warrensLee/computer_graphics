@@ -165,9 +165,6 @@ void Scene::updateCannonBalls(float dt)
             float radius = Config::CANNONBALL_WIDTH * 0.5f;
             
             // wall boundaries - adjust for cannonball radius
-            // camera y position is 4.0f, zoom is 9.0f
-            // visible area in y: from 4.0f - 9.0f = -5.0f to 4.0f + 9.0f = 13.0f
-            // top wall should be at 13.0f - radius
             float wallBoundaryX = 10.0f - radius;   // x boundaries (fixed)
             float wallBoundaryY = 13.0f - radius;   // y boundaries (matches visible top)
             
