@@ -84,13 +84,13 @@ void Controller::handleKeyDown(unsigned char key)
     }
     
     // clamp zoom to reasonable bounds
-    if (camera.getCurrentZoom() > 15.0f)
+    if (camera.getCurrentZoom() > 10.0f)
     {
-        camera.setCurrentZoom(15.0f);
+        camera.setCurrentZoom(10.0f);
     }
-    if (camera.getCurrentZoom() < 1.0f)  // minimum zoom (more zoomed in)
+    if (camera.getCurrentZoom() < 0.5f)  // minimum zoom (more zoomed in)
     {
-        camera.setCurrentZoom(1.0f);
+        camera.setCurrentZoom(0.5f);
     }
 }
 
@@ -158,15 +158,19 @@ void Controller::handleSpecialKeyUp(int key)
 
 void Controller::update()
 {
-    // handle camera movement
+    // handle camera movement - make more intuitive
+    // W: move camera up (scene moves down)
+    // S: move camera down (scene moves up)
+    // A: move camera left (scene moves right)
+    // D: move camera right (scene moves left)
     if (upPressed)
-        camera.setCameraY(camera.getCameraY() - cameraMoveSpeed);  // W: move camera down (scene up)
+        camera.setCameraY(camera.getCameraY() + cameraMoveSpeed);  // W: move camera up
     if (downPressed)
-        camera.setCameraY(camera.getCameraY() + cameraMoveSpeed);  // S: move camera up (scene down)
+        camera.setCameraY(camera.getCameraY() - cameraMoveSpeed);  // S: move camera down
     if (leftPressed)
-        camera.setCameraX(camera.getCameraX() + cameraMoveSpeed);  // A: move camera right (scene left)
+        camera.setCameraX(camera.getCameraX() - cameraMoveSpeed);  // A: move camera left
     if (rightPressed)
-        camera.setCameraX(camera.getCameraX() - cameraMoveSpeed);  // D: move camera left (scene right)
+        camera.setCameraX(camera.getCameraX() + cameraMoveSpeed);  // D: move camera right
     
     // Disable camera rotation for simplicity
     // (commented out to keep camera fixed)
