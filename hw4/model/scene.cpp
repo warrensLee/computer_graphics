@@ -77,6 +77,13 @@ void Scene::update(float dt)
 
 void Scene::launchProjectile(float vx, float vy, float distance)
 {
+    // If there's already an active cannon ball, remove it first
+    if (ballActive && !objects.empty()) {
+        // Remove the last object (which should be the current cannon ball)
+        objects.pop_back();
+        printf("Removed existing cannon ball before launching new one\n");
+    }
+    
     printf("Scene::launchProjectile called with vx=%f, vy=%f, distance=%f\n", vx, vy, distance);
     
     // Start at cannon location
@@ -115,6 +122,11 @@ void Scene::updateCannonBall(float dt)
         {
             ballY = groundY;
             ballActive = false;
+            // Remove the cannon ball object when it hits the ground
+            if (!objects.empty()) {
+                objects.pop_back();
+                printf("Cannon ball hit the ground and was removed\n");
+            }
         }
     }
 }
