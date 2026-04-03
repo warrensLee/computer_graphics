@@ -196,23 +196,28 @@ void Controller::mouseButton(int button, int state, int x, int y)
             float dirX = dx / distance;
             float dirY = dy / distance;
 
+            // Scale by distance for power, and adjust signs for coordinate system
+            // In screen coordinates, y increases downwards, but in world coordinates, y should increase upwards
+            // So invert dy
             float powerScale = 0.02f;
-            float launchVX = dx / distance;
-            float launchVY = -dy / distance;
+            float launchVX = dirX;
+            float launchVY = -dirY;  // Invert for proper world coordinates
 
-            // now to clamp so it doesnt go too far
-            if (launchVX > 3.0f) 
-                launchVX = 3.0f;
-            if (launchVX < -3.0f) 
-                launchVX = -3.0f;
-            if (launchVY > 3.0f) 
-                launchVY = 3.0f;
-            if (launchVY < -3.0f) 
-                launchVY = -3.0f;
+            // Scale by distance (power)
+            launchVX *= distance * powerScale;
+            launchVY *= distance * powerScale;
+
+            // Clamp maximum speed if needed
+            float maxSpeed = 3.0f;
+            float speed = sqrt(launchVX * launchVX + launchVY * launchVY);
+            if (speed > maxSpeed) {
+                launchVX = launchVX / speed * maxSpeed;
+                launchVY = launchVY / speed * maxSpeed;
+            }
 
             // This is your "launch"
-            if (distance > 0.0f)
-                App::callLaunchProjectile(launchVX, launchVY, distance);
+            printf("Launching: distance=%f, vx=%f, vy=%f\n", distance, launchVX, launchVY);
+            App::callLaunchProjectile(launchVX, launchVY, distance);
         }
     }
 }

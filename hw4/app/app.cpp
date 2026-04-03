@@ -109,6 +109,17 @@ void App::keyboardKeyUp(unsigned char key, int x, int y)
 void App::idle()
 {
     controller.update();
+    // Update the scene with delta time
+    // For simplicity, use a fixed delta time
+    static int lastTime = 0;
+    int currentTime = glutGet(GLUT_ELAPSED_TIME);
+    float dt = 0.0f;
+    if (lastTime != 0) {
+        dt = (currentTime - lastTime) / 1000.0f;  // Convert to seconds
+    }
+    lastTime = currentTime;
+    
+    scene.update(dt);
     glutPostRedisplay();
 }
 
@@ -177,7 +188,10 @@ void App::callMouseMotion(int x, int y)
 
 void App::callLaunchProjectile(float launchVX, float launchVY, float distance)
 {
-    printf("launching projectile");
-    instance->scene.launchProjectile(launchVX, launchVY, distance);
-
+    printf("launching projectile\n");
+    if (instance) {
+        instance->scene.launchProjectile(launchVX, launchVY, distance);
+    } else {
+        printf("ERROR: App instance is null\n");
+    }
 }

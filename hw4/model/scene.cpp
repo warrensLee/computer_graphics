@@ -58,29 +58,45 @@ const std::vector<std::unique_ptr<Object3D>> &Scene::getObjects() const
 
 void Scene::update(float dt)
 {
+    // Update all objects
     for (auto &obj : objects)
     {
         obj->update(dt);
+    }
+    
+    // Update cannon ball physics
+    updateCannonBall(dt);
+    
+    // Update the position of the cannon ball object if it exists
+    // We need to find the cannon ball in the objects list
+    // For simplicity, let's assume the last object is the cannon ball
+    if (ballActive && !objects.empty()) {
+        // Update the last object's position to match ballX, ballY
+        objects.back()->setPosition(ballX, ballY, 0.0f);
     }
 }
 
 void Scene::launchProjectile(float vx, float vy, float distance)
 {
-    const float powerScale = 0.02f;
-    const float maxPower = 150.0f;
-
-    if (distance > maxPower)
-        distance = maxPower;
-
+    printf("Scene::launchProjectile called with vx=%f, vy=%f, distance=%f\n", vx, vy, distance);
+    
     // Start at cannon location
     ballX = 0.0f;
     ballY = 0.0f;
 
-    // Set launch velocity
-    ballVX = vx * distance * powerScale;
-    ballVY = vy * distance * powerScale;
+    // Set launch velocity (vx and vy are already scaled appropriately)
+    ballVX = vx;
+    ballVY = vy;
 
     ballActive = true;
+    
+    // Also, create a visual cannon ball object
+    auto cannonBall = std::make_unique<Sphere>();
+    cannonBall->setTexture(2);  // Use a different texture index if available
+    cannonBall->setPosition(ballX, ballY, 0.0f);
+    cannonBall->setSize(0.5f, 0.5f, 0.5f);
+    cannonBall->setRotationSpeed(0.0f, 0.0f, 0.0f);
+    addObject(std::move(cannonBall));
 }
 
 void Scene::updateCannonBall(float dt)
