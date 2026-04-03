@@ -161,6 +161,42 @@ void Scene::updateCannonBalls(float dt)
             // change velocity with gravity
             it->vy += gravity * dt;
             
+            // Check for wall collisions before ground check
+            // Use ground size from Config for wall boundaries
+            float wallBoundary = Config::GROUND_SIZE * 0.8f;  // Use 80% of ground size for walls
+            bool bounced = false;
+            
+            // Check left/right walls (x boundaries)
+            if (it->x <= -wallBoundary) {
+                it->x = -wallBoundary;  // Push back inside
+                it->vx = -it->vx * 0.7f;  // Reverse x direction and reduce speed
+                bounced = true;
+            } else if (it->x >= wallBoundary) {
+                it->x = wallBoundary;   // Push back inside
+                it->vx = -it->vx * 0.7f;  // Reverse x direction and reduce speed
+                bounced = true;
+            }
+            
+            // Check front/back walls (y boundaries) - note: y is vertical in our coordinate system
+            // Actually, in our coordinate system, y is up/down, but for walls we should check z
+            // However, since we're in 2D (x-y plane), we'll treat y as the other horizontal axis
+            if (it->y <= -wallBoundary) {
+                it->y = -wallBoundary;  // Push back inside
+                it->vy = -it->vy * 0.7f;  // Reverse y direction and reduce speed
+                bounced = true;
+            } else if (it->y >= wallBoundary) {
+                it->y = wallBoundary;   // Push back inside
+                it->vy = -it->vy * 0.7f;  // Reverse y direction and reduce speed
+                bounced = true;
+            }
+            
+            if (bounced) {
+                printf("Cannonball hit a wall at (%.2f, %.2f) and bounced\n", it->x, it->y);
+                // Also apply some energy loss to the other component for more realistic bounce
+                it->vx *= 0.95f;
+                it->vy *= 0.95f;
+            }
+            
             // check if hit ground
             if (it->y <= groundY) 
             {
@@ -186,14 +222,6 @@ void Scene::updateCannonBalls(float dt)
                         }
                     }
                     objects.pop_back();
-                }
-
-                // if we reach the side of a wall bounce
-                if (it->y <= -1.0 || it->y >= 1.0f || it->x <= -1.0 || it->x >= 1.0)
-                {
-                    printf("cannonball hit a wall and bounced\n");
-                    it->vx *= -0.85f;
-                    it->vy *= -0.85f;
                 }
 
                 printf("Cannon ball hit the ground and was removed\n");
