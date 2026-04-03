@@ -26,6 +26,7 @@ class Camera
     // getters
         float getCameraX() const;
         float getCameraY() const;
+        float getCameraZ() const;
         float getCurrentZoom() const;
         float getYaw() const;
         float getPitch() const;
@@ -34,6 +35,7 @@ class Camera
     // setters
         void setCameraX(float x);
         void setCameraY(float y);
+        void setCameraZ(float z);
         void setCurrentZoom(float z);
         void setYaw(float yaw);
         void setPitch(float pitch);

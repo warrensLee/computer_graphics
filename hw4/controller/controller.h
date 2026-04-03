@@ -31,7 +31,7 @@ class Controller
         Controller();
 
     // getters
-        Camera getCamera() const;
+        const Camera& getCamera() const;
 
         // Movement state getters (used internally)
         bool getUpPressed() const;

@@ -79,7 +79,9 @@ void App::display()
     glLoadIdentity();
 
     // Apply camera translation
-    glTranslatef(controller.getCamera().getCameraX(), controller.getCamera().getCameraY(), -10.0f);
+    glTranslatef(controller.getCamera().getCameraX(), 
+                 controller.getCamera().getCameraY(), 
+                 controller.getCamera().getCameraZ() - 10.0f);
 
     // Apply camera rotation (in order: roll, pitch, yaw)
     // Note: OpenGL applies transformations in reverse order

@@ -32,6 +32,11 @@ float Camera::getCameraY() const
     return yCameraPosition;
 }
 
+float Camera::getCameraZ() const
+{
+    return zCameraPosition;
+}
+
 float Camera::getCurrentZoom() const
 {
     return currentZoom;
@@ -60,6 +65,11 @@ void Camera::setCameraX(float x)
 void Camera::setCameraY(float y) 
 {
     yCameraPosition = y;
+}
+
+void Camera::setCameraZ(float z) 
+{
+    zCameraPosition = z;
 }
 
 void Camera::setCurrentZoom(float z) 

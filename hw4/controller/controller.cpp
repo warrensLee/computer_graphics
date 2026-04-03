@@ -44,7 +44,7 @@ bool Controller::getRightPressed() const
     return rightPressed;
 }
 
-Camera Controller::getCamera() const
+const Camera& Controller::getCamera() const
 {
     return camera;
 }
