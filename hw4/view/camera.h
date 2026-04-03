@@ -48,7 +48,7 @@ class Camera
 
     private:
     // zoom 
-        float currentZoom = 3.0f;       // starting zoom (smaller = more zoomed in)
+        float currentZoom = 2.0f;       // starting zoom (smaller = more zoomed in)
 
     // camera position - adjust for better view with new zoom
         float xCameraPosition = 0.0f;
