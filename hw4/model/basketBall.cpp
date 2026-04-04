@@ -1,5 +1,5 @@
 /******************************************************************************************
- *  File Name:      basketball.cpp
+ *  File Name:      basketBall.cpp
  *  Author:         Warren Roberts
  *  Created:        March 26, 2026
  *  Last Modified:  April 3, 2026
@@ -30,7 +30,9 @@ void BasketBall::draw(Render& renderer) const
 
 BasketBall::BasketBall()
 {
+    // seed random number generator for spin randomness
     static bool seeded = false;
+    // only do it once!!
     if (!seeded)
     {
         srand(static_cast<unsigned int>(time(nullptr)));
@@ -121,36 +123,38 @@ void BasketBall::handleWallBounce()
     float topWall = 13.0f;
 
     bool bounced = false;
-
+    // check for collision with walls and bounce if necessary
     if (x - radius <= leftWall)
-    {
+    { // left wall
         x = leftWall + radius;
         vx = -vx * 0.85f;
         bounced = true;
     }
     else if (x + radius >= rightWall)
-    {
+    { // right wall
         x = rightWall - radius;
         vx = -vx * 0.85f;
         bounced = true;
     }
 
     if (y - radius <= bottomWall)
-    {
+    { // bottom wall
         y = bottomWall + radius;
         vy = -vy * 0.85f;
         bounced = true;
     }
     else if (y + radius >= topWall)
-    {
+    { // top wall
         y = topWall - radius;
         vy = -vy * 0.85f;
         bounced = true;
     }
 
+    // update position and velocity after bounce
     setPosition(x, y, 0.0f);
     setVelocity(vx, vy, 0.0f);
 
+    // add random spin on bounce to make it interesting
     if (bounced)
     {
         float rotX = getRotVX();

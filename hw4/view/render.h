@@ -2,7 +2,7 @@
  *  File Name:      render.h
  *  Author:         Warren Roberts
  *  Created:        March 25, 2026
- *  Last Modified:  April 2, 2026
+ *  Last Modified:  April 3, 2026
  *
  *  Description:
  *  Defines the Render class, which initializes textures and draws textured
@@ -27,6 +27,7 @@
 
 #include "../model/scene.h"
 #include "../model/texture.h"
+
 class Render
 {
 public:
@@ -39,11 +40,12 @@ public:
     void drawSphere(const Object3D& obj);
     void drawGroundTexture();
     void drawTrajectoryLine(float startX, float startY, float endX, float endY);
+    void drawCubeGeometry(float xmin, float ymin, float zmin, float xmax, float ymax, float zmax);
 
 
 private:
-    void drawCubeGeometry(float xmin, float ymin, float zmin, float xmax, float ymax, float zmax);
 
+    // all textures
     unsigned char* texture1 = nullptr;
     unsigned char* texture2 = nullptr;  
     unsigned char* basketballTexture = nullptr;

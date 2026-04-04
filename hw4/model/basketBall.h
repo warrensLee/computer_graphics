@@ -1,11 +1,11 @@
 /******************************************************************************************
- *  File Name:      BasketBall.h
+ *  File Name:      basketBall.h
  *  Author:         Warren Roberts
  *  Created:        March 26, 2026
  *  Last Modified:  April 3, 2026
  *
  *  Description:
- *  Defines the BasketBall class, which inherits from Sphere and adds
+ *  Defines the basket ball class, which inherits from Sphere and adds
  *  projectile behavior such as launching, gravity, bounce, and active state.
  *
  *  Dependencies:

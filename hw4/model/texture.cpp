@@ -1,8 +1,8 @@
 /******************************************************************************************
  *  File Name:      texture.cpp
  *  Author:         Warren Roberts
- *  Created:        February 26, 2026
- *  Last Modified:  March 10, 2026
+ *  Created:        March 26, 2026
+ *  Last Modified:  March 30, 2026
  *
  *  Description:
  *  Implements texture loading from JPEG files.

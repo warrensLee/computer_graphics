@@ -1,8 +1,8 @@
 /******************************************************************************************
  *  File Name:      controller.h
  *  Author:         Warren Roberts
- *  Created:        February 26, 2026
- *  Last Modified:  March 10, 2026
+ *  Created:        March 26, 2026
+ *  Last Modified:  April 3, 2026
  *
  *  Description:
  *  Declares input control methods used to respond to keyboard input
@@ -34,12 +34,18 @@ class Controller
     // getters
         const Camera& getCamera() const;
 
-        // Movement state getters (used internally)
+        // getters
         bool getUpPressed() const;
         bool getDownPressed() const;
         bool getLeftPressed() const;
         bool getRightPressed() const;
+        bool getIsDragging() const;
+        float getDragStartX() const;
+        float getDragStartY() const;
+        float getDragEndX() const;
+        float getDragEndY() const;
 
+        void getDragWorldCoordinates(float& worldStartX, float& worldStartY, float& worldEndX, float& worldEndY) const;
 
     // functionality
         void handleKeyDown(unsigned char key);
@@ -47,6 +53,7 @@ class Controller
 
         void mouseButton(int button, int state, int x, int y);
         void mouseMotion(int x, int y);
+        
 
         void update();
 
@@ -57,7 +64,7 @@ class Controller
         bool leftPressed = false;
         bool rightPressed = false;
 
-        // These will be initialized in the constructor using Config values
+        // these will be initialized in the constructor using Config values
         bool isDragging = false;
 
         float startX = 0.0f;
@@ -66,16 +73,6 @@ class Controller
         float endY = 0.0f;
         float clickWorldX = 0.0f;
         float clickWorldY = 0.0f;
-        
-    public:
-        // Getters for drag information to draw trajectory line
-        bool getIsDragging() const { return isDragging; }
-        float getDragStartX() const { return startX; }
-        float getDragStartY() const { return startY; }
-        float getDragEndX() const { return endX; }
-        float getDragEndY() const { return endY; }
-        // Get world coordinates for the drag start position
-        void getDragWorldCoordinates(float& worldStartX, float& worldStartY, float& worldEndX, float& worldEndY) const;
 
 };
 

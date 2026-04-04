@@ -2,7 +2,7 @@
  *  File Name:      camera.cpp
  *  Author:         Warren Roberts
  *  Created:        February 26, 2026
- *  Last Modified:  March 10, 2026
+ *  Last Modified:  April 3, 2026
  *
  *  Description:
  *  Implements camera positioning, movement, zooming, and viewing transforms.
@@ -18,16 +18,15 @@
 #include "camera.h"
 #include "../core/config.h"
 
-Camera::Camera() : 
-    currentZoom(Config::CAMERA_ZOOM_START), 
-    xCameraPosition(Config::CAMERA_START_X), 
-    yCameraPosition(Config::CAMERA_START_Y), 
-    zCameraPosition(Config::CAMERA_START_Z),
-    yaw(Config::CAMERA_START_YAW), 
-    pitch(Config::CAMERA_START_PITCH), 
-    roll(Config::CAMERA_START_ROLL)
+Camera::Camera()
 {
-
+    currentZoom = Config::CAMERA_ZOOM_START;
+    xCameraPosition = Config::CAMERA_START_X;
+    yCameraPosition = Config::CAMERA_START_Y;
+    zCameraPosition = Config::CAMERA_START_Z;
+    yaw = Config::CAMERA_START_YAW; 
+    pitch= Config::CAMERA_START_PITCH; 
+    roll =Config::CAMERA_START_ROLL;
 }
 
 float Camera::getCameraX() const
@@ -85,34 +84,34 @@ void Camera::setCurrentZoom(float z)
     currentZoom = z;
 }
 
-void Camera::setYaw(float yaw_)
+void Camera::setYaw(float dYaw)
 {
-    yaw = yaw_;
+    yaw = dYaw;
 }
 
-void Camera::setPitch(float pitch_)
+void Camera::setPitch(float dPitch)
 {
-    pitch = pitch_;
+    pitch = dPitch;
 }
 
-void Camera::setRoll(float roll_)
+void Camera::setRoll(float dRoll)
 {
-    roll = roll_;
+    roll = dRoll;
 }
 
-void Camera::rotateYaw(float delta)
+void Camera::rotateYaw(float d)
 {
-    yaw += delta;
+    yaw += d;
 }
 
-void Camera::rotatePitch(float delta)
+void Camera::rotatePitch(float d)
 {
-    pitch += delta;
+    pitch += d;
 }
 
-void Camera::rotateRoll(float delta)
+void Camera::rotateRoll(float d)
 {
-    roll += delta;
+    roll += d;
 }
 
 

@@ -1,8 +1,8 @@
 /******************************************************************************************
  *  File Name:      controller.cpp
  *  Author:         Warren Roberts
- *  Created:        February 26, 2026
- *  Last Modified:  March 10, 2026
+ *  Created:        March 26, 2026
+ *  Last Modified:  April 3, 2026
  *
  *  Description:
  *  implements input handling for keyboard controls and camera interaction.
@@ -51,7 +51,30 @@ const Camera& Controller::getCamera() const
     return camera;
 }
 
+bool Controller::getIsDragging() const 
+{ 
+    return isDragging; 
+}
 
+float Controller::getDragStartX() const 
+{ 
+    return startX; 
+}
+
+float Controller::getDragStartY() const 
+{ 
+    return startY; 
+}
+
+float Controller::getDragEndX() const 
+{ 
+    return endX; 
+}
+
+float Controller::getDragEndY() const 
+{ 
+    return endY; 
+}
 
 // functionality
 void Controller::handleKeyDown(unsigned char key)
@@ -185,8 +208,7 @@ void Controller::mouseButton(int button, int state, int x, int y)
             if (height == 0) 
                 height = 600;
             
-            // Map screen coordinates to world coordinates
-            // Using orthographic projection bounds from app.cpp
+            // map screen coordinates to world coordinates
             float zoom = camera.getCurrentZoom();
             float aspect = (float)width / (float)height;
             float right = zoom * aspect;
@@ -194,21 +216,22 @@ void Controller::mouseButton(int button, int state, int x, int y)
             float top = zoom;
             float bottom = -top;
             
-            // Convert screen (0 to width-1) to world (left to right)
+            // convert screen (0 to width - 1) to world (left to right)
             float worldX = left + (right - left) * ((float)startX / (float)width);
-            // Convert screen (0 to height-1) to world (bottom to top) - invert Y
+
+            // convert screen (0 to height - 1) to world (bottom to top)
             float worldY = bottom + (top - bottom) * ((float)(height - startY) / (float)height);
-            
-            // Adjust for camera position (scene is translated opposite to camera)
-            // In app.cpp: glTranslatef(-cameraX, -cameraY, -cameraZ)
-            // So we need to add camera position to get correct world position
+
             worldX += camera.getCameraX();
             worldY += camera.getCameraY();
             
-            // The ground is at z=0, so the BASKETBALL should be launched from (worldX, worldY, 0)
-            // But launchProjectile expects x and y coordinates, which match worldX and worldY
+            // the ground is at z = 0, so the ball should be 
+            // launched from (worldX, worldY, 0)
+
+            // debugging
             printf("Mouse click at screen (%d, %d) -> world (%f, %f, 0.0)\n", startX, startY, worldX, worldY);
             printf("Launching from (%f, %f): distance=%f, vx=%f, vy=%f\n", worldX, worldY, distance, launchVX, launchVY);
+
             App::callLaunchProjectile(launchVX, launchVY, distance, worldX, worldY);
         }
     }
@@ -228,20 +251,19 @@ void Controller::mouseMotion(int x, int y)
 
 void Controller::getDragWorldCoordinates(float& worldStartX, float& worldStartY, float& worldEndX, float& worldEndY) const
 {
+    // if not dragging, return last known coordinates (or zeros)
     if (!isDragging) 
     {
         worldStartX = worldStartY = worldEndX = worldEndY = 0.0f;
         return;
     }
-    
+
+    // get screen size
     int width = glutGet(GLUT_WINDOW_WIDTH);
     int height = glutGet(GLUT_WINDOW_HEIGHT);
-    
-    if (width == 0) 
-        width = 800;
-    if (height == 0) 
-        height = 600;
-    
+
+    // map screen coordinates to world coordinates 
+    // using the same logic as in mouseButton
     float zoom = camera.getCurrentZoom();
     float aspect = (float)width / (float)height;
     float right = zoom * aspect;
@@ -249,15 +271,15 @@ void Controller::getDragWorldCoordinates(float& worldStartX, float& worldStartY,
     float top = zoom;
     float bottom = -top;
     
-    // Convert start screen coordinates to world coordinates
+    // convert start screen coordinates to world coordinates
     worldStartX = left + (right - left) * ((float)startX / (float)width);
     worldStartY = bottom + (top - bottom) * ((float)(height - startY) / (float)height);
     
-    // Convert end screen coordinates to world coordinates
+    // convert end screen coordinates to world coordinates
     worldEndX = left + (right - left) * ((float)endX / (float)width);
     worldEndY = bottom + (top - bottom) * ((float)(height - endY) / (float)height);
     
-    // Adjust for camera position
+    // adjust for camera position
     worldStartX += camera.getCameraX();
     worldStartY += camera.getCameraY();
     worldEndX += camera.getCameraX();

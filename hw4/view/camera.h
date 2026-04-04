@@ -2,7 +2,7 @@
  *  File Name:      camera.h
  *  Author:         Warren Roberts
  *  Created:        February 26, 2026
- *  Last Modified:  March 10, 2026
+ *  Last Modified:  April 3, 2026
  *
  *  Description:
  *  Declares camera position and viewing controls for scene navigation.
@@ -40,22 +40,20 @@ class Camera
         void setYaw(float yaw);
         void setPitch(float pitch);
         void setRoll(float roll);
-        void rotateYaw(float delta);
-        void rotatePitch(float delta);
-        void rotateRoll(float delta);
-
-    // functionality
+        void rotateYaw(float d);
+        void rotatePitch(float d);
+        void rotateRoll(float d);
 
     private:
     // zoom 
-        float currentZoom;       // starting zoom (wider view)
+        float currentZoom;  
 
-    // camera position - better viewing position
+    // camera position
         float xCameraPosition;
-        float yCameraPosition;    // camera height (higher to see more)
-        float zCameraPosition;   // camera distance from scene
+        float yCameraPosition;    
+        float zCameraPosition;  
         
-    // camera rotation - looking straight ahead
+    // camera rotation
         float yaw;      // rotation around Y axis (left/right)
         float pitch;    // rotation around X axis (up/down)
         float roll;     // rotation around Z axis (tilt)

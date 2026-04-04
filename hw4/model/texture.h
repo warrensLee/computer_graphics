@@ -1,8 +1,8 @@
 /******************************************************************************************
  *  File Name:      texture.h
  *  Author:         Warren Roberts
- *  Created:        February 26, 2026
- *  Last Modified:  April 2, 2026
+ *  Created:        March 26, 2026
+ *  Last Modified:  March 30, 2026
  *
  *  Description:
  *  Declares texture loading functionality.

@@ -1,8 +1,8 @@
 /******************************************************************************************
  *  File Name:      types.h
  *  Author:         Warren Roberts
- *  Created:        February 26, 2026
- *  Last Modified:  March 7, 2026
+ *  Created:        March 26, 2026
+ *  Last Modified:  March 26, 2026
  *
  *  Description:
  *  Defines shared data structures such as vectors and colors used
@@ -38,8 +38,3 @@ struct Color
     float b;
 };
 
-struct DragState {
-    bool active;
-    Vec2 start;
-    Vec2 end;
-};

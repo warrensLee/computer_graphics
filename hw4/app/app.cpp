@@ -1,7 +1,7 @@
 /******************************************************************************************
  *  File Name:      app.cpp
  *  Author:         Warren Roberts
- *  Created:        February 26, 2026
+ *  Created:        March 26, 2026
  *  Last Modified:  April 3, 2026
  *
  *  Description:
@@ -84,8 +84,8 @@ void App::display()
     // switch to 2D for text
     beginTextMode(width, height);
 
-    // white text color
-    glColor3f(1.0f, 1.0f, 1.0f);
+    // black text color
+    glColor3f(0.0f, 0.0f, 0.0f);
     
     // text positioning
     int textX = 20;

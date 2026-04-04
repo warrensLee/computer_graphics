@@ -1,8 +1,8 @@
 /******************************************************************************************
  *  File Name:      app.h
  *  Author:         Warren Roberts
- *  Created:        February 26, 2026
- *  Last Modified:  March 10, 2026
+ *  Created:        March 26, 2026
+ *  Last Modified:  March 31, 2026
  *
  *  Description:
  *  Declares the App class responsible for managing application-level setup,

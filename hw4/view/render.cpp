@@ -2,10 +2,12 @@
  *  File Name:      render.cpp
  *  Author:         Warren Roberts
  *  Created:        March 25, 2026
- *  Last Modified:  April 2, 2026
+ *  Last Modified:  April 3, 2026
  *
  *  Description:
  *  Implements texture initialization and rendering for textured 3D scene objects.
+ *  Most of this code was gotten from John Gauch's source code and modified slightly
+ *  as needed to fit the project and my design.
  * 
  *  Dependencies:
  *  render.h
@@ -28,9 +30,9 @@ void Render::init()
     glEnable(GL_TEXTURE_2D);
 
     Texture::init_texture("textures/brick.jpg", texture1, xdim1, ydim1);
-    Texture::init_texture("textures/gravel.jpg", texture2, xdim2, ydim2);
+    Texture::init_texture("textures/cannonball.jpg", texture2, xdim2, ydim2);
     Texture::init_texture("textures/basket-ball.jpg", basketballTexture, xdim3, ydim3);
-    Texture::init_texture("textures/grass.jpg", groundTexture, xdim4, ydim4);
+    Texture::init_texture("textures/boards.jpg", groundTexture, xdim4, ydim4);
 
     glGenTextures(4, texIDs);
 
@@ -186,11 +188,11 @@ void Render::drawGroundTexture()
 
     glBegin(GL_QUADS);
 
-    // Draw a ground plane in the x-y plane at z=0.0f (visible to camera at z=20 looking along -Z)
+    // draw a ground plane in the x-y plane at z=0.0f (visible to camera at z=20 looking along -Z)
     float groundSize = Config::GROUND_SIZE;  // Make ground larger to be visible
     float groundZ = Config::GROUND_Z_POSITION;
     
-    // The ground is in the x-y plane at z=0
+    // the ground is in the x-y plane at z=0
     glTexCoord2f(0.0f, 0.0f); glVertex3f(-groundSize, -groundSize, groundZ);
     glTexCoord2f(10.0f, 0.0f); glVertex3f( groundSize, -groundSize, groundZ);
     glTexCoord2f(10.0f, 10.0f); glVertex3f( groundSize,  groundSize, groundZ);
@@ -209,23 +211,21 @@ void Render::drawTrajectoryLine(float startX, float startY, float endX, float en
     // set line color to black and
     // set line width to make it more visible
     glColor3f(0.0f, 0.0f, 0.0f);
-    
-    
     glLineWidth(3.0f);
     
-    // draw the line
+    // draw the line slightly above ground
     glBegin(GL_LINES);
-    glVertex3f(startX, startY, 0.1f);  // Slightly above ground to avoid z-fighting
+    glVertex3f(startX, startY, 0.1f);  
     glVertex3f(endX, endY, 0.1f);
     glEnd();
     
     // reset line width
     glLineWidth(1.0f);
     
-    // re-enable texturing for other objects
+    // re-enable everyhing we disables
     glEnable(GL_TEXTURE_2D);
-    // re-enable depth testing
     glEnable(GL_DEPTH_TEST);
+
     // reset color to white
     glColor3f(1.0f, 1.0f, 1.0f);
 }
