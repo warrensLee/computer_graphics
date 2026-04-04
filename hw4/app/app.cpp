@@ -92,7 +92,7 @@ void App::display()
     int textY = height - 30;
 
     // text content and draw method
-    drawText(textX, textY, "DRAG TO LAUNCH CANNONBALL");
+    drawText(textX, textY, "DRAG TO THROW BASKETBALL");
 
     endTextMode();
 

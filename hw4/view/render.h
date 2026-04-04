@@ -46,7 +46,7 @@ private:
 
     unsigned char* texture1 = nullptr;
     unsigned char* texture2 = nullptr;  
-    unsigned char* cannonballTexture = nullptr;
+    unsigned char* basketballTexture = nullptr;
     unsigned char* groundTexture = nullptr;
 
 

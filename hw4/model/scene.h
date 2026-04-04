@@ -23,6 +23,7 @@
 #include "../core/config.h"
 #include "cubeObject.h"
 #include "sphereObject.h"
+#include "basketBall.h"
 #include <vector>
 #include <memory> // for unique_ptr
 
@@ -37,26 +38,14 @@ public:
     void addObject(std::unique_ptr<Object3D> obj);
 
     void launchProjectile(float vx, float vy, float distance, float spawnX = 0.0f, float spawnY = 0.0f);
-    void updateCannonBalls(float dt);
+    void updateBasketBalls(float dt);
 
     const std::vector<std::unique_ptr<Object3D>> &getObjects() const;
 
 private:
     // unique_ptr for possible polymorphism in the future
     std::vector<std::unique_ptr<Object3D>> objects;
-
-    // Structure to track active cannonballs
-    struct CannonBall {
-        float x;
-        float y;
-        float vx;
-        float vy;
-        bool active;
-        std::size_t objectIndex; // Index in objects vector
-    };
     
-    std::vector<CannonBall> cannonBalls;
-    
-    float gravity = -2.0f;      // even stronger gravity
+    float gravity = -2.0f;      
     float groundY = -5.0f;
 };

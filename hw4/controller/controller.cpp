@@ -157,7 +157,7 @@ void Controller::mouseButton(int button, int state, int x, int y)
 
             // scale by distance for power
             // note: screen y increases downwards, world y increases upwards
-            float powerScale = Config::CANNONBALL_POWER_SCALE;  // reasonable power scale
+            float powerScale = Config::BASKETBALL_POWER_SCALE;  // reasonable power scale
             float launchVX = dirX;
             float launchVY = -dirY;  // invert y for world coordinates
 
@@ -166,14 +166,14 @@ void Controller::mouseButton(int button, int state, int x, int y)
             launchVY *= distance * powerScale;
             
             // Add some upward bias to make the cannon ball go in an arc
-            launchVY += Config::CANNONBALL_UPWARD_BIAS;  // give it some initial upward velocity
+            launchVY += Config::BASKETBALL_UPWARD_BIAS;  // give it some initial upward velocity
 
             // clamp speed to maximum
             float speed = sqrt(launchVX * launchVX + launchVY * launchVY);
 
-            if (speed > Config::CANNONBALL_MAX_SPEED) {
-                launchVX = launchVX / speed * Config::CANNONBALL_MAX_SPEED;
-                launchVY = launchVY / speed * Config::CANNONBALL_MAX_SPEED;
+            if (speed > Config::BASKETBALL_MAX_SPEED) {
+                launchVX = launchVX / speed * Config::BASKETBALL_MAX_SPEED;
+                launchVY = launchVY / speed * Config::BASKETBALL_MAX_SPEED;
             }
 
             // Convert click position to world coordinates on the ground plane (z=0)
@@ -205,7 +205,7 @@ void Controller::mouseButton(int button, int state, int x, int y)
             worldX += camera.getCameraX();
             worldY += camera.getCameraY();
             
-            // The ground is at z=0, so the cannonball should be launched from (worldX, worldY, 0)
+            // The ground is at z=0, so the BASKETBALL should be launched from (worldX, worldY, 0)
             // But launchProjectile expects x and y coordinates, which match worldX and worldY
             printf("Mouse click at screen (%d, %d) -> world (%f, %f, 0.0)\n", startX, startY, worldX, worldY);
             printf("Launching from (%f, %f): distance=%f, vx=%f, vy=%f\n", worldX, worldY, distance, launchVX, launchVY);

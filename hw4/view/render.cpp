@@ -29,7 +29,7 @@ void Render::init()
 
     Texture::init_texture("textures/brick.jpg", texture1, xdim1, ydim1);
     Texture::init_texture("textures/gravel.jpg", texture2, xdim2, ydim2);
-    Texture::init_texture("textures/cannonball.jpg", cannonballTexture, xdim3, ydim3);
+    Texture::init_texture("textures/basket-ball.jpg", basketballTexture, xdim3, ydim3);
     Texture::init_texture("textures/grass.jpg", groundTexture, xdim4, ydim4);
 
     glGenTextures(4, texIDs);
@@ -53,7 +53,7 @@ void Render::init()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, xdim3, ydim3, 0, GL_RGB, GL_UNSIGNED_BYTE, cannonballTexture);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, xdim3, ydim3, 0, GL_RGB, GL_UNSIGNED_BYTE, basketballTexture);
 
     glBindTexture(GL_TEXTURE_2D, texIDs[3]);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -201,30 +201,31 @@ void Render::drawGroundTexture()
 
 void Render::drawTrajectoryLine(float startX, float startY, float endX, float endY)
 {
-    // Disable depth testing to ensure the line is always visible
+    // disable depth testing to ensure the line is always visible
+    // and disable texturing for the line
     glDisable(GL_DEPTH_TEST);
-    // Disable texturing for the line
     glDisable(GL_TEXTURE_2D);
     
-    // Set line color to bright red
-    glColor3f(1.0f, 0.0f, 0.0f);
+    // set line color to black and
+    // set line width to make it more visible
+    glColor3f(0.0f, 0.0f, 0.0f);
     
-    // Set line width
+    
     glLineWidth(3.0f);
     
-    // Draw the line
+    // draw the line
     glBegin(GL_LINES);
     glVertex3f(startX, startY, 0.1f);  // Slightly above ground to avoid z-fighting
     glVertex3f(endX, endY, 0.1f);
     glEnd();
     
-    // Reset line width
+    // reset line width
     glLineWidth(1.0f);
     
-    // Re-enable texturing for other objects
+    // re-enable texturing for other objects
     glEnable(GL_TEXTURE_2D);
-    // Re-enable depth testing
+    // re-enable depth testing
     glEnable(GL_DEPTH_TEST);
-    // Reset color to white
+    // reset color to white
     glColor3f(1.0f, 1.0f, 1.0f);
 }
