@@ -1,0 +1,48 @@
+/******************************************************************************************
+ *  File Name:      main.cpp
+ *  Author:         Warren Roberts
+ *  Created:        March 26, 2026
+ *  Last Modified:  March 28, 2026
+ *
+ *  Description:
+ *  Entry point of the program. Creates the application object and starts
+ *  the OpenGL execution loop.
+ * 
+ *  Dependencies:
+ *  app.h
+ * 
+ *  Notes:
+ *  Contains only startup logic.
+ *
+ ******************************************************************************************/
+
+
+#include "app.h"
+
+
+int main(int argc, char** argv)
+{
+    glutInit(&argc, argv);                         // Initialize GLUT
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);  // Double buffer, RGB
+    glutInitWindowSize(800, 800);      
+    glutInitWindowPosition(400, 400);            
+    glutCreateWindow("Computer Graphics: Homework 4, Texture Mapping onto a Model");       // Window title
+
+
+    App app;
+    app.init();
+    app.initOpenGL();
+
+
+    glutDisplayFunc(app.callDisplay);
+    glutKeyboardFunc(app.callKeyboard);
+    glutKeyboardUpFunc(app.callKeyboardKeyUp);
+    glutMouseFunc(app.callMouseButton);
+    glutMotionFunc(app.callMouseMotion);
+
+    
+    glutIdleFunc(app.callIdle);
+
+    glutMainLoop();                                // start event loop
+    return 0;
+}
