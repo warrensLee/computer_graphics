@@ -1,8 +1,8 @@
 # *****************************************************************************************
 # *  File Name:      Makefile
 # *  Author:         Warren Roberts
-# *  Created:        February 26, 2026
-# *  Last Modified:  March 28, 2026
+# *  Created:        March 26, 2026
+# *  Last Modified:  April 3, 2026
 # *
 # *  Description:
 # *  Builds the terrain generation and rendering project, including compilation,
@@ -17,10 +17,8 @@ LIBS     = core/libim/libim.a core/jpeg/libjpeg.a
 
 TARGET = main
 
-OBJS = core/maze.o \
-       #app/main.o app/app.o \
-       core/math.o core/imageLoader.o \
-       model/mesh.o model/texture.o model/scene.o model/3DObject.o \
+OBJS = app/main.o app/app.o \
+       model/texture.o model/scene.o model/object3D.o model/sphereObject.o model/cubeObject.o model/basketBall.o \
        controller/controller.o \
        view/render.o view/camera.o
 
@@ -32,13 +30,15 @@ $(TARGET): $(OBJS) $(LIBS)
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-jpeg/libjpeg.a:
+core/jpeg/libjpeg.a:
 	cd core/jpeg && make
 
-libim/libim.a:
+core/libim/libim.a:
 	cd core/libim && make
 
 clean:
 	rm -f $(OBJS) $(TARGET)
 	cd core/jpeg && make clean || true
 	cd core/libim && make clean || true
+
+.PHONY: all clean
