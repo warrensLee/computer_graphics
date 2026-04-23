@@ -2,17 +2,16 @@
  *  File Name:      render.h
  *  Author:         Warren Roberts
  *  Created:        March 26, 2026
- *  Last Modified:  April 3, 2026
+ *  Last Modified:  April 22, 2026
  *
  *  Description:
- *  Defines the Render class, which initializes textures and draws textured
- *  3D objects stored in the scene.
- * 
+ *  Declares the Render class, which blits the ray-traced pixel buffer to the screen.
+ *
  *  Dependencies:
- *  OpenGL, GLUT, object3D.h, scene.h, texture.h
- * 
+ *  OpenGL, GLUT
+ *
  *  Notes:
- *  This class handles texture setup and rendering only.
+ *  All rendering output is produced by RayTracer; this class only handles display.
  *
  ******************************************************************************************/
 
@@ -21,41 +20,9 @@
 #include <OpenGL/gl.h>
 #include <GLUT/glut.h>
 
-#include "../model/object3D.h"
-#include "../model/sphereObject.h"
-#include "../model/cubeObject.h"
-
-#include "../model/scene.h"
-#include "../model/texture.h"
-
 class Render
 {
 public:
     Render() = default;
-
-    void init();
-    void draw(const Scene& scene);
-
-    void drawCube(const Object3D& obj);
-    void drawSphere(const Object3D& obj);
-    void drawGroundTexture();
-    void drawTrajectoryLine(float startX, float startY, float endX, float endY);
-    void drawCubeGeometry(float xmin, float ymin, float zmin, float xmax, float ymax, float zmax);
-
-
-private:
-
-    // all textures
-    unsigned char* texture1 = nullptr;
-    unsigned char* texture2 = nullptr;  
-    unsigned char* basketballTexture = nullptr;
-    unsigned char* groundTexture = nullptr;
-
-
-    int xdim1 = 0, ydim1 = 0;
-    int xdim2 = 0, ydim2 = 0;
-    int xdim3 = 0, ydim3 = 0;
-    int xdim4 = 0, ydim4 = 0;
-
-    GLuint texIDs[4];
+    void drawRayTracedImage(const unsigned char* buf, int w, int h);
 };

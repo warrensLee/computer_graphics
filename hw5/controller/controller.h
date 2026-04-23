@@ -2,77 +2,39 @@
  *  File Name:      controller.h
  *  Author:         Warren Roberts
  *  Created:        March 26, 2026
- *  Last Modified:  April 3, 2026
+ *  Last Modified:  April 22, 2026
  *
  *  Description:
- *  Declares input control methods used to respond to keyboard input
- *  and pass commands to the application.
- * 
+ *  Declares keyboard input handling and camera movement for the ray tracer.
+ *
  *  Dependencies:
- *  App and camera-related components
- * 
+ *  camera.h, config.h
+ *
  *  Notes:
- *  Separates input logic from rendering logic.
+ *  WASD moves the camera; Q/E zoom is handled directly in App.
  *
  ******************************************************************************************/
 
 #pragma once
 
-#include <OpenGL/gl.h>
-#include <GLUT/glut.h>
-#include <cmath>
 #include "../view/camera.h"
 #include "../core/config.h"
 
-
 class Controller
 {
-    public:
-    // constructor
-        Controller();
+public:
+    Controller();
 
-    // getters
-        const Camera& getCamera() const;
+    const Camera& getCamera() const;
 
-        // getters
-        bool getUpPressed() const;
-        bool getDownPressed() const;
-        bool getLeftPressed() const;
-        bool getRightPressed() const;
-        bool getIsDragging() const;
-        float getDragStartX() const;
-        float getDragStartY() const;
-        float getDragEndX() const;
-        float getDragEndY() const;
+    void handleKeyDown(unsigned char key);
+    void handleKeyUp(unsigned char key);
+    void update(float dt);
 
-        void getDragWorldCoordinates(float& worldStartX, float& worldStartY, float& worldEndX, float& worldEndY) const;
-
-    // functionality
-        void handleKeyDown(unsigned char key);
-        void handleKeyUp(unsigned char key);
-
-        void mouseButton(int button, int state, int x, int y);
-        void mouseMotion(int x, int y);
-        
-
-        void update();
-
-    private:
-        Camera camera;
-        bool upPressed = false;
-        bool downPressed = false;
-        bool leftPressed = false;
-        bool rightPressed = false;
-
-        // these will be initialized in the constructor using Config values
-        bool isDragging = false;
-
-        float startX = 0.0f;
-        float startY = 0.0f;
-        float endX = 0.0f;
-        float endY = 0.0f;
-        float clickWorldX = 0.0f;
-        float clickWorldY = 0.0f;
-
+private:
+    Camera camera;
+    bool upPressed = false;
+    bool downPressed = false;
+    bool leftPressed = false;
+    bool rightPressed = false;
 };
-
