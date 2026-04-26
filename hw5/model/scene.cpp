@@ -16,12 +16,15 @@
  ******************************************************************************************/
 
 #include "scene.h"
+#include <cmath>
 
 Scene::Scene()
 {
     lightColor.set(200, 200, 200);
     lightDir.set(-1, -1, -1);
     lightDir.normalize();
+    orbitAngle = 0.0f;
+    yellowSpherePtr = nullptr;
 
     // Gray sphere centered at (0,0,3)
     auto graySphere = std::make_unique<Sphere>();
@@ -41,6 +44,7 @@ Scene::Scene()
     ColorRGB yellowColor;
     yellowColor.set(255, 255, 0);
     yellowSphere->setMaterial(yellowColor, 0.3f, 0.4f, 0.4f, 10.0f);
+    yellowSpherePtr = yellowSphere.get();  // store pointer before move
     addObject(std::move(yellowSphere));
 }
 
@@ -56,6 +60,14 @@ const std::vector<std::unique_ptr<Object3D>>& Scene::getObjects() const
 
 void Scene::update(float dt)
 {
+    orbitAngle += dt * 1.2f;  // rotation speed (radians per second)
+    if (yellowSpherePtr)
+    {
+        float radius = 2.0f;
+        float x = radius * cos(orbitAngle);
+        float z = 3.0f + radius * sin(orbitAngle);
+        yellowSpherePtr->setPosition(x, 0.0f, z);
+    }
     for (auto& obj : objects)
         obj->update(dt);
 }

@@ -43,7 +43,8 @@ public:
 
 private:
     std::vector<std::unique_ptr<Object3D>> objects;
-
+    Sphere* yellowSpherePtr;  // non-owning pointer to the yellow sphere
+    float orbitAngle;
     ColorRGB lightColor;
     Vector3D lightDir;
 };
