@@ -26,6 +26,7 @@ class Sphere : public Object3D
 public:
     void draw(Render& renderer) const override;
     void setGeometry(Point3D center, float radius);
+    void setPosition(float px, float py, float pz) override;
     bool intersect(Ray3D ray, Point3D& p, Vector3D& n) const override;
 
 private:

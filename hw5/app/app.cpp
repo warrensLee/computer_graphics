@@ -75,6 +75,7 @@ void App::idle()
     lastTime = currentTime;
 
     controller.update(dt);
+    rayTracer.updateScene(dt);
     rayTracer.traceScene();
     glutPostRedisplay();
 }

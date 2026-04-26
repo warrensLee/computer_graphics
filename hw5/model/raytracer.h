@@ -12,6 +12,7 @@ public:
     RayTracer();
 
     void traceScene();
+    void updateScene(float dt);
 
     void increaseCameraDistance();
     void decreaseCameraDistance();

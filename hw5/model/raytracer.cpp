@@ -8,6 +8,11 @@ RayTracer::RayTracer() : scene(), camera()
             image[y][x][0] = image[y][x][1] = image[y][x][2] = 0;
 }
 
+void RayTracer::updateScene(float dt)
+{
+    scene.update(dt);
+}
+
 void RayTracer::traceScene()
 {
     Render::tracePixels(scene, camera, &image[0][0][0], Config::XDIM, Config::YDIM, mode);
