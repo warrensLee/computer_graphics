@@ -2,25 +2,28 @@
 
 #include <string>
 #include "../core/config.h"
-#include "../core/ray_classes.h"
+#include "scene.h"
+#include "../view/camera.h"
+#include "../view/render.h"
 
 class RayTracer
 {
-    public:
-        RayTracer();
+public:
+    RayTracer();
 
-        void traceScene();
+    void traceScene();
 
-        void increaseCameraDistance();
-        void decreaseCameraDistance();
+    void increaseCameraDistance();
+    void decreaseCameraDistance();
 
-        void setPhongMode();
-        void setNormalMode();
+    void setPhongMode();
+    void setNormalMode();
 
-        const unsigned char* getImageBuffer() const;
+    const unsigned char* getImageBuffer() const;
 
-    private:
-        unsigned char image[Config::YDIM][Config::XDIM][3];
-        float position;
-        std::string mode;
+private:
+    unsigned char image[Config::YDIM][Config::XDIM][3];
+    std::string mode;
+    Scene  scene;
+    Camera camera;
 };
