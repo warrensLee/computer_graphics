@@ -26,11 +26,11 @@ Scene::Scene()
     orbitAngle = 0.0f;
     yellowSpherePtr = nullptr;
 
-    // Gray sphere centered at (0,0,3)
+    // Gray sphere positioned at (0,0,3)
     auto graySphere = std::make_unique<Sphere>();
-    Point3D centerGray;
-    centerGray.set(0, 0, 3);
-    graySphere->setGeometry(centerGray, 1.5f);
+    Point3D positionGraySphere;
+    positionGraySphere.set(0, 0, 20);
+    graySphere->setGeometry(positionGraySphere, 1.5f);
     ColorRGB grayColor;
     grayColor.set(180, 180, 180);
     graySphere->setMaterial(grayColor, 0.3f, 0.4f, 0.4f, 10.0f);
@@ -38,14 +38,27 @@ Scene::Scene()
 
     // Yellow sphere near the gray sphere
     auto yellowSphere = std::make_unique<Sphere>();
-    Point3D centerYellow;
-    centerYellow.set(2, 0, 3);
-    yellowSphere->setGeometry(centerYellow, 1.0f);
+    Point3D positionYellowSphere;
+    positionYellowSphere.set(3.0f, 0.0f, 20.0f);
+    yellowSphere->setGeometry(positionYellowSphere, 1.0f);
     ColorRGB yellowColor;
     yellowColor.set(255, 255, 0);
     yellowSphere->setMaterial(yellowColor, 0.3f, 0.4f, 0.4f, 10.0f);
     yellowSpherePtr = yellowSphere.get();  // store pointer before move
     addObject(std::move(yellowSphere));
+
+    auto checkeredPlane = std::make_unique<Plane3D>();
+    Point3D positionPlane;
+    positionPlane.set(-0.0f,-3.0f,-0.0f);
+    Vector3D vectorPlane;
+    vectorPlane.set(0.0f,-2.0f,0.0f);
+    ColorRGB planeYellow;
+    planeYellow.set(255, 255, 0);
+    ColorRGB planeRed;
+    planeRed.set(255, 0, 0);
+    float tile = 0.2f;
+    checkeredPlane->setPlane(positionPlane, vectorPlane, planeYellow, planeRed, tile);
+    addObject(std::move(checkeredPlane));
 }
 
 void Scene::addObject(std::unique_ptr<Object3D> obj)
@@ -60,16 +73,26 @@ const std::vector<std::unique_ptr<Object3D>>& Scene::getObjects() const
 
 void Scene::update(float dt)
 {
-    orbitAngle += dt * 1.2f;  // rotation speed (radians per second)
+    orbitAngle += dt * 0.75f;
+
     if (yellowSpherePtr)
     {
-        float radius = 2.0f;
-        float x = radius * cos(orbitAngle);
-        float z = 3.0f + radius * sin(orbitAngle);
-        yellowSpherePtr->setPosition(x, 0.0f, z);
+        float orbitRadius = 5.0f;
+
+        float positionX = 0.0f;
+        float positionY = 0.0f;
+        float positionZ = 20.0f;   // same as gray sphere
+
+        float x = positionX + orbitRadius * cos(orbitAngle);
+        float z = positionZ + orbitRadius * sin(orbitAngle);
+
+        yellowSpherePtr->setPosition(x, positionY, z);
     }
+
     for (auto& obj : objects)
+    {
         obj->update(dt);
+    }
 }
 
 ColorRGB Scene::getLightColor() const
