@@ -34,5 +34,10 @@ public:
     ColorRGB getCheckerColor(Point3D hitPoint);
     ColorRGB getSurfaceColor(Point3D hitPoint) const override;
     
+    float getKa() const override { return 0.3f; }
+    float getKd() const override { return 0.4f; }
+    float getKs() const override { return 0.4f; }
+    float getKp() const override { return 10.0f; }
+
     void draw(Render &renderer) const override;
 };
