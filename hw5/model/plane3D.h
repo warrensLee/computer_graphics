@@ -16,18 +16,23 @@
 
 #pragma once
 
+#include "object3D.h"
 #include "../core/ray_classes.h"
 
-class Plane3D
+class Plane3D : public Object3D
 {
 public:
-    Point3D  point;
+    Plane3D();
+    Point3D point;
     Vector3D normal;
     ColorRGB color1;
     ColorRGB color2;
-    float    tileSize;
+    float tileSize;
 
-    void set(Point3D p, Vector3D n, ColorRGB c1, ColorRGB c2, float tile);
-    bool get_intersection(Ray3D ray, Point3D &hitPoint, Vector3D &hitNormal);
-    ColorRGB get_checker_color(Point3D hitPoint);
+    void setPlane(Point3D p, Vector3D n, ColorRGB c1, ColorRGB c2, float tile);
+    bool getIntersection(Ray3D ray, Point3D &hitPoint, Vector3D &hitNormal);
+    ColorRGB getCheckerColor(Point3D hitPoint);
+    ColorRGB getSurfaceColor(Point3D hitPoint) const override;
+    
+    void draw(Render &renderer) const override;
 };
