@@ -37,7 +37,7 @@ void Plane3D::setPlane(Point3D p, Vector3D n, ColorRGB c1, ColorRGB c2, float ti
         tileSize = tile;
 }
 
-bool Plane3D::getIntersection(Ray3D ray, Point3D &hitPoint, Vector3D &hitNormal)
+bool Plane3D::getIntersection(const Ray3D& ray, Point3D &hitPoint, Vector3D &hitNormal) const
 {
     // dot product between ray direction and plane normal
     float denom = ray.dir.vx * normal.vx +
@@ -102,24 +102,24 @@ void Plane3D::draw(Render &renderer) const
 {
 }
 
-float getKa() 
+float Plane3D::getKa() const
 {
     return 0.3f;
 }
-float getKd() 
+float Plane3D::getKd() const
 {
     return 0.4f;
 }
-float getKs()  
+float Plane3D::getKs() const
 {
     return 0.4f;
 }
-float getKp()
+float Plane3D::getKp() const
 {
     return 10.0f;
 }
 
-bool Plane3D::intersect(Ray3D ray, Point3D &hitPoint, Vector3D &hitNormal)
+bool Plane3D::intersect(const Ray3D& ray, Point3D &hitPoint, Vector3D &hitNormal) const
 {
     return getIntersection(ray, hitPoint, hitNormal);
 }

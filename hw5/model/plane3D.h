@@ -30,10 +30,10 @@ public:
     float tileSize;
 
     void setPlane(Point3D p, Vector3D n, ColorRGB c1, ColorRGB c2, float tile);
-    bool getIntersection(Ray3D ray, Point3D &hitPoint, Vector3D &hitNormal);
+    bool getIntersection(const Ray3D& ray, Point3D &hitPoint, Vector3D &hitNormal) const;
     ColorRGB getCheckerColor(Point3D hitPoint);
     ColorRGB getSurfaceColor(Point3D hitPoint) const override;
-    bool intersect(Ray3D ray, Point3D &hitPoint, Vector3D &hitNormal); 
+    bool intersect(const Ray3D& ray, Point3D &hitPoint, Vector3D &hitNormal) const override;
     float getKa() const;
     float getKd() const;
     float getKs() const;

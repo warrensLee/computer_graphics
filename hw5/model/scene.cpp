@@ -51,7 +51,7 @@ Scene::Scene()
     Point3D positionPlane;
     positionPlane.set(-0.0f,-3.0f,-0.0f);
     Vector3D vectorPlane;
-    vectorPlane.set(0.0f,-2.0f,0.0f);
+    vectorPlane.set(0.0f,1.0f,0.0f);
     ColorRGB planeYellow;
     planeYellow.set(255, 255, 0);
     ColorRGB planeRed;
