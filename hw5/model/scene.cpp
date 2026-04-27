@@ -49,14 +49,14 @@ Scene::Scene()
 
     auto checkeredPlane = std::make_unique<Plane3D>();
     Point3D positionPlane;
-    positionPlane.set(-0.0f,-3.0f,-0.0f);
+    positionPlane.set(-0.0f, 3.0f, -0.0f);
     Vector3D vectorPlane;
     vectorPlane.set(0.0f,1.0f,0.0f);
     ColorRGB planeYellow;
     planeYellow.set(255, 255, 0);
     ColorRGB planeRed;
     planeRed.set(255, 0, 0);
-    float tile = 0.2f;
+    float tile = 2.0f;
     checkeredPlane->setPlane(positionPlane, vectorPlane, planeYellow, planeRed, tile);
     addObject(std::move(checkeredPlane));
 }
