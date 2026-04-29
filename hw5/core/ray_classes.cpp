@@ -366,6 +366,92 @@ void Phong::GetShade(Point3D point, Vector3D normal, ColorRGB & color)
    }
 }
 
+void Cube3D::set(Point3D p, float r)
+{
+    center = p;
+    radius = r;
+}
+
+void Cube3D::set(Point3D p, Vector3D m, float r)
+{
+    center = p;
+    motion = m;
+    radius = r;
+}
+
+string Cube3D::print()
+{
+    center.print();
+    cout << " ";
+    motion.print();
+    cout << " " << radius << endl;
+    return "";
+}
+
+bool Cube3D::get_intersection(Ray3D ray, Point3D &point, Vector3D &normal)
+{
+    float xmin = center.px - radius;
+    float xmax = center.px + radius;
+    float ymin = center.py - radius;
+    float ymax = center.py + radius;
+    float zmin = center.pz - radius;
+    float zmax = center.pz + radius;
+
+    float tmin = -1e9f;
+    float tmax =  1e9f;
+    const float epsilon = 1e-6f;
+
+    auto checkAxis = [&](float rayOrigin, float rayDir, float minVal, float maxVal) -> bool
+    {
+        if (fabs(rayDir) < epsilon)
+        {
+            return rayOrigin >= minVal && rayOrigin <= maxVal;
+        }
+
+        float t1 = (minVal - rayOrigin) / rayDir;
+        float t2 = (maxVal - rayOrigin) / rayDir;
+
+        if (t1 > t2)
+            std::swap(t1, t2);
+
+        tmin = std::max(tmin, t1);
+        tmax = std::min(tmax, t2);
+
+        return tmin <= tmax;
+    };
+
+    if (!checkAxis(ray.point.px, ray.dir.vx, xmin, xmax)) return false;
+    if (!checkAxis(ray.point.py, ray.dir.vy, ymin, ymax)) return false;
+    if (!checkAxis(ray.point.pz, ray.dir.vz, zmin, zmax)) return false;
+
+    if (tmax < 0)
+        return false;
+
+    float t = tmin;
+
+    if (t < 0)
+        t = tmax;
+
+    point = ray.get_sample(t);
+
+    float bias = 0.001f;
+
+    if (fabs(point.px - xmin) < bias)
+        normal.set(-1, 0, 0);
+    else if (fabs(point.px - xmax) < bias)
+        normal.set(1, 0, 0);
+    else if (fabs(point.py - ymin) < bias)
+        normal.set(0, -1, 0);
+    else if (fabs(point.py - ymax) < bias)
+        normal.set(0, 1, 0);
+    else if (fabs(point.pz - zmin) < bias)
+        normal.set(0, 0, -1);
+    else
+        normal.set(0, 0, 1);
+
+    return true;
+}
+
 //----------------------------------------------
 int test_main()
 {

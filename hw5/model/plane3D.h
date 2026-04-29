@@ -33,8 +33,7 @@ public:
     bool getIntersection(const Ray3D& ray, Point3D &hitPoint, Vector3D &hitNormal) const;
     ColorRGB getCheckerColor(Point3D hitPoint);
     ColorRGB getSurfaceColor(Point3D hitPoint) const override;
-    bool intersect(const Ray3D& ray, Point3D &hitPoint, Vector3D &hitNormal) const override;
-    float getKa() const;
+    bool intersect(Ray3D ray, Point3D &hitPoint, Vector3D &hitNormal) const override;    float getKa() const;
     float getKd() const;
     float getKs() const;
     float getKp() const;

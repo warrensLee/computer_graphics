@@ -20,8 +20,8 @@
 namespace Config
 {
     // window size
-    constexpr inline int XDIM = 800;
-    constexpr inline int YDIM = 800;
+    constexpr inline int XDIM = 400;
+    constexpr inline int YDIM = 400;
 
     // camera starting position (used by Controller / Camera)
     constexpr inline float CAMERA_START_X = 0.0f;

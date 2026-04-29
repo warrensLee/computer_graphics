@@ -137,6 +137,41 @@ void Render::draw(const Scene& scene)
         obj->draw(*this);
 }
 
+static bool traceClosestObject(const Scene& scene, Ray3D ray,
+                               Point3D origin,
+                               Point3D& closestP,
+                               Vector3D& closestN,
+                               const Object3D*& closestObj)
+{
+    bool hit = false;
+    float closestDist = 1e9f;
+
+    for (const auto& obj : scene.getObjects())
+    {
+        Point3D tempP;
+        Vector3D tempN;
+
+        if (obj->intersect(ray, tempP, tempN))
+        {
+            float dx = tempP.px - origin.px;
+            float dy = tempP.py - origin.py;
+            float dz = tempP.pz - origin.pz;
+            float dist = dx * dx + dy * dy + dz * dz;
+
+            if (dist > 0.001f && dist < closestDist)
+            {
+                closestDist = dist;
+                closestP = tempP;
+                closestN = tempN;
+                closestObj = obj.get();
+                hit = true;
+            }
+        }
+    }
+
+    return hit;
+}
+
 void Render::tracePixels(const Scene& scene, const Camera& camera,
                          unsigned char* image, int width, int height,
                          const std::string& mode)
@@ -165,27 +200,89 @@ void Render::tracePixels(const Scene& scene, const Camera& camera,
             ray.set(cam, point);
 
             ColorRGB color;
-            Point3D  p;
-            Vector3D n;
 
-            for (const auto& obj : scene.getObjects())
+            Point3D closestP;
+            Vector3D closestN;
+            const Object3D* closestObj = nullptr;
+
+            bool hit = traceClosestObject(scene, ray, cam, closestP, closestN, closestObj);
+            
+            if (hit && closestObj)
             {
-                if (obj->intersect(ray, p, n))
+                if (mode == "normal")
                 {
-                    if (mode == "normal")
-                    {
-                        color.set(127 + n.vx * 127, 127 + n.vy * 127, 127 + n.vz * 127);
-                    }
-                    else
-                    {
-                        shader.SetObject(obj->getColor(), obj->getKa(), obj->getKd(), obj->getKs(), obj->getKp());
-                        shader.GetShade(p, n, color);
-                    }
-                    image[idx]   = (unsigned char)color.R;
-                    image[idx+1] = (unsigned char)color.G;
-                    image[idx+2] = (unsigned char)color.B;
-                    break;
+                    color.set(127 + closestN.vx * 127,
+                            127 + closestN.vy * 127,
+                            127 + closestN.vz * 127);
                 }
+                else
+                {
+                    ColorRGB surfaceColor = closestObj->getSurfaceColor(closestP);
+
+                    shader.SetObject(
+                        surfaceColor,
+                        closestObj->getKa(),
+                        closestObj->getKd(),
+                        closestObj->getKs(),
+                        closestObj->getKp()
+                    );
+
+                    shader.GetShade(closestP, closestN, color);
+                    Vector3D D = ray.dir;
+                    D.normalize();
+
+                    Vector3D N = closestN;
+                    N.normalize();
+
+                    float dotDN = D.dot(N);
+
+                    Vector3D reflectDir;
+                    reflectDir.set(
+                        D.vx - 2.0f * dotDN * N.vx,
+                        D.vy - 2.0f * dotDN * N.vy,
+                        D.vz - 2.0f * dotDN * N.vz
+                    );
+                    reflectDir.normalize();
+
+                    Point3D reflectStart;
+                    reflectStart.set(
+                        closestP.px + reflectDir.vx * 0.01f,
+                        closestP.py + reflectDir.vy * 0.01f,
+                        closestP.pz + reflectDir.vz * 0.01f
+                    );
+
+                    Ray3D reflectRay;
+                    reflectRay.set(reflectStart, reflectDir);
+
+                    Point3D reflectP;
+                    Vector3D reflectN;
+                    const Object3D* reflectObj = nullptr;
+
+                    if (traceClosestObject(scene, reflectRay, reflectStart, reflectP, reflectN, reflectObj))
+                    {
+                        ColorRGB reflectColor = reflectObj->getSurfaceColor(reflectP);
+
+                        reflectColor.mult(closestObj->getKs());
+                        color.add(reflectColor);
+                        color.clamp();
+                    }
+                    
+                }
+
+                image[idx]   = (unsigned char)color.R;
+                image[idx+1] = (unsigned char)color.G;
+                image[idx+2] = (unsigned char)color.B;
+            }
+            else
+            {
+                ColorRGB sky;
+
+                // simple blue sky
+                sky.set(70, 100, 255);
+
+                image[idx]   = (unsigned char)sky.R;
+                image[idx+1] = (unsigned char)sky.G;
+                image[idx+2] = (unsigned char)sky.B;
             }
         }
     }

@@ -30,7 +30,7 @@ Scene::Scene()
     auto graySphere = std::make_unique<Sphere>();
     Point3D positionGraySphere;
     positionGraySphere.set(0, 0, 20);
-    graySphere->setGeometry(positionGraySphere, 1.5f);
+    graySphere->setGeometry(positionGraySphere, 1.6f);
     ColorRGB grayColor;
     grayColor.set(180, 180, 180);
     graySphere->setMaterial(grayColor, 0.3f, 0.4f, 0.4f, 10.0f);
@@ -40,7 +40,7 @@ Scene::Scene()
     auto yellowSphere = std::make_unique<Sphere>();
     Point3D positionYellowSphere;
     positionYellowSphere.set(3.0f, 0.0f, 20.0f);
-    yellowSphere->setGeometry(positionYellowSphere, 1.0f);
+    yellowSphere->setGeometry(positionYellowSphere, 1.5f);
     ColorRGB yellowColor;
     yellowColor.set(255, 255, 0);
     yellowSphere->setMaterial(yellowColor, 0.3f, 0.4f, 0.4f, 10.0f);
@@ -49,7 +49,7 @@ Scene::Scene()
 
     auto checkeredPlane = std::make_unique<Plane3D>();
     Point3D positionPlane;
-    positionPlane.set(-0.0f, 3.0f, -0.0f);
+    positionPlane.set(0.0f, 5.0f, 20.0f);
     Vector3D vectorPlane;
     vectorPlane.set(0.0f,1.0f,0.0f);
     ColorRGB planeYellow;
@@ -59,6 +59,27 @@ Scene::Scene()
     float tile = 2.0f;
     checkeredPlane->setPlane(positionPlane, vectorPlane, planeYellow, planeRed, tile);
     addObject(std::move(checkeredPlane));
+
+    auto cubeOne = std::make_unique<Cube>();
+    Point3D positionCubeOne;
+    positionCubeOne.set(10.0f, 1.0f, 20.0f);    
+    cubeOne->setGeometry(positionCubeOne, 2.0f);    
+    ColorRGB cubeOneColor;
+    cubeOneColor.set(0, 255, 0);
+    cubeOne->setMaterial(cubeOneColor, 0.3f, 0.4f, 0.4f, 10.0f);
+    cubeOnePtr = cubeOne.get();  // store pointer before move
+    addObject(std::move(cubeOne));
+
+    auto cubeTwo = std::make_unique<Cube>();
+    Point3D positionCubeTwo;
+    positionCubeTwo.set(-10.0f, 1.0f, 20.0f);
+    cubeTwo->setGeometry(positionCubeTwo, 2.0f);    
+    ColorRGB cubeTwoColor;
+    cubeTwoColor.set(255, 0, 0);
+    cubeTwo->setMaterial(cubeTwoColor, 0.3f, 0.4f, 0.4f, 10.0f);
+    cubeTwoPtr = cubeTwo.get();  // store pointer before move
+    addObject(std::move(cubeTwo));
+
 }
 
 void Scene::addObject(std::unique_ptr<Object3D> obj)
@@ -73,20 +94,30 @@ const std::vector<std::unique_ptr<Object3D>>& Scene::getObjects() const
 
 void Scene::update(float dt)
 {
-    orbitAngle += dt * 0.75f;
+    orbitAngle += dt * 1.50f;
 
     if (yellowSpherePtr)
     {
-        float orbitRadius = 5.0f;
+        float orbitRadius = 3.5f;
 
         float positionX = 0.0f;
-        float positionY = 0.0f;
+        float positionY = 0.8f;
         float positionZ = 20.0f;   // same as gray sphere
 
         float x = positionX + orbitRadius * cos(orbitAngle);
         float z = positionZ + orbitRadius * sin(orbitAngle);
 
         yellowSpherePtr->setPosition(x, positionY, z);
+    }
+
+    if (cubeOnePtr)
+    {
+        cubeOnePtr->setRotation(cubeOnePtr->getRotX(), cubeOnePtr->getRotY() + dt * 60.0f, cubeOnePtr->getRotZ());
+    }
+
+    if (cubeTwoPtr)
+    {
+        cubeTwoPtr->setRotation(cubeTwoPtr->getRotX(), cubeTwoPtr->getRotY() - dt * 75.0f, cubeTwoPtr->getRotZ());
     }
 
     for (auto& obj : objects)

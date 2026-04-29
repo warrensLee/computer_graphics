@@ -17,7 +17,7 @@ TARGET = main
 
 OBJS = app/main.o app/app.o \
        core/ray_classes.o \
-       model/raytracer.o \
+       model/raytracer.o model/object3D.o model/scene.o model/cubeObject.o model/sphereObject.o model/plane3D.o \
        controller/controller.o \
        view/render.o view/camera.o
 

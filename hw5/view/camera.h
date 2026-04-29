@@ -44,6 +44,11 @@ class Camera
         void rotatePitch(float d);
         void rotateRoll(float d);
 
+    // ray tracer camera distance (zoom in/out)
+        float getCameraDistance() const;
+        void  increaseCameraDistance();
+        void  decreaseCameraDistance();
+
     private:
     // zoom 
         float currentZoom;  
@@ -57,5 +62,8 @@ class Camera
         float yaw;      // rotation around Y axis (left/right)
         float pitch;    // rotation around X axis (up/down)
         float roll;     // rotation around Z axis (tilt)
+
+    // ray tracer zoom distance
+        float cameraDistance;
 
 };

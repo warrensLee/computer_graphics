@@ -30,7 +30,7 @@ void Sphere::setGeometry(Point3D center, float radius)
 void Sphere::setPosition(float px, float py, float pz)
 {
     Object3D::setPosition(px, py, pz);
-    // Update the Sphere3D geometry center to match the new position
+    // update the Sphere3D geometry center to match the new position
     geometry.center.set(px, py, pz);
 }
 

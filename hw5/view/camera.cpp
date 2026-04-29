@@ -24,9 +24,10 @@ Camera::Camera()
     xCameraPosition = Config::CAMERA_START_X;
     yCameraPosition = Config::CAMERA_START_Y;
     zCameraPosition = Config::CAMERA_START_Z;
-    yaw = Config::CAMERA_START_YAW; 
-    pitch= Config::CAMERA_START_PITCH; 
+    yaw = Config::CAMERA_START_YAW;
+    pitch= Config::CAMERA_START_PITCH;
     roll =Config::CAMERA_START_ROLL;
+    cameraDistance = 2.0f;
 }
 
 float Camera::getCameraX() const
@@ -112,6 +113,23 @@ void Camera::rotatePitch(float d)
 void Camera::rotateRoll(float d)
 {
     roll += d;
+}
+
+float Camera::getCameraDistance() const
+{
+    return cameraDistance;
+}
+
+void Camera::increaseCameraDistance()
+{
+    if (cameraDistance < 5.0f)
+        cameraDistance *= 1.1f;
+}
+
+void Camera::decreaseCameraDistance()
+{
+    if (cameraDistance > 1.0f)
+        cameraDistance /= 1.1f;
 }
 
 

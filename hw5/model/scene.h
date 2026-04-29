@@ -24,6 +24,7 @@
 #include "../core/ray_classes.h"
 #include "cubeObject.h"
 #include "sphereObject.h"
+#include "plane3D.h"
 #include <vector>
 #include <memory>
 
@@ -44,6 +45,8 @@ public:
 private:
     std::vector<std::unique_ptr<Object3D>> objects;
     Sphere* yellowSpherePtr;  // non-owning pointer to the yellow sphere
+    Cube* cubeOnePtr;
+    Cube* cubeTwoPtr;
     float orbitAngle;
     ColorRGB lightColor;
     Vector3D lightDir;

@@ -119,7 +119,7 @@ float Plane3D::getKp() const
     return 10.0f;
 }
 
-bool Plane3D::intersect(const Ray3D& ray, Point3D &hitPoint, Vector3D &hitNormal) const
+bool Plane3D::intersect(Ray3D ray, Point3D &hitPoint, Vector3D &hitNormal) const
 {
     return getIntersection(ray, hitPoint, hitNormal);
 }

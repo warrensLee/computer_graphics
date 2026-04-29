@@ -93,6 +93,19 @@ class Sphere3D
       string print() ;
       bool get_intersection(Ray3D ray, Point3D &point, Vector3D &normal);
 };
+//----------------------------------------------
+class Cube3D
+{
+public:
+    Point3D center;
+    Vector3D motion;
+    float radius;
+
+    void set(Point3D p, float r);
+    void set(Point3D p, Vector3D m, float r);
+    string print();
+    bool get_intersection(Ray3D ray, Point3D &point, Vector3D &normal);
+};
 
 //----------------------------------------------
 class Phong
