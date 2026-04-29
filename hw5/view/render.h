@@ -17,8 +17,15 @@
 
 #pragma once
 
-#include <OpenGL/gl.h>
-#include <GLUT/glut.h>
+#ifdef __APPLE__
+    #include <OpenGL/gl.h>
+    #include <GLUT/glut.h>
+#else
+    #include <GL/gl.h>
+    #include <GL/glut.h>
+#endif
+// #include <OpenGL/gl.h>
+// #include <GLUT/glut.h>
 #include <string>
 
 #include "../model/scene.h"

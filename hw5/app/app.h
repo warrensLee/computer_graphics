@@ -2,7 +2,7 @@
  *  File Name:      app.h
  *  Author:         Warren Roberts
  *  Created:        March 26, 2026
- *  Last Modified:  April 22, 2026
+ *  Last Modified:  April 29, 2026
  *
  *  Description:
  *  Declares the App class: GLUT callbacks, input forwarding, and the
@@ -13,13 +13,21 @@
  *
  *  Notes:
  *  Singleton pattern bridges GLUT C-style callbacks to C++ instance methods.
+ *  Added handlers for apple or windows OpenGL includes.
  *
  ******************************************************************************************/
 
 #pragma once
 
-#include <OpenGL/gl.h>
-#include <GLUT/glut.h>
+// #include <OpenGL/gl.h>
+// #include <GLUT/glut.h>
+#ifdef __APPLE__
+    #include <OpenGL/gl.h>
+    #include <GLUT/glut.h>
+#else
+    #include <GL/gl.h>
+    #include <GL/glut.h>
+#endif
 #include <stdio.h>
 
 #include "../core/config.h"
