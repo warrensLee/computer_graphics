@@ -2,7 +2,7 @@
  *  File Name:      cubeObject.h
  *  Author:         Warren Roberts
  *  Created:        March 26, 2026
- *  Last Modified:  April 1, 2026
+ *  Last Modified:  April 27, 2026
  *
  *  Description:
  *  Defines the Cube class, a textured cube object that inherits from Object3D.

@@ -13,7 +13,7 @@
  *
  *  Notes:
  *  Singleton pattern bridges GLUT C-style callbacks to C++ instance methods.
- *  Added handlers for apple or windows OpenGL includes.
+ *  Added includes for apple or windows OpenGL includes.
  *
  ******************************************************************************************/
 

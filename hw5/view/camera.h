@@ -14,6 +14,7 @@
  *  Used by rendering and controller systems.
  *
  ******************************************************************************************/
+
 #pragma once
 
 class Camera

@@ -2,7 +2,7 @@
  *  File Name:      render.h
  *  Author:         Warren Roberts
  *  Created:        March 26, 2026
- *  Last Modified:  April 22, 2026
+ *  Last Modified:  April 29, 2026
  *
  *  Description:
  *  Declares the Render class, which blits the ray-traced pixel buffer to the screen.
@@ -12,6 +12,7 @@
  *
  *  Notes:
  *  All rendering output is produced by RayTracer; this class only handles display.
+ *  Made some updates to handle both Windows and macOS OpenGL includes.
  *
  ******************************************************************************************/
 
@@ -43,7 +44,5 @@ public:
     void drawSphere(const Object3D& obj);
     void drawCubeGeometry(float xmin, float ymin, float zmin, float xmax, float ymax, float zmax);
 
-    static void tracePixels(const Scene& scene, const Camera& camera,
-                            unsigned char* image, int width, int height,
-                            const std::string& mode);
+    static void tracePixels(const Scene& scene, const Camera& camera, unsigned char* image, int width, int height, const std::string& mode);
 };

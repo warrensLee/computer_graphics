@@ -2,7 +2,7 @@
  *  File Name:      object3D.cpp
  *  Author:         Warren Roberts
  *  Created:        March 26, 2026
- *  Last Modified:  April 2, 2026
+ *  Last Modified:  April 27, 2026
  *
  *  Description:
  *  Implements the Object3D class, including getters, setters, and motion updates.
@@ -177,5 +177,5 @@ void Object3D::setMaterial(ColorRGB c, float ka, float kd, float ks, float kp)
 
 ColorRGB Object3D::getSurfaceColor(Point3D hitPoint) const
 {
-    return color;
+   return color;
 }

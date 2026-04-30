@@ -2,7 +2,7 @@
  *  File Name:      plane3D.h
  *  Author:         Warren Roberts
  *  Created:        March 26, 2026
- *  Last Modified:  April 1, 2026
+ *  Last Modified:  April 27, 2026
  *
  *  Description:
  *  Defines the Plane3D class for ray tracing: a plane with checkerboard pattern.

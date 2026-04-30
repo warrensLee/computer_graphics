@@ -2,7 +2,7 @@
  *  File Name:      plane3D.cpp
  *  Author:         Warren Roberts
  *  Created:        April 25, 2026
- *  Last Modified:  April 26, 2026
+ *  Last Modified:  April 27, 2026
  *
  *  Description:
  *  Handles plane intersection logic for ray tracing and generates a checkerboard pattern
@@ -37,12 +37,10 @@ void Plane3D::setPlane(Point3D p, Vector3D n, ColorRGB c1, ColorRGB c2, float ti
         tileSize = tile;
 }
 
-bool Plane3D::getIntersection(const Ray3D& ray, Point3D &hitPoint, Vector3D &hitNormal) const
+bool Plane3D::getIntersection(const Ray3D &ray, Point3D &hitPoint, Vector3D &hitNormal) const
 {
     // dot product between ray direction and plane normal
-    float denom = ray.dir.vx * normal.vx +
-                  ray.dir.vy * normal.vy +
-                  ray.dir.vz * normal.vz;
+    float denom = ray.dir.vx * normal.vx + ray.dir.vy * normal.vy + ray.dir.vz * normal.vz;
 
     // if denom is near zero, the ray is basically parallel → no hit
     const float epsilon = 1e-6f;
